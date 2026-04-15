@@ -1,0 +1,187 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 30% 20%, #7B2FBE 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 80% 70%, #C038B8 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 60% 10%, #4A10A0 0%, transparent 50%),
+    linear-gradient(160deg, #1A0535 0%, #2D0A5A 40%, #1A0535 100%);
+  z-index: 0;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  width: 100%;
+}
+
+.topLine {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.date {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: #70CAFF;
+  text-transform: uppercase;
+}
+
+.sep { color: rgba(255,255,255,0.3); font-size: 12px; }
+
+.place {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+}
+
+.loc {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.logoWrap {
+  position: relative;
+  line-height: 0.85;
+  margin-bottom: 1.2rem;
+}
+
+.logoTop {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(4rem, 16vw, 8rem);
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 0 #5B1DA8, 0 0 60px rgba(204, 56, 190, 0.5);
+  letter-spacing: -0.02em;
+}
+
+.logoBot {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(4.5rem, 18vw, 9rem);
+  color: #FF70E8;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 0 #7B1090, 0 0 60px rgba(255,106,224,0.45);
+  letter-spacing: -0.02em;
+}
+
+.year {
+  position: absolute;
+  right: -0.5rem;
+  bottom: 0.5rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1rem, 3.5vw, 1.8rem);
+  color: #70CAFF;
+  letter-spacing: 0.06em;
+}
+
+.tags {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.tag {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #CC38BE, #FF70E8, #CC38BE, transparent);
+  margin: 0 2rem 1.5rem;
+}
+
+.eventTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.3rem;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+}
+
+.eventTitle span { color: #FF70E8; }
+
+.eventSub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.cta {
+  display: inline-block;
+  padding: 14px 40px;
+  background: linear-gradient(135deg, #8B30CC, #CC38BE);
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 24px rgba(204,56,190,0.4);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(204,56,190,0.55);
+}
+
+.cta:active { transform: translateY(0); }

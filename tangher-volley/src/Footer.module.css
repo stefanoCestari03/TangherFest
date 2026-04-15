@@ -1,0 +1,34 @@
+.footer {
+  background: #080114;
+  border-top: 1px solid rgba(204,56,190,0.2);
+  padding: 3rem 1.5rem 2rem;
+  text-align: center;
+}
+
+.inner { max-width: 400px; margin: 0 auto; }
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 2.5rem;
+  line-height: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.t1 { color: #fff; display: block; }
+.t2 { color: #FF70E8; display: block; }
+
+.sub {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 1.5rem;
+}
+
+.copy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  line-height: 1.6;
+}
