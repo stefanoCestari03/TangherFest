@@ -68,7 +68,7 @@ export default function FormSection() {
     try {
       // Upload files to Supabase Storage
       const uploadedDocs = []
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 4; i++) {
         const file = form.players[i].file
         if (file) {
           const path = `documenti/${Date.now()}_g${i + 1}_${file.name}`

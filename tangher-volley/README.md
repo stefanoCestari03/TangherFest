@@ -1,16 +1,81 @@
-# React + Vite
+# 🏐 Green Volley 3×3 — Tangher Fest 2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sito di iscrizione al torneo di Green Volley 3×3 della Tangher Fest, Segonzano (TN).
 
-Currently, two official plugins are available:
+## Stack
+- **React 18** + **Vite**
+- **CSS Modules**
+- **Supabase** (DB + Storage)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Struttura
 
-## React Compiler
+```
+src/
+├── components/
+│   ├── Hero.jsx / .module.css
+│   ├── Navbar.jsx / .module.css
+│   ├── SlotBar.jsx / .module.css
+│   ├── PlayerCard.jsx / .module.css
+│   ├── FormPage.jsx / .module.css
+│   ├── InfoPage.jsx / .module.css
+│   ├── SquadrePage.jsx / .module.css
+│   └── Footer.jsx / .module.css
+├── lib/
+│   ├── constants.js   ← categorie, limiti posti
+│   ├── db.js          ← chiamate Supabase (con fallback localStorage)
+│   ├── helpers.js     ← genId, initForm, formatDate
+│   ├── supabase.js    ← client Supabase
+│   └── validators.js  ← validazione form e file
+├── styles/
+│   └── global.css
+├── App.jsx
+└── main.jsx
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Avvio locale
 
-## Expanding the ESLint configuration
+```bash
+npm install
+cp .env.example .env   # poi inserisci le chiavi Supabase
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Configurare Supabase
+
+1. Crea un progetto su [supabase.com](https://supabase.com)
+2. Nel SQL Editor esegui:
+
+```sql
+create table squadre (
+  id           text primary key,
+  nome_squadra text not null,
+  referente    text not null,
+  email        text not null,
+  telefono     text not null,
+  tipo         text not null check (tipo in ('tesserata','libera')),
+  giocatori    jsonb not null,
+  creato_il    timestamptz default now()
+);
+
+-- Tutti possono inserire (iscrizione pubblica)
+alter table squadre enable row level security;
+create policy "insert pubblico" on squadre for insert with check (true);
+create policy "lettura pubblica" on squadre for select using (true);
+
+-- Storage per documenti
+insert into storage.buckets (id, name, public)
+values ('volley-docs', 'volley-docs', false);
+
+create policy "upload pubblico" on storage.objects
+  for insert with check (bucket_id = 'volley-docs');
+```
+
+3. Copia `Project URL` e `anon key` da **Settings → API**
+4. Incollali nel file `.env`
+5. In `src/lib/db.js` decommenta le chiamate Supabase e rimuovi il blocco localStorage
+
+## Deploy
+
+**Netlify:** `npm run build` → trascina la cartella `dist/` su netlify.com/drop
+
+**Vercel:** `npx vercel --prod` (poi aggiungi le env vars nel pannello)

@@ -1,0 +1,17 @@
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1.1rem; }
+.card { border-radius: 12px; padding: .9rem 1rem; border: 1px solid; }
+.tess { background: rgba(139,48,204,.1); border-color: rgba(139,48,204,.28); }
+.lib  { background: rgba(112,202,255,.07); border-color: rgba(112,202,255,.22); }
+.lbl  { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.4); margin-bottom: .25rem; }
+.count { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.75rem; line-height: 1; }
+.colorTess { color: #D080FF; }
+.colorLib  { color: var(--sky); }
+.full { color: var(--err) !important; }
+.max  { font-size: 1rem; opacity: .5; }
+.sub  { font-size: 11px; color: rgba(255,255,255,.32); margin-top: .2rem; }
+.barOut { height: 4px; background: rgba(255,255,255,.07); border-radius: 4px; margin-top: .45rem; overflow: hidden; }
+.barIn  { height: 100%; border-radius: 4px; transition: width .4s; }
+.barTess { background: linear-gradient(90deg, var(--v2), var(--mg)); }
+.barLib  { background: linear-gradient(90deg, #3A90C8, var(--sky)); }
+
+@media (max-width: 420px) { .grid { grid-template-columns: 1fr; } }

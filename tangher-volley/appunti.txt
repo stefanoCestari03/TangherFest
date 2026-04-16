@@ -1,0 +1,16 @@
+Punti da rivedere:
+--> Avere una maggiore pulizia del dato e non avere duplicati verificare che la squadra non si sia gia iscritta ovvero inserimento dei dati pulito
+verificare che i componenti non facciano gia parte di un altra squadra verificando che i nomi o verificare che quindi non siano gia presenti in altre squadre
+--> Gestire un massimo di 4 iscritti al torneo
+--> gestire la categoria dei giocatori ovvero inserimento della categoria dei giocatori con un menu a tendina nel form dove si inserisce la categoria del giocatore
+mettere un messaggio iniziale che invità gli iscritti ad essere onesti nel'inserimento della categoria e vei valori richiesti per far si di avere un torneo divertente e giusto
+per quanta riguarda le categorie 
+--> gestire il limite delle squadre massimo squadre con tesserati e masimo squadre con i non tesserati
+--> gestire il componente femminile quindi nella sezione del'iscrizione squadre tesserate mettere le donne
+--> caricamento dei moduli necessari e gestione dei moduli necessari all'iscrizione e verifica del formato di essi
+--> gestione della conferma dell'iscrizione via mail
+--> gestione di una pagina dove si vedono le squadre che si sono gia iscritte nelle 2 categorie tesserati e non che crei un po di hyper per il torneo in vista
+ della sua esecuzione
+
+
+
