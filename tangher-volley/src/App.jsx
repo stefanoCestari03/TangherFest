@@ -22,32 +22,21 @@ export default function App() {
     setTimeout(() => navRef.current?.scrollIntoView({ behavior: 'smooth' }), 50)
   }
 
-  const onSuccess = (nuova) => {
-    setSquadre(prev => [...prev, nuova])
-  }
+  const onSuccess = (nuova) => setSquadre(prev => [...prev, nuova])
 
   return (
     <div className={styles.app}>
       <div className={styles.gridBg} />
-
       <div className={styles.wrap}>
         <Hero squadre={squadre} onCta={goIscrizione} />
       </div>
-
-      <Navbar
-        tab={tab}
-        setTab={setTab}
-        nSquadre={squadre.length}
-        navRef={navRef}
-      />
-
+      <Navbar tab={tab} setTab={setTab} nSquadre={squadre.length} navRef={navRef} />
       <div className={styles.wrap}>
         {tab === 'info'       && <InfoPage />}
         {tab === 'regole'     && <InfoPage />}
         {tab === 'iscrizione' && <FormPage squadre={squadre} onSuccess={onSuccess} />}
         {tab === 'squadre'    && <SquadrePage squadre={squadre} />}
       </div>
-
       <Footer />
     </div>
   )

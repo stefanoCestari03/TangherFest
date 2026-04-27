@@ -10,20 +10,18 @@
   --gold:  #FFD97A;
   --ok:    #5EE89A;
   --err:   #FF6B6B;
+  --warn:  #FFD97A;
   --card:  rgba(255,255,255,0.06);
   --border:rgba(255,255,255,0.11);
-  --dark:  #120422;
 }
 
 html { scroll-behavior: smooth; }
-
 body {
   font-family: 'Barlow', sans-serif;
   color: #fff;
-  background: var(--dark);
+  background: #120422;
   min-height: 100vh;
   overflow-x: hidden;
 }
-
 button { font-family: 'Barlow Condensed', sans-serif; cursor: pointer; }
 input, select, textarea { font-family: 'Barlow', sans-serif; }

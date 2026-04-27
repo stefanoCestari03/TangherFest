@@ -13,4 +13,52 @@ per quanta riguarda le categorie
  della sua esecuzione
 
 
+--controllare bene i dati che vengono inseriti nel form per evitare errori degli utenti
+--creare il db per i form e gestione delle squadre
+--effettuare test.
 
+che cosa fare per il form di iscrizione:
+
+mi srve implementare inolte il form di iscrizione per i giocatori che saranno 3 obbligatori e il 4 facoltativo per le due categorie tesserate 
+
+il form dovrà essere come quello attuale con in piu iseguenti valori
+
+NB: --controllare bene i dati che vengono inseriti nel form per evitare errori degli utenti
+
+• Nome e Cognome
+
+• Data di Nascita (Usare per attivare logica minorenni)
+
+• Codice Fiscale
+
+• Recapito Telefonico
+
+2. Logica Maggiorenni (>= 18 anni)
+
+• Checkbox Obbligatoria 1: "Dichiaro di aver letto il Regolamento e lo Scarico di Responsabilità, esonerando gli organizzatori da ogni responsabilità per danni o infortuni."
+
+• Checkbox Obbligatoria 2: "Dichiaro di essere in possesso di certificato medico sportivo valido."
+
+• Consenso Media: "Autorizzo l'uso di foto/video per i canali social del torneo."
+
+3. Logica Minorenni (< 18 anni) - Campi Extra
+
+• Dati Genitore/Tutore: Nome, Cognome e Codice Fiscale del responsabile legale.
+
+• Upload Documento: Campo obbligatorio per caricare la foto della Carta d'Identità del genitore.
+
+• Checkbox Obbligatoria Genitore: "In qualità di genitore/tutore, autorizzo la partecipazione del minore e mi assumo la responsabilità legale descritta nel modulo di scarico."
+
+4. Dati Tecnici da Salvare nel DB
+
+• Timestamp: Data e ora precisa dell'invio.
+
+• IP Address: Indirizzo IP da cui è stato inviato il form (utile come prova tecnica).
+
+• Versione Documento: Salvare quale versione dello scarico responsabilità è stata accettata.
+
+5. Check-in al Torneo questa parte sarà fatta al torneo
+
+• Preparare una lista stampata con i consensi digitali.
+
+• Richiedere comunque la firma autografa sul modulo cartaceo pre-compilato per i minorenni come ulteriore tutela.
