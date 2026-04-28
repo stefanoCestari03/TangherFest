@@ -1,39 +1,98 @@
-import { CATEGORIE } from '../lib/constants'
 import styles from './InfoPage.module.css'
-export default function InfoPage() {
+
+const INFO_CARDS = [
+  { i: '📅', l: 'Date',    v: '8 · 9 · 10 Agosto 2026' },
+  { i: '📍', l: 'Luogo',   v: 'Loc. Doss Venticcia, Segonzano' },
+  { i: '🏐', l: 'Formato', v: '3 contro 3 su erba' },
+  { i: '👥', l: 'Posti',   v: '12 Tesseratem + 12 Libere' },
+]
+
+const ATMOSFERA = [
+  { icon: '🎵', title: 'Musica Live',   desc: 'Concerti e DJ set ogni sera nelle aree festival' },
+  { icon: '🍕', title: 'Food & Drink',  desc: 'Stand gastronomici con prodotti tipici trentini' },
+  { icon: '🏐', title: 'Green Volley',  desc: 'Il torneo 3×3 su erba, aperto a tutti i livelli' },
+  { icon: '🎉', title: 'Party & Fun',   desc: 'Atmosfera unica tra amici, natura e divertimento' },
+]
+
+export default function InfoPage({ onCta }) {
   return (
     <div className={styles.wrap}>
+
+      {/* Intro evento */}
       <div className={styles.slabel}>Il Torneo</div>
       <h2 className={styles.h2}>Green Volley <span>3×3</span></h2>
-      <p className={styles.lead}>Benvenuti al torneo di <strong>Green Volley 3×3</strong> della Tangher Fest 2026! Una competizione su erba verde aperta a tutti — tesserati e non. Tre giorni di sport, musica e festa nel cuore della Val di Cembra.</p>
+      <p className={styles.lead}>
+        Benvenuti al torneo di <strong>Green Volley 3×3</strong> della Tangher Fest 2026!
+        Tre giorni di sport sull'erba verde di Segonzano — aperto a tutti,
+        tesserati e non, immerso nella magia della Val di Cembra.
+      </p>
+
       <div className={styles.infoGrid}>
-        {[{i:'📅',l:'Date',v:'8 · 9 · 10 Agosto 2026'},{i:'📍',l:'Luogo',v:'Loc. Doss Venticcia, Segonzano'},{i:'🏐',l:'Formato',v:'3 contro 3 su erba'},{i:'👥',l:'Max squadre',v:'12 Tesseratem + 12 Libere'}].map(x=>(
-          <div key={x.l} className={styles.icard}><span className={styles.iicon}>{x.i}</span><div><div className={styles.ilbl}>{x.l}</div><div className={styles.ival}>{x.v}</div></div></div>
+        {INFO_CARDS.map(x => (
+          <div key={x.l} className={styles.icard}>
+            <span className={styles.iicon}>{x.i}</span>
+            <div>
+              <div className={styles.ilbl}>{x.l}</div>
+              <div className={styles.ival}>{x.v}</div>
+            </div>
+          </div>
         ))}
       </div>
-      <div className={styles.divider}/>
-      <div className={styles.slabel}>Regolamento</div>
-      <h2 className={styles.h2}>Composizione <span>Squadre</span></h2>
-      <p className={styles.lead}>Ogni team è composto da <strong>3 giocatori obbligatori</strong> + 1 riserva facoltativa.</p>
-      <div className={styles.rulesGrid}>
-        <div className={styles.rbox}>
-          <span className={`${styles.rbadge} ${styles.rbT}`}>Tesserata</span>
-          <div className={styles.rtitle}>Con pallavolisti federati</div>
-          <ul className={styles.rlist}><li>Tessera FIPaV obbligatoria</li><li><strong>Max 2 uomini tesserati</strong></li><li><strong>Min 1 componente femminile</strong></li><li>Allegare tessera federale</li><li>Max 12 squadre</li></ul>
-        </div>
-        <div className={styles.rbox}>
-          <span className={`${styles.rbadge} ${styles.rbL}`}>Libera</span>
-          <div className={styles.rtitle}>Senza tesserati</div>
-          <ul className={styles.rlist}><li>Nessuna tessera richiesta</li><li><strong>Nessun vincolo di genere</strong></li><li>Aperta a tutti</li><li>Documento identità richiesto</li><li>Max 12 squadre</li></ul>
-        </div>
+
+      <div className={styles.divider} />
+
+      {/* Contesto festival */}
+      <div className={styles.slabel}>Tangher Fest 2026</div>
+      <h2 className={styles.h2}>Tre giorni di <span>Festa</span></h2>
+      <p className={styles.lead}>
+        Il Green Volley è il cuore sportivo della <strong>Tangher Fest</strong>,
+        il festival estivo di Segonzano che unisce musica live, gastronomia locale
+        e sport nella splendida cornice della Val di Cembra.
+      </p>
+
+      <div className={styles.atmosGrid}>
+        {ATMOSFERA.map(x => (
+          <div key={x.title} className={styles.atmosCard}>
+            <div className={styles.atmosIcon}>{x.icon}</div>
+            <div className={styles.atmosTitle}>{x.title}</div>
+            <div className={styles.atmosDesc}>{x.desc}</div>
+          </div>
+        ))}
       </div>
-      <div className={styles.divider}/>
-      <div className={styles.slabel}>Categorie</div>
-      <h2 className={styles.h2}>I livelli di <span>Gioco</span></h2>
-      <p className={styles.lead}>Inserisci la categoria reale — garantisce un torneo <strong>equilibrato e divertente</strong>.</p>
-      <div className={styles.catGrid}>
-        {CATEGORIE.slice(1).map(c=><div key={c.value} className={styles.catCard}><span>🏅</span><span className={styles.catLbl}>{c.label}</span></div>)}
+
+      <div className={styles.divider} />
+
+      {/* Location */}
+      <div className={styles.slabel}>Come raggiungerci</div>
+      <h2 className={styles.h2}>Segonzano, <span>Val di Cembra</span></h2>
+      <p className={styles.lead}>
+        Siamo a <strong>Loc. Doss Venticcia</strong>, nel comune di Segonzano.
+        Facilmente raggiungibile in auto da Trento in circa 30 minuti lungo la Val di Cembra.
+      </p>
+
+      <div className={styles.locationCard}>
+        {[
+          { icon: '📍', title: 'Indirizzo',    val: 'Loc. Doss Venticcia · Segonzano (TN)' },
+          { icon: '🚗', title: 'In auto',       val: 'SS47 da Trento → SP11 verso Segonzano · ~30 min' },
+          { icon: '🅿️', title: 'Parcheggio',   val: 'Disponibile in loco, gratuito' },
+        ].map(r => (
+          <div key={r.title} className={styles.locationRow}>
+            <span className={styles.locationIcon}>{r.icon}</span>
+            <div>
+              <div className={styles.locationTitle}>{r.title}</div>
+              <div className={styles.locationVal}>{r.val}</div>
+            </div>
+          </div>
+        ))}
       </div>
+
+      {/* CTA */}
+      <div className={styles.cta}>
+        <div className={styles.ctaTitle}>Pronto a scendere in campo?</div>
+        <p className={styles.ctaTxt}>Iscriviti ora — i posti sono limitati a 24 squadre totali.</p>
+        <button className={styles.ctaBtn} onClick={onCta}>Iscriviti al Torneo →</button>
+      </div>
+
     </div>
   )
 }

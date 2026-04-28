@@ -37,6 +37,7 @@ export const mkGiocatore = (genere = 'M') => ({
   tutoreNome:      '',
   tutoreCognome:   '',
   tutoreCF:        '',
+  tutoreEmail:     '',
   tutoreFileName:  '',
   tutoreFileObj:   null,
   tutoreFileErr:   '',

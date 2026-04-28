@@ -1,0 +1,51 @@
+.wrap { padding: 2.5rem 0 4rem; }
+.slabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--mg2); margin-bottom: .5rem; }
+.h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.8rem,6vw,3rem); text-transform: uppercase; margin-bottom: .75rem; color: #fff; }
+.h2 span { color: var(--mg2); }
+.lead { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,.65); margin-bottom: 1.75rem; }
+.lead strong { color: rgba(255,255,255,.95); }
+.divider { height: 1px; background: linear-gradient(90deg,transparent,rgba(204,56,190,.35),transparent); margin: 2.5rem 0; }
+
+/* Regole squadre */
+.rulesGrid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: .9rem; }
+.rbox { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 1.2rem; }
+.rbadge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: 3px 10px; border-radius: 20px; border: 1px solid; margin-bottom: .6rem; }
+.rbT { background: rgba(139,48,204,.25); border-color: rgba(139,48,204,.48); color: #D080FF; }
+.rbL { background: rgba(112,202,255,.12); border-color: rgba(112,202,255,.3); color: var(--sky); }
+.rtitle { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.88); margin-bottom: .7rem; line-height: 1.3; }
+.rlist { padding-left: 1rem; font-size: 12.5px; line-height: 2.1; color: rgba(255,255,255,.6); }
+.rlist strong { color: rgba(255,255,255,.92); }
+
+/* Honesty banner */
+.honesty { display: flex; align-items: flex-start; gap: .75rem; background: rgba(255,217,122,.06); border: 1px solid rgba(255,217,122,.2); border-radius: 10px; padding: .85rem 1rem; font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.6; margin-bottom: 1rem; }
+.honestyIcon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.honesty strong { color: var(--gold); }
+
+/* Categorie */
+.catGrid { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: .55rem; margin-bottom: 1rem; }
+.catCard { display: flex; align-items: center; gap: .6rem; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: .7rem .9rem; }
+.catLbl { font-size: 13px; font-weight: 500; color: #fff; }
+
+/* Steps formato */
+.steps { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1rem; }
+.step { display: flex; align-items: flex-start; gap: 1rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.1rem; }
+.stepNum { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.8rem; color: var(--mg2); line-height: 1; flex-shrink: 0; width: 28px; }
+.stepTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: #fff; margin-bottom: .2rem; }
+.stepDesc { font-size: 12.5px; color: rgba(255,255,255,.55); line-height: 1.55; }
+
+/* Documenti */
+.docsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; margin-bottom: 1rem; }
+.docCard { display: flex; align-items: flex-start; gap: .75rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: .9rem 1rem; }
+.docIcon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.docTitle { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.9); margin-bottom: .2rem; }
+.docDesc { font-size: 12px; color: rgba(255,255,255,.45); line-height: 1.5; }
+
+/* FAQ */
+.faqList { display: flex; flex-direction: column; gap: .55rem; }
+.faqItem { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.1rem; }
+.faqQ { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,.9); margin-bottom: .4rem; }
+.faqA { font-size: 13px; color: rgba(255,255,255,.52); line-height: 1.65; }
+
+@media (max-width: 500px) {
+  .rulesGrid, .docsGrid { grid-template-columns: 1fr; }
+}

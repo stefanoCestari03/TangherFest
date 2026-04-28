@@ -1,6 +1,12 @@
 import { FORMATI_OK, MAX_FILE_MB } from './constants'
 import { isMinorenne, calcolaEta } from './helpers'
 
+function validateEmailStr(email) {
+  if (!email?.trim()) return 'Campo obbligatorio'
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) return 'Email non valida'
+  return null
+}
+
 export function validateFile(file) {
   if (!file) return null
   if (!FORMATI_OK.includes(file.type))
@@ -39,7 +45,7 @@ export function validateDataNascita(data) {
   return null
 }
 
-export function validateForm(form, squadreEsistenti) {
+export function validateForm(form, squadreEsistenti, aggiungiQuarto = false) {
   const errors  = {}
   const globals = []
 
@@ -50,8 +56,8 @@ export function validateForm(form, squadreEsistenti) {
   if (!form.referente.trim())
     errors.referente = 'Campo obbligatorio'
 
-  if (!form.email.trim() || !form.email.includes('@'))
-    errors.email = 'Email non valida'
+  const errEmail = validateEmailStr(form.email)
+  if (errEmail) errors.email = errEmail
 
   if (!form.telefono.trim())
     errors.telefono = 'Campo obbligatorio'
@@ -85,9 +91,8 @@ export function validateForm(form, squadreEsistenti) {
   })
 
   form.giocatori.forEach((g, i) => {
-    const obbligatorio = i < 3
-    const attivo = i < 3 || g.nome.trim() || g.cognome.trim() || g.codiceFiscale.trim()
-    if (!attivo) return // 4° giocatore non compilato → skip
+    const attivo = i < 3 || (i === 3 && aggiungiQuarto)
+    if (!attivo) return
 
     const pre = `g${i}`
     const minore = isMinorenne(g.dataNascita)
@@ -154,6 +159,8 @@ export function validateForm(form, squadreEsistenti) {
       if (!g.tutoreCognome.trim()) errors[`${pre}_tcog`]   = 'Obbligatorio'
       const errTCF = validateCF(g.tutoreCF)
       if (errTCF) errors[`${pre}_tcf`] = errTCF
+      const errTEmail = validateEmailStr(g.tutoreEmail)
+      if (errTEmail) errors[`${pre}_temail`] = errTEmail
       if (!g.tutoreFileObj && !g.tutoreFileName)
         errors[`${pre}_tdoc`] = 'Documento genitore obbligatorio'
       if (g.tutoreFileErr) errors[`${pre}_tdoc`] = g.tutoreFileErr

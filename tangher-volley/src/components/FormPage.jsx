@@ -8,20 +8,37 @@ import PlayerCard from './PlayerCard'
 import styles     from './FormPage.module.css'
 
 export default function FormPage({ squadre, onSuccess }) {
-  const [form,   setForm]   = useState(initForm())
-  const [status, setStatus] = useState('idle')
-  const [errors, setErrors] = useState({})
-  const [gErrs,  setGErrs]  = useState([])
+  const [form,           setForm]          = useState(initForm())
+  const [status,         setStatus]        = useState('idle')
+  const [errors,         setErrors]        = useState({})
+  const [gErrs,          setGErrs]         = useState([])
+  const [aggiungiQuarto, setAggiungiQuarto] = useState(false)
 
   const isTess   = form.tipo === 'tesserata'
   const tessFull = squadre.filter(s => s.tipo === 'tesserata').length >= MAX_TESSERATI
   const libFull  = squadre.filter(s => s.tipo === 'libera').length    >= MAX_LIBERE
   const curFull  = isTess ? tessFull : libFull
 
-  // Il 4° giocatore è "attivo" se ha qualcosa compilato
-  const quarto4Attivo = !!(form.giocatori[3]?.nome.trim() || form.giocatori[3]?.cognome.trim() || form.giocatori[3]?.codiceFiscale?.trim())
-
   const setField = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  const handleToggleQuarto = (e) => {
+    const on = e.target.checked
+    setAggiungiQuarto(on)
+    if (!on) {
+      setForm(f => ({
+        ...f,
+        giocatori: f.giocatori.map((g, i) =>
+          i === 3 ? { ...mkGiocatore('M'), facoltativo: true } : g
+        ),
+      }))
+      // Pulisce eventuali errori del 4° giocatore
+      setErrors(prev => {
+        const next = { ...prev }
+        Object.keys(next).filter(k => k.startsWith('g3')).forEach(k => delete next[k])
+        return next
+      })
+    }
+  }
 
   const setGiocatore = (idx, k, v) =>
     setForm(f => ({
@@ -36,13 +53,14 @@ export default function FormPage({ squadre, onSuccess }) {
         ? [mkGiocatore('M'), mkGiocatore('M'), mkGiocatore('F'), { ...mkGiocatore('M'), facoltativo: true }]
         : [mkGiocatore('M'), mkGiocatore('M'), mkGiocatore('M'), { ...mkGiocatore('M'), facoltativo: true }]
     }))
+    setAggiungiQuarto(false)
     setErrors({})
     setGErrs([])
   }
 
   const handleSubmit = async () => {
     if (curFull) { setGErrs(['Posti esauriti per questa categoria.']); return }
-    const { errors: errs, globals, isValid } = validateForm(form, squadre)
+    const { errors: errs, globals, isValid } = validateForm(form, squadre, aggiungiQuarto)
     setErrors(errs)
     setGErrs(globals)
     if (!isValid) {
@@ -61,7 +79,7 @@ export default function FormPage({ squadre, onSuccess }) {
 
       for (let i = 0; i < form.giocatori.length; i++) {
         const g = form.giocatori[i]
-        if (i === 3 && !quarto4Attivo) { docs.push(null); continue }
+        if (i === 3 && !aggiungiQuarto) { docs.push(null); continue }
 
         // Documento principale
         if (g.fileObj) {
@@ -95,7 +113,7 @@ export default function FormPage({ squadre, onSuccess }) {
         telefono:          form.telefono.trim(),
         tipo:              form.tipo,
         giocatori: form.giocatori.map((g, i) => {
-          if (i === 3 && !quarto4Attivo) return null
+          if (i === 3 && !aggiungiQuarto) return null
           return {
             nome:           g.nome.trim(),
             cognome:        g.cognome.trim(),
@@ -154,7 +172,7 @@ export default function FormPage({ squadre, onSuccess }) {
         al torneo la <strong>firma autografa sul modulo cartaceo</strong>.
       </div>
       <button className={styles.resetBtn}
-        onClick={() => { setForm(initForm()); setStatus('idle'); setErrors({}); setGErrs([]) }}>
+        onClick={() => { setForm(initForm()); setStatus('idle'); setErrors({}); setGErrs([]); setAggiungiQuarto(false) }}>
         Iscriviti con un'altra squadra
       </button>
     </div>
@@ -245,7 +263,8 @@ export default function FormPage({ squadre, onSuccess }) {
           Giocatori
           <span className={styles.cardSub}>3 obbligatori · 1 facoltativo (riserva)</span>
         </div>
-        {form.giocatori.map((g, i) => (
+
+        {form.giocatori.slice(0, 3).map((g, i) => (
           <PlayerCard
             key={i}
             idx={i}
@@ -253,9 +272,39 @@ export default function FormPage({ squadre, onSuccess }) {
             isTesserata={isTess}
             onChange={setGiocatore}
             errors={errors}
-            abilitato={i < 3 || quarto4Attivo}
+            abilitato={true}
           />
         ))}
+
+        {/* Toggle 4° giocatore */}
+        <div className={`${styles.addFourthWrap} ${aggiungiQuarto ? styles.addFourthActive : ''}`}>
+          <label className={styles.addFourthLabel}>
+            <input
+              type="checkbox"
+              className={styles.addFourthCheck}
+              checked={aggiungiQuarto}
+              onChange={handleToggleQuarto}
+            />
+            <span className={`${styles.addFourthBox} ${aggiungiQuarto ? styles.addFourthBoxOn : ''}`}>
+              {aggiungiQuarto ? '✓' : '+'}
+            </span>
+            <div>
+              <span className={styles.addFourthTitle}>Aggiungi 4° giocatore</span>
+              <span className={styles.addFourthSub}> — riserva facoltativa</span>
+            </div>
+          </label>
+        </div>
+
+        {aggiungiQuarto && (
+          <PlayerCard
+            idx={3}
+            giocatore={form.giocatori[3]}
+            isTesserata={isTess}
+            onChange={setGiocatore}
+            errors={errors}
+            abilitato={true}
+          />
+        )}
       </div>
 
       {gErrs.length > 0 && (

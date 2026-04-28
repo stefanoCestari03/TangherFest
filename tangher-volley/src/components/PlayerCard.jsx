@@ -69,7 +69,7 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
     set('tutoreFileObj', file); set('tutoreFileName', file.name); set('tutoreFileErr', err || '')
   }
 
-  const docLabel = isTesserata && idx < 2 ? 'Tessera federale' : 'Documento identità'
+  const docLabel = 'Documento di identità'
 
   return (
     <div className={`${styles.card} ${!abilitato ? styles.cardDisabled : ''}`}>
@@ -254,6 +254,14 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
                 maxLength={16}
                 value={g.tutoreCF} onChange={e => set('tutoreCF', e.target.value.toUpperCase())} />
               {errors[`${pre}_tcf`] && <span className={styles.ferr}>{errors[`${pre}_tcf`]}</span>}
+            </div>
+
+            <div className={styles.fg}>
+              <label className={styles.lbl}>Email genitore/tutore *</label>
+              <input className={`${styles.input} ${errors[`${pre}_temail`] ? styles.ef : ''}`}
+                type="email" placeholder="genitore@email.it"
+                value={g.tutoreEmail} onChange={e => set('tutoreEmail', e.target.value)} />
+              {errors[`${pre}_temail`] && <span className={styles.ferr}>{errors[`${pre}_temail`]}</span>}
             </div>
 
             <UploadField
