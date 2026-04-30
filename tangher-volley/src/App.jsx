@@ -12,7 +12,7 @@ import styles      from './App.module.css'
 export default function App() {
   const [tab,     setTab]     = useState('info')
   const [squadre, setSquadre] = useState([])
-  const [musicOn,   setMusicOn]   = useState(false)
+  const [musicOn,   setMusicOn]   = useState(true)
   const [showHint,  setShowHint]  = useState(false)
   const navRef      = useRef()
   const audioRef    = useRef(null)
@@ -44,9 +44,8 @@ export default function App() {
       document.removeEventListener('touchstart', tryPlay)
     }
 
-    // Prova autoplay immediato
+    // Prova autoplay immediato; se bloccato aspetta il primo gesto
     audio.play().then(onPlay).catch(() => {
-      // Bloccato: aspetta primo gesto utente
       document.addEventListener('click',      tryPlay)
       document.addEventListener('touchstart', tryPlay)
     })
