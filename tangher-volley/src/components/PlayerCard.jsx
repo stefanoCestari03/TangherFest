@@ -196,16 +196,6 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
             </CheckboxField>
 
             <CheckboxField
-              id={`${pre}_med`}
-              checked={g.accettaCertMedico}
-              onChange={v => set('accettaCertMedico', v)}
-              error={errors[`${pre}_med`]}
-            >
-              Dichiaro di essere in possesso di <strong>certificato medico sportivo valido</strong> per la
-              pratica del volley non agonistico.
-            </CheckboxField>
-
-            <CheckboxField
               id={`${pre}_media`}
               checked={g.consensoMedia}
               onChange={v => set('consensoMedia', v)}

@@ -149,8 +149,6 @@ export function validateForm(form, squadreEsistenti, aggiungiQuarto = false) {
     if (!minore) {
       if (!g.accettaRegolamento)
         errors[`${pre}_reg`] = 'Accettazione obbligatoria'
-      if (!g.accettaCertMedico)
-        errors[`${pre}_med`] = 'Accettazione obbligatoria'
     }
 
     // ── Campi minorenni ──────────────────────────────────

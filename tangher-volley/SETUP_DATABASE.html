@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Setup Database – TangherFest Green Volley 3×3</title>
+<style>
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.6; color: #1a1a1a; max-width: 900px; margin: 0 auto; padding: 40px 50px; }
+  h1 { font-size: 26pt; color: #2c0a4e; border-bottom: 3px solid #8B30CC; padding-bottom: 10px; margin-bottom: 6px; }
+  h2 { font-size: 17pt; color: #5B20AA; border-left: 5px solid #CC38BE; padding-left: 12px; margin-top: 40px; }
+  h3 { font-size: 13pt; color: #3a0a5e; margin-top: 24px; }
+  h4 { font-size: 11pt; color: #5B20AA; margin-top: 16px; }
+  .subtitle { font-size: 13pt; color: #666; margin-bottom: 30px; }
+  .version { font-size: 9pt; color: #999; margin-bottom: 40px; border: 1px solid #ddd; padding: 8px 14px; border-radius: 4px; display: inline-block; }
+  p { margin: 0 0 10px; }
+  ul, ol { margin: 6px 0 14px 22px; }
+  li { margin-bottom: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 9.5pt; background: #f4f0fa; padding: 1px 5px; border-radius: 3px; color: #5B20AA; }
+  pre { font-family: 'Courier New', monospace; font-size: 9pt; background: #1a0530; color: #e8d8ff; padding: 18px 20px; border-radius: 8px; overflow-x: auto; margin: 12px 0 18px; line-height: 1.55; border-left: 4px solid #CC38BE; }
+  pre .comment { color: #8a6fa0; font-style: italic; }
+  pre .keyword { color: #FF70E8; }
+  pre .string { color: #FFD97A; }
+  pre .type { color: #70CAFF; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: 10pt; }
+  th { background: #2c0a4e; color: #fff; padding: 8px 12px; text-align: left; }
+  td { padding: 7px 12px; border-bottom: 1px solid #e0d4f0; vertical-align: top; }
+  tr:nth-child(even) td { background: #faf5ff; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 9pt; font-weight: bold; }
+  .badge-green  { background: #d4f5e2; color: #1a6b3a; }
+  .badge-yellow { background: #fff3cc; color: #7a5800; }
+  .badge-red    { background: #ffe0e0; color: #8b0000; }
+  .badge-blue   { background: #d8eeff; color: #005b8e; }
+  .callout { border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 10.5pt; }
+  .callout-info    { background: #e8f4ff; border-left: 4px solid #2196F3; }
+  .callout-warn    { background: #fffbe6; border-left: 4px solid #FFC107; }
+  .callout-success { background: #e8f5e9; border-left: 4px solid #4CAF50; }
+  .callout-danger  { background: #fce4e4; border-left: 4px solid #f44336; }
+  .step { display: flex; gap: 14px; align-items: flex-start; margin: 12px 0; }
+  .step-num { background: #8B30CC; color: #fff; font-weight: bold; font-size: 12pt; min-width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-body { flex: 1; }
+  .page-break { page-break-before: always; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 30px 0; }
+  .toc { background: #faf5ff; border: 1px solid #d0b8f0; border-radius: 8px; padding: 16px 22px; margin: 24px 0; }
+  .toc h3 { margin-top: 0; color: #5B20AA; font-size: 12pt; }
+  .toc ol { margin-bottom: 0; }
+  .toc li { margin-bottom: 3px; font-size: 10.5pt; }
+  .schema-field { font-family: 'Courier New', monospace; font-size: 9pt; }
+  .recommended { background: #fff3cd; border: 2px solid #FFC107; border-radius: 6px; padding: 8px 14px; font-weight: bold; font-size: 10pt; display: inline-block; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<h1>Setup Database</h1>
+<div class="subtitle">TangherFest Green Volley 3×3 — Guida completa alla progettazione e configurazione</div>
+<div class="version">
+  Versione documento: 1.1 &nbsp;|&nbsp; Data: Aprile 2026 &nbsp;|&nbsp; Progetto: tangher-volley &nbsp;|&nbsp; <em>v1.1: rimosso accettaCertMedico</em>
+</div>
+
+<div class="toc">
+  <h3>Indice</h3>
+  <ol>
+    <li>Contesto e requisiti del progetto</li>
+    <li>Confronto soluzioni database</li>
+    <li>Perché Supabase — motivazione dettagliata</li>
+    <li>Schema del database — due opzioni a confronto</li>
+    <li>Guida passo-passo: creazione progetto Supabase</li>
+    <li>SQL Scripts completi</li>
+    <li>Row Level Security (RLS)</li>
+    <li>Configurazione Storage (documenti di identità)</li>
+    <li>Variabili d'ambiente e connessione al codice</li>
+    <li>Realtime e subscription</li>
+    <li>Checklist finale pre-lancio</li>
+    <li>Modificare le tabelle dopo la creazione</li>
+  </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>1. Contesto e requisiti del progetto</h2>
+
+<p>Il sito <strong>TangherFest Green Volley 3×3</strong> è un'applicazione React/Vite che gestisce le iscrizioni al torneo di beach volley. Il database deve supportare:</p>
+
+<ul>
+  <li><strong>Iscrizione squadre</strong> con dati di tutti i giocatori (3 obbligatori + 1 facoltativo)</li>
+  <li><strong>Upload documenti</strong>: documento di identità di ogni giocatore, eventuale tessera FIPaV, documento del tutore per i minorenni</li>
+  <li><strong>Consensi digitali con valore legale</strong>: timestamp, IP, versione documento, user-agent</li>
+  <li><strong>Aggiornamenti in tempo reale</strong>: la pagina Squadre si aggiorna automaticamente quando arriva una nuova iscrizione</li>
+  <li><strong>Limite posti</strong>: 12 squadre tesseratem + 12 libere (max 24 totali)</li>
+  <li>Accesso in <strong>sola lettura pubblico</strong> alla lista squadre; scrittura solo tramite form di iscrizione</li>
+</ul>
+
+<h3>Volumi attesi</h3>
+<table>
+  <tr><th>Dato</th><th>Stima</th></tr>
+  <tr><td>Squadre totali</td><td>Max 24</td></tr>
+  <tr><td>Giocatori totali</td><td>Max ~96 (24 × 4)</td></tr>
+  <tr><td>Documenti caricati (file)</td><td>Max ~200 file, ~500MB totali</td></tr>
+  <tr><td>Letture giornaliere (utenti che visitano la pagina)</td><td>~500–2.000</td></tr>
+  <tr><td>Scritture (iscrizioni)</td><td>24 in tutto il periodo</td></tr>
+  <tr><td>Connessioni realtime simultanee</td><td>~50–100 durante picco</td></tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Nota:</strong> Per questi volumi qualsiasi soluzione modern-cloud va bene. La scelta va guidata da <em>funzionalità integrate</em>, non da scalabilità.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>2. Confronto soluzioni database</h2>
+
+<table>
+  <tr>
+    <th>Soluzione</th>
+    <th>Tipo DB</th>
+    <th>Realtime</th>
+    <th>File Storage</th>
+    <th>Auth</th>
+    <th>Free Tier</th>
+    <th>Già integrato</th>
+    <th>Complessità</th>
+  </tr>
+  <tr>
+    <td><strong>Supabase</strong></td>
+    <td>PostgreSQL</td>
+    <td><span class="badge badge-green">✓ Sì</span></td>
+    <td><span class="badge badge-green">✓ Sì</span></td>
+    <td><span class="badge badge-green">✓ Sì</span></td>
+    <td>500MB DB, 1GB storage, 50k req/mese</td>
+    <td><span class="badge badge-green">✓ Già nel codice</span></td>
+    <td><span class="badge badge-green">Bassa</span></td>
+  </tr>
+  <tr>
+    <td><strong>Firebase</strong></td>
+    <td>NoSQL (Firestore)</td>
+    <td><span class="badge badge-green">✓ Sì</span></td>
+    <td><span class="badge badge-green">✓ Sì</span></td>
+    <td><span class="badge badge-green">✓ Sì</span></td>
+    <td>1GB Firestore, 5GB storage</td>
+    <td><span class="badge badge-red">✗ Da integrare</span></td>
+    <td><span class="badge badge-yellow">Media</span></td>
+  </tr>
+  <tr>
+    <td><strong>Neon</strong></td>
+    <td>PostgreSQL serverless</td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td>512MB DB</td>
+    <td><span class="badge badge-red">✗ Da integrare</span></td>
+    <td><span class="badge badge-yellow">Alta</span></td>
+  </tr>
+  <tr>
+    <td><strong>PlanetScale</strong></td>
+    <td>MySQL serverless</td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td>5GB DB</td>
+    <td><span class="badge badge-red">✗ Da integrare</span></td>
+    <td><span class="badge badge-yellow">Alta</span></td>
+  </tr>
+  <tr>
+    <td><strong>Railway</strong></td>
+    <td>PostgreSQL</td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td><span class="badge badge-red">✗ No</span></td>
+    <td>$5 crediti/mese</td>
+    <td><span class="badge badge-red">✗ Da integrare</span></td>
+    <td><span class="badge badge-yellow">Alta</span></td>
+  </tr>
+  <tr>
+    <td><strong>MongoDB Atlas</strong></td>
+    <td>NoSQL (Document)</td>
+    <td><span class="badge badge-yellow">~ Change Streams</span></td>
+    <td><span class="badge badge-red">✗ No nativo</span></td>
+    <td><span class="badge badge-yellow">~ App Services</span></td>
+    <td>512MB cluster</td>
+    <td><span class="badge badge-red">✗ Da integrare</span></td>
+    <td><span class="badge badge-yellow">Media</span></td>
+  </tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>3. Perché Supabase — motivazione dettagliata</h2>
+
+<p>Supabase è la scelta ottimale per questo progetto per 6 ragioni concrete:</p>
+
+<ol>
+  <li>
+    <strong>Già integrato nel codice</strong> — <code>src/lib/supabase.js</code>, <code>src/lib/db.js</code> e la subscription realtime sono già scritti. Attivarlo richiede solo le variabili d'ambiente.
+  </li>
+  <li>
+    <strong>PostgreSQL = dati strutturati</strong> — Le iscrizioni al torneo sono dati fortemente strutturati (non documenti JSON arbitrari). PostgreSQL garantisce integrità referenziale, constraints, e query SQL potenti per reportistica.
+  </li>
+  <li>
+    <strong>Storage integrato</strong> — I documenti di identità e le tessere FIPaV vengono caricati direttamente nel bucket <code>volley-docs</code> di Supabase. Nessun servizio esterno (AWS S3, Cloudinary, ecc.).
+  </li>
+  <li>
+    <strong>Realtime out-of-the-box</strong> — La pagina Squadre si aggiorna in tempo reale via WebSocket quando arriva una nuova iscrizione, senza polling. Già implementato in <code>subscribeSquadre()</code>.
+  </li>
+  <li>
+    <strong>Row Level Security (RLS)</strong> — Regole di sicurezza a livello di riga direttamente nel DB. Lettura pubblica delle squadre (senza autenticazione), scrittura solo tramite la chiave anonima del form. Nessuna API custom da scrivere.
+  </li>
+  <li>
+    <strong>Free tier sufficiente</strong> — Per 24 squadre e un evento annuale, il tier gratuito di Supabase (500MB DB, 1GB storage, 50.000 richieste/mese) è abbondantemente sufficiente per anni.
+  </li>
+</ol>
+
+<div class="callout callout-warn">
+  <strong>Alternativa valida se già si usa Firebase:</strong> Firebase Firestore funzionerebbe bene per i dati e Firebase Storage per i documenti. Il realtime è nativo. Lo svantaggio è che i dati NoSQL rendono più difficile fare query come "tutti i giocatori di categoria Serie A" o creare report in Excel. Richiederebbe anche riscrivere tutto il layer <code>db.js</code>.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>4. Schema del database — due opzioni a confronto</h2>
+
+<h3>Opzione A — Schema JSONB (consigliata per il lancio)</h3>
+
+<div class="recommended">⭐ Consigliata per il lancio — zero modifiche al codice JS esistente</div>
+
+<p>Una sola tabella <code>squadre</code> con i giocatori salvati come array JSONB. Corrisponde esattamente alla struttura dati già usata nel codice React.</p>
+
+<h4>Struttura tabella squadre</h4>
+<table>
+  <tr><th>Colonna</th><th>Tipo PostgreSQL</th><th>Note</th></tr>
+  <tr><td class="schema-field">id</td><td>TEXT</td><td>Chiave primaria — ID alfanumerico generato lato client (es. <code>A3KF9B</code>)</td></tr>
+  <tr><td class="schema-field">nome_squadra</td><td>TEXT NOT NULL</td><td>Nome scelto dalla squadra, unico nel DB</td></tr>
+  <tr><td class="schema-field">referente</td><td>TEXT NOT NULL</td><td>Nome e cognome del contatto principale</td></tr>
+  <tr><td class="schema-field">email</td><td>TEXT NOT NULL UNIQUE</td><td>Email del referente, usata per verifica duplicati</td></tr>
+  <tr><td class="schema-field">telefono</td><td>TEXT NOT NULL</td><td>Telefono della squadra</td></tr>
+  <tr><td class="schema-field">tipo</td><td>TEXT NOT NULL</td><td>Enum soft: <code>'tesserata'</code> oppure <code>'libera'</code></td></tr>
+  <tr><td class="schema-field">giocatori</td><td>JSONB NOT NULL</td><td>Array JSON con i dati di tutti i giocatori (3–4 oggetti, vedi struttura sotto)</td></tr>
+  <tr><td class="schema-field">metadati</td><td>JSONB NOT NULL</td><td>Tracciabilità legale: timestamp, IP, versione documento, user-agent</td></tr>
+  <tr><td class="schema-field">creato_il</td><td>TIMESTAMPTZ NOT NULL</td><td>Data/ora iscrizione in UTC — default: <code>NOW()</code></td></tr>
+</table>
+
+<h4>Struttura JSON — ogni oggetto giocatore in <code>giocatori[]</code></h4>
+<pre>
+{
+  "nome":              "Marco",
+  "cognome":           "Rossi",
+  "dataNascita":       "1995-03-15",
+  "codiceFiscale":     "RSSMRC95C15A562Z",
+  "telefono":          "+39 333 1234567",
+  "genere":            "M",                       <span class="comment">// "M" | "F"</span>
+  "categoria":         "prima",                   <span class="comment">// vedi costanti</span>
+  "minorenne":         false,
+  "facoltativo":       false,                     <span class="comment">// true solo per il 4° giocatore</span>
+  "accettaRegolamento": true,
+  "consensoMedia":      false,
+  "doc":               "docs/A3KF9B_g1_carta.pdf", <span class="comment">// path in Supabase Storage</span>
+  "hasDoc":            true,
+  "tutore":            null                        <span class="comment">// oppure oggetto (vedi sotto)</span>
+}
+
+<span class="comment">// Se minorenne, tutore contiene:</span>
+{
+  "nome":    "Giuseppe",
+  "cognome": "Rossi",
+  "cf":      "RSSGPP70A01A562X",
+  "email":   "g.rossi@email.it",
+  "hasDoc":  true
+}
+</pre>
+
+<h4>Struttura JSON — metadati</h4>
+<pre>
+{
+  "timestamp":         "2026-05-10T14:32:00.000Z",
+  "ipAddress":         "93.35.123.45",
+  "versioneDocumento": "1.0",
+  "userAgent":         "Mozilla/5.0 ..."
+}
+</pre>
+
+<hr>
+
+<h3>Opzione B — Schema normalizzato (consigliata per il futuro)</h3>
+
+<p>Tre tabelle con relazioni FK. Permette query SQL avanzate ("quanti giocatori di Serie A sono iscritti?"), report in Excel, integrità referenziale completa. Richiede modifiche al layer <code>db.js</code>.</p>
+
+<h4>Diagramma relazioni</h4>
+<pre>
+squadre (1) ──────< giocatori (N)
+                       │
+                  tutori (0..1)
+</pre>
+
+<h4>Tabella: squadre</h4>
+<table>
+  <tr><th>Colonna</th><th>Tipo</th><th>Note</th></tr>
+  <tr><td class="schema-field">id</td><td>TEXT PK</td><td>ID alfanumerico generato lato client</td></tr>
+  <tr><td class="schema-field">nome_squadra</td><td>TEXT NOT NULL UNIQUE</td><td>Unique constraint — previene duplicati</td></tr>
+  <tr><td class="schema-field">referente</td><td>TEXT NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">email</td><td>TEXT NOT NULL UNIQUE</td><td></td></tr>
+  <tr><td class="schema-field">telefono</td><td>TEXT NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">tipo</td><td>squadra_tipo NOT NULL</td><td>ENUM custom: <code>'tesserata' | 'libera'</code></td></tr>
+  <tr><td class="schema-field">ip_address</td><td>TEXT</td><td>Metadato legale</td></tr>
+  <tr><td class="schema-field">user_agent</td><td>TEXT</td><td>Metadato legale</td></tr>
+  <tr><td class="schema-field">versione_documento</td><td>TEXT NOT NULL DEFAULT '1.0'</td><td></td></tr>
+  <tr><td class="schema-field">creato_il</td><td>TIMESTAMPTZ NOT NULL DEFAULT NOW()</td><td></td></tr>
+</table>
+
+<h4>Tabella: giocatori</h4>
+<table>
+  <tr><th>Colonna</th><th>Tipo</th><th>Note</th></tr>
+  <tr><td class="schema-field">id</td><td>SERIAL PK</td><td>Auto-incremento</td></tr>
+  <tr><td class="schema-field">squadra_id</td><td>TEXT NOT NULL REFERENCES squadre(id) ON DELETE CASCADE</td><td>FK con cascade delete</td></tr>
+  <tr><td class="schema-field">ordine</td><td>INT NOT NULL CHECK (ordine BETWEEN 1 AND 4)</td><td>Posizione nella squadra (1–3 obbligatori, 4 facoltativo)</td></tr>
+  <tr><td class="schema-field">nome</td><td>TEXT NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">cognome</td><td>TEXT NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">data_nascita</td><td>DATE NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">codice_fiscale</td><td>TEXT NOT NULL</td><td>Unique constraint globale — impedisce doppie iscrizioni</td></tr>
+  <tr><td class="schema-field">telefono</td><td>TEXT</td><td>Nullable per i minorenni</td></tr>
+  <tr><td class="schema-field">genere</td><td>CHAR(1) NOT NULL CHECK (genere IN ('M','F'))</td><td></td></tr>
+  <tr><td class="schema-field">categoria</td><td>TEXT NOT NULL</td><td>Valori: under16, under18, amatore, prima, serieD, serieC, serieB, serieA</td></tr>
+  <tr><td class="schema-field">minorenne</td><td>BOOLEAN NOT NULL DEFAULT FALSE</td><td>Calcolato al momento dell'iscrizione</td></tr>
+  <tr><td class="schema-field">facoltativo</td><td>BOOLEAN NOT NULL DEFAULT FALSE</td><td>TRUE solo per il 4° giocatore (riserva)</td></tr>
+  <tr><td class="schema-field">accetta_regolamento</td><td>BOOLEAN NOT NULL DEFAULT FALSE</td><td>Consenso obbligatorio — regolamento e scarico responsabilità</td></tr>
+  <tr><td class="schema-field">consenso_media</td><td>BOOLEAN DEFAULT FALSE</td><td>Facoltativo — autorizzazione foto/video</td></tr>
+  <tr><td class="schema-field">doc_path</td><td>TEXT</td><td>Path file in Supabase Storage</td></tr>
+  <tr><td class="schema-field">creato_il</td><td>TIMESTAMPTZ NOT NULL DEFAULT NOW()</td><td></td></tr>
+</table>
+
+<h4>Tabella: tutori</h4>
+<table>
+  <tr><th>Colonna</th><th>Tipo</th><th>Note</th></tr>
+  <tr><td class="schema-field">id</td><td>SERIAL PK</td><td></td></tr>
+  <tr><td class="schema-field">giocatore_id</td><td>INT NOT NULL UNIQUE REFERENCES giocatori(id) ON DELETE CASCADE</td><td>UNIQUE: un solo tutore per giocatore</td></tr>
+  <tr><td class="schema-field">nome</td><td>TEXT NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">cognome</td><td>TEXT NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">codice_fiscale</td><td>TEXT NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">email</td><td>TEXT NOT NULL</td><td></td></tr>
+  <tr><td class="schema-field">doc_path</td><td>TEXT</td><td>Path doc. identità tutore in Storage</td></tr>
+  <tr><td class="schema-field">creato_il</td><td>TIMESTAMPTZ NOT NULL DEFAULT NOW()</td><td></td></tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Conclusione:</strong> Per il lancio usa l'<strong>Opzione A</strong> (JSONB) — richiede zero modifiche al codice JS. Dopo il primo torneo, se vuoi query avanzate o reportistica, migra all'<strong>Opzione B</strong>.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page-break"></div>
+<h2>5. Guida passo-passo: creazione progetto Supabase</h2>
+
+<h3>Step 1 — Crea un account e un progetto</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">Vai su <strong>supabase.com</strong> e crea un account gratuito (puoi usare GitHub).</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">Clicca <strong>"New project"</strong>.</div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    Compila i campi:
+    <ul>
+      <li><strong>Name:</strong> <code>tangher-volley</code></li>
+      <li><strong>Database Password:</strong> Scegli una password sicura e salvala — non è recuperabile</li>
+      <li><strong>Region:</strong> <code>West EU (Ireland)</code> — il più vicino all'Italia</li>
+    </ul>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">Clicca <strong>"Create new project"</strong> e attendi ~2 minuti.</div>
+</div>
+
+<h3>Step 2 — Esegui gli SQL Scripts</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">Nel menu laterale di Supabase clicca <strong>"SQL Editor"</strong>.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">Clicca <strong>"New query"</strong>.</div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">Copia e incolla gli script SQL della sezione 6 di questo documento e premi <strong>"Run" (Ctrl+Enter)</strong>.</div>
+</div>
+
+<h3>Step 3 — Raccogli le credenziali</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">Nel menu clicca <strong>Settings → API</strong>.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    Copia e salva in un posto sicuro:
+    <ul>
+      <li><strong>Project URL</strong> (es. <code>https://abcdefgh.supabase.co</code>)</li>
+      <li><strong>anon / public key</strong> (stringa lunga che inizia con <code>eyJ...</code>)</li>
+    </ul>
+    <div class="callout callout-warn" style="margin-top:8px">
+      <strong>Non copiare mai la Service Role Key</strong> nel codice frontend — ha accesso completo e bypassa RLS.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>6. SQL Scripts completi</h2>
+
+<h3>Script 1 — Creazione tabella (Opzione A — JSONB)</h3>
+<p>Copia e incolla questo script nel SQL Editor di Supabase e premi Run.</p>
+<pre>
+<span class="comment">-- ════════════════════════════════════════════════════
+-- TangherFest Green Volley 3×3 — Schema database v1.0
+-- Opzione A: JSONB (consigliata per il lancio)
+-- ════════════════════════════════════════════════════</span>
+
+<span class="comment">-- Tabella principale: una riga = una squadra iscritta</span>
+CREATE TABLE IF NOT EXISTS <span class="type">squadre</span> (
+  id                  TEXT PRIMARY KEY,
+  "nomeSquadra"       TEXT NOT NULL,
+  referente           TEXT NOT NULL,
+  email               TEXT NOT NULL,
+  telefono            TEXT NOT NULL,
+  tipo                TEXT NOT NULL CHECK (tipo IN (<span class="string">'tesserata'</span>, <span class="string">'libera'</span>)),
+  giocatori           JSONB NOT NULL DEFAULT <span class="string">'[]'</span>,
+  metadati            JSONB NOT NULL DEFAULT <span class="string">'{}'</span>,
+  creato_il           TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+<span class="comment">-- Indici per velocizzare le query più comuni</span>
+CREATE UNIQUE INDEX IF NOT EXISTS idx_squadre_email
+  ON squadre (LOWER(email));
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_squadre_nome
+  ON squadre (LOWER("nomeSquadra"));
+
+<span class="comment">-- Indice GIN per query sui giocatori (es. cerca per CF)
+-- Utile se in futuro vuoi query come:
+-- WHERE giocatori @> '[{"codiceFiscale": "RSSMRC95C15A562Z"}]'</span>
+CREATE INDEX IF NOT EXISTS idx_squadre_giocatori
+  ON squadre USING GIN (giocatori);
+
+<span class="comment">-- View utile per contare i posti disponibili</span>
+CREATE OR REPLACE VIEW <span class="type">contatori_iscrizioni</span> AS
+SELECT
+  COUNT(*) FILTER (WHERE tipo = <span class="string">'tesserata'</span>) AS n_tesseratem,
+  COUNT(*) FILTER (WHERE tipo = <span class="string">'libera'</span>)    AS n_libere,
+  COUNT(*)                                     AS totale
+FROM squadre;
+</pre>
+
+<h3>Script 2 — Row Level Security (RLS)</h3>
+<pre>
+<span class="comment">-- ════════════════════════════════════════════════════
+-- Row Level Security — accesso controllato per ruolo
+-- ════════════════════════════════════════════════════</span>
+
+<span class="comment">-- Attiva RLS sulla tabella (obbligatorio per sicurezza)</span>
+ALTER TABLE <span class="type">squadre</span> ENABLE ROW LEVEL SECURITY;
+
+<span class="comment">-- Policy 1: lettura pubblica
+-- Chiunque può leggere le squadre iscritte (pagina Squadre del sito)</span>
+CREATE POLICY <span class="string">"Lettura pubblica squadre"</span>
+  ON squadre
+  FOR SELECT
+  TO anon, authenticated
+  USING (true);
+
+<span class="comment">-- Policy 2: inserimento tramite chiave anonima
+-- Il form di iscrizione usa la chiave "anon" per inviare nuove iscrizioni</span>
+CREATE POLICY <span class="string">"Inserimento iscrizioni"</span>
+  ON squadre
+  FOR INSERT
+  TO anon
+  WITH CHECK (true);
+
+<span class="comment">-- NOTA: Nessuna policy di UPDATE o DELETE per utenti anonimi.
+-- Le modifiche sono possibili solo dal pannello Supabase (service role).
+-- Se in futuro aggiungi un pannello admin, crea una policy
+-- per il ruolo "authenticated" con verifica email.</span>
+</pre>
+
+<h3>Script 3 — Storage bucket</h3>
+<pre>
+<span class="comment">-- ════════════════════════════════════════════════════
+-- Crea il bucket per i documenti caricati dagli utenti
+-- ════════════════════════════════════════════════════</span>
+
+<span class="comment">-- Crea il bucket (eseguire UNA SOLA VOLTA)</span>
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  <span class="string">'volley-docs'</span>,
+  <span class="string">'volley-docs'</span>,
+  false,                          <span class="comment">-- privato: i file non sono accessibili via URL pubblico</span>
+  5242880,                        <span class="comment">-- max 5MB per file</span>
+  ARRAY[<span class="string">'image/jpeg'</span>, <span class="string">'image/png'</span>, <span class="string">'application/pdf'</span>]
+);
+
+<span class="comment">-- Policy storage: solo upload anonimo (form di iscrizione)</span>
+CREATE POLICY <span class="string">"Upload documenti iscrizione"</span>
+  ON storage.objects
+  FOR INSERT
+  TO anon
+  WITH CHECK (bucket_id = <span class="string">'volley-docs'</span>);
+
+<span class="comment">-- Policy storage: lettura riservata agli admin (authenticated)
+-- Il pubblico NON può scaricare i documenti di identità altrui</span>
+CREATE POLICY <span class="string">"Lettura documenti solo admin"</span>
+  ON storage.objects
+  FOR SELECT
+  TO authenticated
+  USING (bucket_id = <span class="string">'volley-docs'</span>);
+</pre>
+
+<h3>Script 4 — Funzione Realtime</h3>
+<pre>
+<span class="comment">-- ════════════════════════════════════════════════════
+-- Attiva la pubblicazione realtime sulla tabella squadre
+-- ════════════════════════════════════════════════════</span>
+
+<span class="comment">-- Aggiunge la tabella squadre al canale realtime di Supabase</span>
+ALTER PUBLICATION supabase_realtime ADD TABLE squadre;
+
+<span class="comment">-- Verifica che sia attivo:</span>
+SELECT * FROM pg_publication_tables
+WHERE pubname = <span class="string">'supabase_realtime'</span>;
+</pre>
+
+<h3>Script 5 — Dati di test (opzionale)</h3>
+<pre>
+<span class="comment">-- ════════════════════════════════════════════════════
+-- Dati di test — squadra di esempio per verificare
+-- che tutto funzioni prima del lancio
+-- Eliminare prima del go-live!
+-- ════════════════════════════════════════════════════</span>
+
+INSERT INTO squadre (id, "nomeSquadra", referente, email, telefono, tipo, giocatori, metadati, creato_il)
+VALUES (
+  <span class="string">'TEST01'</span>,
+  <span class="string">'Aquile di Segonzano'</span>,
+  <span class="string">'Mario Bianchi'</span>,
+  <span class="string">'test@tangher.it'</span>,
+  <span class="string">'+39 333 1234567'</span>,
+  <span class="string">'tesserata'</span>,
+  <span class="string">'[
+    {"nome":"Marco","cognome":"Rossi","dataNascita":"1995-03-15","codiceFiscale":"RSSMRC95C15A562Z","genere":"M","categoria":"prima","minorenne":false,"facoltativo":false,"accettaRegolamento":true,"consensoMedia":false,"hasDoc":false,"doc":null,"tutore":null},
+    {"nome":"Luca","cognome":"Bianchi","dataNascita":"1998-07-22","codiceFiscale":"BNCLCU98L22B157K","genere":"M","categoria":"amatore","minorenne":false,"facoltativo":false,"accettaRegolamento":true,"consensoMedia":true,"hasDoc":false,"doc":null,"tutore":null},
+    {"nome":"Sara","cognome":"Verdi","dataNascita":"2000-11-05","codiceFiscale":"VRDSRA00S45A562P","genere":"F","categoria":"under18","minorenne":false,"facoltativo":false,"accettaRegolamento":true,"consensoMedia":false,"hasDoc":false,"doc":null,"tutore":null}
+  ]'</span>,
+  <span class="string">'{"timestamp":"2026-04-28T10:00:00.000Z","ipAddress":"127.0.0.1","versioneDocumento":"1.0","userAgent":"test"}'</span>,
+  NOW()
+);
+
+<span class="comment">-- Verifica inserimento:</span>
+SELECT id, "nomeSquadra", tipo, jsonb_array_length(giocatori) AS n_giocatori FROM squadre;
+</pre>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page-break"></div>
+<h2>7. Row Level Security — spiegazione approfondita</h2>
+
+<p>L'RLS (Row Level Security) di PostgreSQL permette di definire <strong>chi può leggere e scrivere ogni riga</strong> direttamente nel database, senza dipendere dalla logica dell'applicazione.</p>
+
+<h3>Architettura di accesso per questo progetto</h3>
+<table>
+  <tr><th>Operazione</th><th>Chi</th><th>Come</th><th>Policy</th></tr>
+  <tr>
+    <td>Leggere le squadre iscritte</td>
+    <td>Qualsiasi visitatore</td>
+    <td>chiave <code>anon</code></td>
+    <td>SELECT → <code>USING (true)</code></td>
+  </tr>
+  <tr>
+    <td>Iscrivere una squadra</td>
+    <td>Form di iscrizione (frontend)</td>
+    <td>chiave <code>anon</code></td>
+    <td>INSERT → <code>WITH CHECK (true)</code></td>
+  </tr>
+  <tr>
+    <td>Modificare/eliminare un'iscrizione</td>
+    <td>Solo amministratori</td>
+    <td>Pannello Supabase (service role)</td>
+    <td>Nessuna policy pubblica</td>
+  </tr>
+  <tr>
+    <td>Scaricare i documenti</td>
+    <td>Solo amministratori</td>
+    <td>Pannello Supabase o API autenticata</td>
+    <td>Storage: solo <code>authenticated</code></td>
+  </tr>
+</table>
+
+<div class="callout callout-danger">
+  <strong>Importante:</strong> Senza abilitare RLS (<code>ENABLE ROW LEVEL SECURITY</code>), la tabella è completamente aperta. Con RLS attivo ma <em>senza policy</em>, la tabella è completamente chiusa. Le policy vanno create dopo aver abilitato RLS.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>8. Configurazione Storage</h2>
+
+<p>Il bucket <code>volley-docs</code> conterrà tutti i documenti caricati dai partecipanti. La struttura dei path è:</p>
+
+<pre>
+volley-docs/
+  docs/
+    {id-squadra}_g1_{nome-file}            <span class="comment">← documento giocatore 1</span>
+    {id-squadra}_g2_{nome-file}            <span class="comment">← documento giocatore 2</span>
+    {id-squadra}_g3_{nome-file}            <span class="comment">← documento giocatore 3</span>
+    {id-squadra}_g4_{nome-file}            <span class="comment">← documento giocatore 4 (se presente)</span>
+    {id-squadra}_g1_tutore_{nome-file}     <span class="comment">← documento tutore giocatore minorenne</span>
+    {id-squadra}_g2_tutore_{nome-file}     <span class="comment">← ecc.</span>
+</pre>
+
+<h3>Accesso ai documenti dal pannello Supabase</h3>
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">Vai su <strong>Storage</strong> nel menu laterale di Supabase.</div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">Clicca sul bucket <strong>volley-docs</strong> → cartella <strong>docs</strong>.</div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">Puoi scaricare ogni file cliccandoci sopra → <strong>"Download"</strong>.</div>
+</div>
+
+<div class="callout callout-info">
+  Il bucket è privato (<code>public: false</code>). Per generare un link temporaneo condivisibile usa l'API <code>supabase.storage.from('volley-docs').createSignedUrl(path, 3600)</code> dalla console Supabase o da uno script admin.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>9. Variabili d'ambiente e connessione al codice</h2>
+
+<h3>Passaggi per connettere il progetto React a Supabase</h3>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    Nella root del progetto esiste già il file <code>.env.example</code>. Crea il file <code>.env</code> copiandolo:
+    <pre>
+cp .env.example .env
+</pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    Apri <code>.env</code> e inserisci le credenziali copiate da <em>Supabase → Settings → API</em>:
+    <pre>
+VITE_SUPABASE_URL=https://xxxxxxxxxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+</pre>
+    <div class="callout callout-danger" style="margin-top:8px">
+      <strong>Non committare mai il file <code>.env</code> su Git.</strong> Il file <code>.gitignore</code> del progetto lo esclude già.
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    Il file <code>src/lib/supabase.js</code> legge queste variabili automaticamente:
+    <pre>
+<span class="comment">// src/lib/supabase.js — già configurato</span>
+const SUPABASE_URL      = import.meta.env.VITE_SUPABASE_URL
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+</pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    Il file <code>src/lib/db.js</code> è già completamente configurato per Supabase — usa direttamente le funzioni:
+    <ul>
+      <li><code>fetchSquadre()</code> — carica tutte le squadre ordinate per data</li>
+      <li><code>insertSquadra(squadra)</code> — inserisce una nuova iscrizione</li>
+      <li><code>uploadDoc(file, path)</code> — carica un documento nel bucket <code>volley-docs</code></li>
+      <li><code>subscribeSquadre(onInsert)</code> — sottoscrive agli aggiornamenti realtime</li>
+    </ul>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    Avvia il progetto e verifica che la connessione funzioni:
+    <pre>
+npm run dev
+</pre>
+    Apri il browser, vai alla tab <strong>"Squadre"</strong>: dovrebbe mostrare le squadre dal DB (o la schermata vuota se non ce ne sono ancora).
+  </div>
+</div>
+
+<h3>Variabili in produzione (deploy)</h3>
+<p>Se usi <strong>Vercel</strong> o <strong>Netlify</strong> per il deploy, aggiungi le stesse variabili d'ambiente nel pannello del servizio di hosting:</p>
+<ul>
+  <li><strong>Vercel:</strong> Dashboard → Project → Settings → Environment Variables</li>
+  <li><strong>Netlify:</strong> Site settings → Build &amp; deploy → Environment variables</li>
+</ul>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>10. Realtime — come funziona</h2>
+
+<p>Quando un utente è sulla pagina Squadre e qualcun altro invia un'iscrizione, la pagina si aggiorna automaticamente <strong>senza ricaricare</strong>. Ecco il flusso:</p>
+
+<pre>
+Utente A: compila il form e invia
+    │
+    ▼
+Supabase: INSERT INTO squadre (...)
+    │
+    ▼
+Postgres notifica il canale "public:squadre"
+    │
+    ▼
+Supabase Realtime WebSocket → broadcast a tutti i client connessi
+    │
+    ▼
+App.jsx: onInsert(nuovaSquadra) → setSquadre(prev => [...prev, nuova])
+    │
+    ▼
+React re-render → SquadrePage mostra la nuova squadra in tempo reale
+</pre>
+
+<p>La funzione <code>subscribeSquadre</code> in <code>src/lib/db.js</code> gestisce tutto questo. La subscription viene aperta al mount dell'app e chiusa all'unmount (cleanup automatico con <code>return unsubscribe</code> in <code>useEffect</code>).</p>
+
+<div class="callout callout-info">
+  <strong>Prerequisito realtime:</strong> La tabella deve essere aggiunta alla pubblicazione realtime di Supabase. Lo fa lo Script 4 di questo documento (<code>ALTER PUBLICATION supabase_realtime ADD TABLE squadre</code>).
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page-break"></div>
+<h2>11. Checklist finale pre-lancio</h2>
+
+<h3>Database</h3>
+<ul>
+  <li>☐ Progetto Supabase creato con regione <em>West EU (Ireland)</em></li>
+  <li>☐ Script 1 eseguito (tabella <code>squadre</code> + indici + view)</li>
+  <li>☐ Script 2 eseguito (RLS abilitato + policy lettura e inserimento)</li>
+  <li>☐ Script 3 eseguito (bucket <code>volley-docs</code> + policy storage)</li>
+  <li>☐ Script 4 eseguito (realtime abilitato sulla tabella)</li>
+  <li>☐ Script 5 eseguito con dati di test e verificato (poi <code>DELETE FROM squadre WHERE id = 'TEST01'</code>)</li>
+</ul>
+
+<h3>Codice</h3>
+<ul>
+  <li>☐ File <code>.env</code> creato con <code>VITE_SUPABASE_URL</code> e <code>VITE_SUPABASE_ANON_KEY</code></li>
+  <li>☐ File <code>.env</code> NON committato su Git (<code>.gitignore</code> lo esclude)</li>
+  <li>☐ <code>npm run dev</code> avviato senza errori in console</li>
+  <li>☐ Tab "Squadre" carica senza errori (rete o empty state)</li>
+  <li>☐ Form iscrizione: invio squadra di test e verifica comparsa in pagina Squadre</li>
+  <li>☐ Upload documento: verificato che il file appaia in Supabase Storage → volley-docs</li>
+</ul>
+
+<h3>Produzione</h3>
+<ul>
+  <li>☐ Variabili d'ambiente impostate nel pannello hosting (Vercel/Netlify)</li>
+  <li>☐ Deploy in produzione eseguito</li>
+  <li>☐ Test completo del flusso iscrizione su URL di produzione</li>
+  <li>☐ Dati di test eliminati dal DB prima del lancio</li>
+</ul>
+
+<h3>Sicurezza</h3>
+<ul>
+  <li>☐ RLS attivo e verificato (query diretta a <code>/rest/v1/squadre</code> restituisce dati solo se <code>SELECT</code> è consentito)</li>
+  <li>☐ Service role key <strong>mai esposta</strong> nel frontend</li>
+  <li>☐ Bucket <code>volley-docs</code> impostato come <strong>privato</strong></li>
+  <li>☐ URL Supabase nei CORS del progetto (Settings → API → CORS)</li>
+</ul>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<h2>12. Modificare le tabelle dopo la creazione</h2>
+
+<p><strong>Sì, puoi modificarle.</strong> PostgreSQL (e quindi Supabase) permette di alterare le tabelle in qualsiasi momento con il comando <code>ALTER TABLE</code>, eseguibile dal SQL Editor di Supabase senza dover ricreare nulla da zero.</p>
+
+<div class="callout callout-info">
+  <strong>Come accedere:</strong> Supabase → SQL Editor → New query → incolla il comando → Run.
+</div>
+
+<h3>Operazioni più comuni</h3>
+
+<h4>Aggiungere una colonna</h4>
+<pre>
+<span class="comment">-- Aggiunge una colonna opzionale alla tabella squadre</span>
+ALTER TABLE squadre
+  ADD COLUMN note TEXT;
+
+<span class="comment">-- Con valore di default per le righe esistenti</span>
+ALTER TABLE squadre
+  ADD COLUMN confermata BOOLEAN NOT NULL DEFAULT FALSE;
+</pre>
+
+<h4>Rinominare una colonna</h4>
+<pre>
+ALTER TABLE squadre
+  RENAME COLUMN "nomeSquadra" TO nome_squadra;
+
+<span class="comment">-- ATTENZIONE: dopo il rename devi aggiornare anche il codice JS
+-- in src/lib/db.js e src/components/ ovunque si usa il vecchio nome</span>
+</pre>
+
+<h4>Rimuovere una colonna</h4>
+<pre>
+<span class="comment">-- Elimina definitivamente la colonna e tutti i suoi dati</span>
+ALTER TABLE squadre
+  DROP COLUMN IF EXISTS note;
+</pre>
+
+<h4>Modificare il tipo di una colonna</h4>
+<pre>
+<span class="comment">-- Cambia il tipo (solo se i dati esistenti sono compatibili)</span>
+ALTER TABLE squadre
+  ALTER COLUMN telefono TYPE VARCHAR(20);
+</pre>
+
+<h4>Aggiungere un constraint (unicità, check)</h4>
+<pre>
+<span class="comment">-- Aggiunge vincolo unicità sul nome squadra (case-insensitive)</span>
+CREATE UNIQUE INDEX IF NOT EXISTS idx_squadre_nome
+  ON squadre (LOWER("nomeSquadra"));
+
+<span class="comment">-- Aggiunge check sul tipo</span>
+ALTER TABLE squadre
+  ADD CONSTRAINT chk_tipo CHECK (tipo IN ('tesserata', 'libera'));
+</pre>
+
+<h4>Aggiungere un indice per velocizzare le query</h4>
+<pre>
+<span class="comment">-- Indice sul campo tipo (utile per la query "conta le tesseratem")</span>
+CREATE INDEX IF NOT EXISTS idx_squadre_tipo ON squadre (tipo);
+
+<span class="comment">-- Indice GIN su JSONB (per query dentro l'array giocatori)</span>
+CREATE INDEX IF NOT EXISTS idx_squadre_giocatori
+  ON squadre USING GIN (giocatori);
+</pre>
+
+<h3>Cosa NON si può fare senza conseguenze</h3>
+<table>
+  <tr><th>Operazione</th><th>Rischio</th><th>Alternativa sicura</th></tr>
+  <tr>
+    <td>Rinominare una colonna usata nel codice JS</td>
+    <td>Il sito smette di funzionare finché non aggiorni anche il codice</td>
+    <td>Aggiorna prima il codice, poi esegui il rename</td>
+  </tr>
+  <tr>
+    <td><code>DROP COLUMN</code> con dati esistenti</td>
+    <td>Perdita permanente dei dati in quella colonna</td>
+    <td>Esporta i dati prima (Table Editor → Export CSV)</td>
+  </tr>
+  <tr>
+    <td>Cambiare tipo da TEXT a INT con valori non numerici</td>
+    <td>Errore PostgreSQL — impossibile castare</td>
+    <td>Crea nuova colonna, migra i dati, poi elimina la vecchia</td>
+  </tr>
+  <tr>
+    <td>Eliminare una tabella (<code>DROP TABLE</code>)</td>
+    <td>Perdita di tutti i dati — irreversibile</td>
+    <td>Rinomina la tabella come backup: <code>RENAME TO squadre_old</code></td>
+  </tr>
+</table>
+
+<div class="callout callout-success">
+  <strong>Consiglio pratico:</strong> Prima di modificare una tabella con dati reali, vai su <strong>Table Editor → squadre → Export</strong> e scarica un CSV di backup. Ci vogliono 5 secondi e ti salva da qualsiasi imprevisto.
+</div>
+
+<h3>Modifiche alle policy RLS</h3>
+<pre>
+<span class="comment">-- Per vedere le policy attive:</span>
+SELECT policyname, cmd, qual FROM pg_policies WHERE tablename = <span class="string">'squadre'</span>;
+
+<span class="comment">-- Per eliminare e ricreare una policy:</span>
+DROP POLICY IF EXISTS <span class="string">"Lettura pubblica squadre"</span> ON squadre;
+
+CREATE POLICY <span class="string">"Lettura pubblica squadre"</span>
+  ON squadre FOR SELECT TO anon, authenticated USING (true);
+</pre>
+
+<hr>
+
+<p style="font-size:9pt;color:#999;text-align:center">
+  TangherFest Green Volley 3×3 · SETUP_DATABASE.html · v1.0 · Aprile 2026<br>
+  Documento generato per uso interno — non distribuire
+</p>
+
+</body>
+</html>

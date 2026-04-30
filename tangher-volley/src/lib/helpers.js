@@ -30,9 +30,8 @@ export const mkGiocatore = (genere = 'M') => ({
   genere,
   categoria:   '',
   // Consensi maggiorenne
-  accettaRegolamento:    false,
-  accettaCertMedico:     false,
-  consensoMedia:         false,
+  accettaRegolamento: false,
+  consensoMedia:      false,
   // Dati tutore (minorenni)
   tutoreNome:      '',
   tutoreCognome:   '',
