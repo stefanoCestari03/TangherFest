@@ -1,4 +1,4 @@
-import { CATEGORIE } from '../lib/constants'
+import { CATEGORIE_TESSERATA, CATEGORIE_LIBERA } from '../lib/constants'
 import { validateFile } from '../lib/validators'
 import { isMinorenne, calcolaEta } from '../lib/helpers'
 import styles from './PlayerCard.module.css'
@@ -50,12 +50,13 @@ function CheckboxField({ id, checked, onChange, children, error }) {
 }
 
 export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, errors, abilitato }) {
-  const isF3    = isTesserata && idx === 2
-  const isMale  = isTesserata && idx < 2
-  const minore  = isMinorenne(g.dataNascita)
-  const eta     = calcolaEta(g.dataNascita)
-  const pre     = `g${idx}`
-  const fac     = idx === 3
+  const isF3      = isTesserata && idx === 2
+  const isMale    = isTesserata && idx < 2
+  const minore    = isMinorenne(g.dataNascita)
+  const eta       = calcolaEta(g.dataNascita)
+  const pre       = `g${idx}`
+  const fac       = idx === 3
+  const categorie = isTesserata ? CATEGORIE_TESSERATA : CATEGORIE_LIBERA
 
   const set = (k, v) => onChange(idx, k, v)
 
@@ -165,7 +166,7 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
             <label className={styles.lbl}>Categoria *</label>
             <select className={`${styles.select} ${errors[`${pre}_cat`] ? styles.ef : ''}`}
               value={g.categoria} onChange={e => set('categoria', e.target.value)}>
-              {CATEGORIE.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
+              {categorie.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
             </select>
             {errors[`${pre}_cat`] && <span className={styles.ferr}>{errors[`${pre}_cat`]}</span>}
           </div>

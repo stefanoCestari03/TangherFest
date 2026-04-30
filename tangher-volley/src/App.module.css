@@ -1,3 +1,45 @@
 .app{background:linear-gradient(160deg,#1A0535 0%,#2D0A5A 40%,#3A0A70 70%,#1A0535 100%);min-height:100vh;position:relative;}
 .gridBg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:52px 52px;}
 .wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 1.1rem;}
+
+.musicBtn {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 200;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(18, 4, 34, 0.82);
+  border: 1.5px solid rgba(204,56,190,.4);
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 18px rgba(204,56,190,.2);
+  transition: transform .15s, border-color .2s, box-shadow .2s;
+}
+.musicBtn:hover { transform: scale(1.1); border-color: var(--mg); box-shadow: 0 4px 24px rgba(204,56,190,.4); }
+.musicOn { border-color: var(--mg); box-shadow: 0 0 0 3px rgba(204,56,190,.18), 0 4px 20px rgba(204,56,190,.3); }
+
+.musicHint {
+  position: fixed;
+  bottom: 4.5rem;
+  right: 1.25rem;
+  z-index: 200;
+  background: rgba(18, 4, 34, 0.9);
+  border: 1px solid rgba(204,56,190,.4);
+  border-radius: 10px;
+  padding: .55rem 1rem;
+  font-size: 13px;
+  color: rgba(255,255,255,.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  animation: hintIn .3s ease, hintOut .5s ease 4.5s forwards;
+  white-space: nowrap;
+}
+
+@keyframes hintIn  { from { opacity:0; transform: translateY(8px) } to { opacity:1; transform: translateY(0) } }
+@keyframes hintOut { from { opacity:1 } to { opacity:0; transform: translateY(6px) } }

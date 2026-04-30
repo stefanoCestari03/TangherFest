@@ -1,9 +1,10 @@
 export const MAX_TESSERATI = 12
 export const MAX_LIBERE    = 12
 
-export const CATEGORIE = [
+// Categorie per squadre TESSERATEM (giocatori federati)
+export const CATEGORIE_TESSERATA = [
   { value: '',        label: 'Seleziona categoria...' },
-  { value: 'under16', label: 'Under 16 (min U16)' },
+  { value: 'under16', label: 'Under 16' },
   { value: 'under18', label: 'Under 18' },
   { value: 'amatore', label: 'Amatore / Libero' },
   { value: 'prima',   label: 'Prima Divisione' },
@@ -13,12 +14,27 @@ export const CATEGORIE = [
   { value: 'serieA',  label: 'Serie A' },
 ]
 
+// Categorie per squadre LIBERE (nessun vincolo federale)
+export const CATEGORIE_LIBERA = [
+  { value: '',          label: 'Seleziona categoria...' },
+  { value: 'mai',       label: 'Non ho mai giocato' },
+  { value: 'una_volta', label: 'Giocavo una volta' },
+  { value: 'amatore',   label: 'Amatore / Libero' },
+  { value: 'under16',   label: 'Under 16' },
+  { value: 'under18',   label: 'Under 18' },
+]
+
+// Backward compat (usato in InfoPage/RegolePage per mostrare la lista completa)
+export const CATEGORIE = CATEGORIE_TESSERATA
+
+// Mappa value → label per tutte le categorie (usata in SquadrePage)
 export const CAT_LABEL = Object.fromEntries(
-  CATEGORIE.slice(1).map(c => [c.value, c.label])
+  [...CATEGORIE_TESSERATA, ...CATEGORIE_LIBERA]
+    .filter(c => c.value)
+    .map(c => [c.value, c.label])
 )
 
 export const FORMATI_OK  = ['image/jpeg', 'image/png', 'application/pdf']
 export const MAX_FILE_MB = 5
 
-// Versione corrente del documento scarico responsabilità
 export const VERSIONE_DOCUMENTO = '1.0'

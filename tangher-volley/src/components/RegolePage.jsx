@@ -1,4 +1,4 @@
-import { CATEGORIE } from '../lib/constants'
+import { CATEGORIE_TESSERATA, CATEGORIE_LIBERA } from '../lib/constants'
 import styles from './RegolePage.module.css'
 
 const FORMATO_STEPS = [
@@ -93,13 +93,34 @@ export default function RegolePage() {
         Dalle categorie giovanili fino alla Serie A.
       </p>
 
-      <div className={styles.catGrid}>
-        {CATEGORIE.slice(1).map(c => (
-          <div key={c.value} className={styles.catCard}>
-            <span>🏅</span>
-            <span className={styles.catLbl}>{c.label}</span>
-          </div>
-        ))}
+      <div className={styles.catSection}>
+        <div className={styles.catLabel}>
+          <span className={`${styles.catBadge} ${styles.catBadgeTess}`}>Tesserata</span>
+          Categorie competitive
+        </div>
+        <div className={styles.catGrid}>
+          {CATEGORIE_TESSERATA.slice(1).map(c => (
+            <div key={c.value} className={styles.catCard}>
+              <span>🏅</span>
+              <span className={styles.catLbl}>{c.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.catSection}>
+        <div className={styles.catLabel}>
+          <span className={`${styles.catBadge} ${styles.catBadgeLib}`}>Libera</span>
+          Categorie per tutti
+        </div>
+        <div className={styles.catGrid}>
+          {CATEGORIE_LIBERA.slice(1).map(c => (
+            <div key={c.value} className={styles.catCard}>
+              <span>🏐</span>
+              <span className={styles.catLbl}>{c.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className={styles.divider} />

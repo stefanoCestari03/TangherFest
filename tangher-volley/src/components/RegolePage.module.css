@@ -22,8 +22,13 @@
 .honesty strong { color: var(--gold); }
 
 /* Categorie */
-.catGrid { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: .55rem; margin-bottom: 1rem; }
-.catCard { display: flex; align-items: center; gap: .6rem; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: .7rem .9rem; }
+.catSection { margin-bottom: 1rem; }
+.catLabel { display: flex; align-items: center; gap: .55rem; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.5); margin-bottom: .5rem; text-transform: uppercase; letter-spacing: .07em; }
+.catBadge { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: 2px 8px; border-radius: 20px; border: 1px solid; }
+.catBadgeTess { background: rgba(139,48,204,.22); border-color: rgba(139,48,204,.45); color: #D080FF; }
+.catBadgeLib  { background: rgba(112,202,255,.12); border-color: rgba(112,202,255,.3);  color: var(--sky); }
+.catGrid { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: .5rem; margin-bottom: .6rem; }
+.catCard { display: flex; align-items: center; gap: .6rem; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: .65rem .9rem; }
 .catLbl { font-size: 13px; font-weight: 500; color: #fff; }
 
 /* Steps formato */

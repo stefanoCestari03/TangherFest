@@ -197,6 +197,24 @@ export default function FormPage({ squadre, onSuccess }) {
 
       <SlotBar squadre={squadre} />
 
+      {/* Guida scelta tipo */}
+      <div className={styles.tipoHint}>
+        <div className={styles.tipoHintRow}>
+          <span className={styles.tipoHintBadge}>Tesserata</span>
+          <span className={styles.tipoHintTxt}>
+            Scegli questa se <strong>almeno un giocatore è tesserato FIPaV</strong> —
+            anche solo uno. Obbliga ad almeno 1 giocatrice F e massimo 2 uomini tesserati.
+          </span>
+        </div>
+        <div className={styles.tipoHintRow}>
+          <span className={`${styles.tipoHintBadge} ${styles.tipoHintBadgeLib}`}>Libera</span>
+          <span className={styles.tipoHintTxt}>
+            Scegli questa se <strong>nessuno è tesserato</strong> —
+            nessun vincolo di genere, aperta a tutti i livelli compresi i principianti.
+          </span>
+        </div>
+      </div>
+
       {/* Tipo squadra */}
       <div className={styles.toggle}>
         <button
