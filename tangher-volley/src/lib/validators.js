@@ -167,13 +167,13 @@ export function validateForm(form, squadreEsistenti, aggiungiQuarto = false) {
     }
   })
 
-  /* ── Vincoli squadra tesserata ──────────────────────── */
+  /* ── Vincoli squadra tesserata (solo 3 titolari, riserva libera) ── */
   if (form.tipo === 'tesserata') {
-    const attivi = form.giocatori.filter((g, i) => i < 3 || g.nome.trim())
-    const maschi  = attivi.filter(g => g.genere === 'M').length
-    const femmine = attivi.filter(g => g.genere === 'F').length
-    if (maschi > 2)  globals.push('Squadra tesserata: massimo 2 componenti maschili tesserati.')
-    if (femmine < 1) globals.push('Squadra tesserata: almeno 1 componente femminile obbligatoria.')
+    const titolari = form.giocatori.slice(0, 3)
+    const maschi   = titolari.filter(g => g.genere === 'M').length
+    const femmine  = titolari.filter(g => g.genere === 'F').length
+    if (maschi > 2)  globals.push('Squadra tesserata: massimo 2 componenti maschili tra i 3 titolari.')
+    if (femmine < 1) globals.push('Squadra tesserata: almeno 1 componente femminile tra i 3 titolari.')
   }
 
   return {

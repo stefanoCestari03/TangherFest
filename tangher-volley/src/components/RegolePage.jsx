@@ -56,8 +56,9 @@ export default function RegolePage() {
           <div className={styles.rtitle}>Con pallavolisti federati</div>
           <ul className={styles.rlist}>
             <li>Tessera FIPaV obbligatoria per i tesserati</li>
-            <li><strong>Max 2 componenti maschili tesserati</strong></li>
-            <li><strong>Minimo 1 componente femminile</strong></li>
+            <li><strong>Max 2 maschi tra i 3 titolari in campo</strong></li>
+            <li><strong>Minimo 1 componente femminile tra i titolari</strong></li>
+            <li>Riserva (4° giocatore): nessun vincolo di genere</li>
             <li>Documento di identità per tutti i giocatori</li>
             <li>Max 12 squadre per questa categoria</li>
           </ul>

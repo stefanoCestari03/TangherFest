@@ -235,8 +235,8 @@ export default function FormPage({ squadre, onSuccess }) {
 
       {isTess && (
         <div className={styles.warn}>
-          <strong>Regola:</strong> max 2 componenti maschili tesserati + almeno 1 componente
-          femminile obbligatoria. Allega la tessera FIPaV per i tesserati.
+          <strong>Regola:</strong> tra i 3 titolari: max 2 componenti maschili + almeno 1 femminile obbligatoria.
+          La riserva (4° giocatore) è libera senza vincoli di genere. Allega la tessera FIPaV per i tesserati.
         </div>
       )}
 
