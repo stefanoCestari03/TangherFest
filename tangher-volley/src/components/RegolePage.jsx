@@ -52,7 +52,7 @@ export default function RegolePage() {
 
       <div className={styles.rulesGrid}>
         <div className={styles.rbox}>
-          <span className={`${styles.rbadge} ${styles.rbT}`}>Tesserata</span>
+          <span className={`${styles.rbadge} ${styles.rbT}`}>Pro</span>
           <div className={styles.rtitle}>Con pallavolisti federati</div>
           <ul className={styles.rlist}>
             <li>Tessera FIPaV obbligatoria per i tesserati</li>
@@ -64,7 +64,7 @@ export default function RegolePage() {
           </ul>
         </div>
         <div className={styles.rbox}>
-          <span className={`${styles.rbadge} ${styles.rbL}`}>Libera</span>
+          <span className={`${styles.rbadge} ${styles.rbL}`}>Amatori</span>
           <div className={styles.rtitle}>Aperta a tutti</div>
           <ul className={styles.rlist}>
             <li>Nessuna tessera federale richiesta</li>
@@ -96,7 +96,7 @@ export default function RegolePage() {
 
       <div className={styles.catSection}>
         <div className={styles.catLabel}>
-          <span className={`${styles.catBadge} ${styles.catBadgeTess}`}>Tesserata</span>
+          <span className={`${styles.catBadge} ${styles.catBadgeTess}`}>Pro</span>
           Categorie competitive
         </div>
         <div className={styles.catGrid}>
@@ -111,7 +111,7 @@ export default function RegolePage() {
 
       <div className={styles.catSection}>
         <div className={styles.catLabel}>
-          <span className={`${styles.catBadge} ${styles.catBadgeLib}`}>Libera</span>
+          <span className={`${styles.catBadge} ${styles.catBadgeLib}`}>Amatori</span>
           Categorie per tutti
         </div>
         <div className={styles.catGrid}>

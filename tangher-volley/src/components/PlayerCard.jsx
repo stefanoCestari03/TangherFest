@@ -84,9 +84,9 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
             {fac && <span className={styles.facTag}> (facoltativo)</span>}
           </span>
           <div className={styles.badges}>
-            {isMale  && <span className={`${styles.badge} ${styles.bTess}`}>Tesserato</span>}
+            {isMale  && <span className={`${styles.badge} ${styles.bTess}`}>Pro</span>}
             {isF3    && <span className={`${styles.badge} ${styles.bFem}`}>♀ Obbligatoria</span>}
-            {!isTesserata && <span className={`${styles.badge} ${styles.bLib}`}>Libero</span>}
+            {!isTesserata && <span className={`${styles.badge} ${styles.bLib}`}>Amatore</span>}
             {abilitato && minore && <span className={`${styles.badge} ${styles.bMinore}`}>⚠ Minorenne</span>}
             {abilitato && eta !== null && !minore && <span className={`${styles.badge} ${styles.bAge}`}>{eta} anni</span>}
           </div>

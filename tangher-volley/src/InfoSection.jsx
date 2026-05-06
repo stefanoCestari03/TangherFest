@@ -41,7 +41,7 @@ export default function InfoSection() {
         <div className={styles.rulesGrid}>
           <div className={styles.ruleCard}>
             <div className={styles.ruleHeader}>
-              <span className={styles.ruleBadge} style={{background:'rgba(139,48,204,0.3)',borderColor:'rgba(139,48,204,0.5)',color:'#D080FF'}}>Tesserata</span>
+              <span className={styles.ruleBadge} style={{background:'rgba(139,48,204,0.3)',borderColor:'rgba(139,48,204,0.5)',color:'#D080FF'}}>Pro</span>
               <div className={styles.ruleTitle}>Squadra con pallavolisti federati</div>
             </div>
             <ul className={styles.ruleList}>
@@ -54,7 +54,7 @@ export default function InfoSection() {
 
           <div className={styles.ruleCard}>
             <div className={styles.ruleHeader}>
-              <span className={styles.ruleBadge} style={{background:'rgba(112,202,255,0.15)',borderColor:'rgba(112,202,255,0.35)',color:'#70CAFF'}}>Libera</span>
+              <span className={styles.ruleBadge} style={{background:'rgba(112,202,255,0.15)',borderColor:'rgba(112,202,255,0.35)',color:'#70CAFF'}}>Amatori</span>
               <div className={styles.ruleTitle}>Squadra senza tesserati</div>
             </div>
             <ul className={styles.ruleList}>

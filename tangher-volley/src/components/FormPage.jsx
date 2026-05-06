@@ -200,14 +200,14 @@ export default function FormPage({ squadre, onSuccess }) {
       {/* Guida scelta tipo */}
       <div className={styles.tipoHint}>
         <div className={styles.tipoHintRow}>
-          <span className={styles.tipoHintBadge}>Tesserata</span>
+          <span className={styles.tipoHintBadge}>Pro</span>
           <span className={styles.tipoHintTxt}>
             Scegli questa se <strong>almeno un giocatore è tesserato FIPaV</strong> —
-            anche solo uno. Obbliga ad almeno 1 giocatrice F e massimo 2 uomini tesserati.
+            anche solo uno. Obbliga ad almeno 1 giocatrice F e massimo 2 uomini tesserati tra i titolari.
           </span>
         </div>
         <div className={styles.tipoHintRow}>
-          <span className={`${styles.tipoHintBadge} ${styles.tipoHintBadgeLib}`}>Libera</span>
+          <span className={`${styles.tipoHintBadge} ${styles.tipoHintBadgeLib}`}>Amatori</span>
           <span className={styles.tipoHintTxt}>
             Scegli questa se <strong>nessuno è tesserato</strong> —
             nessun vincolo di genere, aperta a tutti i livelli compresi i principianti.
@@ -221,14 +221,14 @@ export default function FormPage({ squadre, onSuccess }) {
           className={`${styles.topt} ${form.tipo === 'tesserata' ? styles.tSel : ''} ${tessFull ? styles.tDis : ''}`}
           onClick={() => !tessFull && switchTipo('tesserata')}
         >
-          <span className={styles.tLbl}>Squadra Tesserata</span>
+          <span className={styles.tLbl}>Categoria Pro</span>
           <span className={styles.tSub}>{tessFull ? '⚠ Posti esauriti' : 'Con pallavolisti federati'}</span>
         </button>
         <button
           className={`${styles.topt} ${form.tipo === 'libera' ? styles.tSel : ''} ${libFull ? styles.tDis : ''}`}
           onClick={() => !libFull && switchTipo('libera')}
         >
-          <span className={styles.tLbl}>Squadra Libera</span>
+          <span className={styles.tLbl}>Categoria Amatori</span>
           <span className={styles.tSub}>{libFull ? '⚠ Posti esauriti' : 'Nessun vincolo'}</span>
         </button>
       </div>

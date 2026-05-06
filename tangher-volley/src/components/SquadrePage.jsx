@@ -44,7 +44,7 @@ function TeamCard({ sq, rank }) {
         <div className={styles.cardName}>{sq.nomeSquadra}</div>
         <div className={styles.cardBadges}>
           <span className={`${styles.typeBadge} ${isTess ? styles.typeBadgeTess : styles.typeBadgeLib}`}>
-            {isTess ? 'Tesserata' : 'Libera'}
+            {isTess ? 'Pro' : 'Amatori'}
           </span>
           {nuovo && <span className={styles.newBadge}>● New</span>}
         </div>
@@ -137,8 +137,8 @@ export default function SquadrePage({ squadre, onCta }) {
         <div className={styles.tabs}>
           {[
             { id: 'tutte',     label: `Tutte · ${squadre.length}` },
-            { id: 'tesserata', label: `Tesseratem · ${tC}` },
-            { id: 'libera',    label: `Libere · ${lC}` },
+            { id: 'tesserata', label: `Pro · ${tC}` },
+            { id: 'libera',    label: `Amatori · ${lC}` },
           ].map(t => (
             <button
               key={t.id}
