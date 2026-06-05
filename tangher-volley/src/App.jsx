@@ -6,6 +6,7 @@ import InfoPage    from './components/InfoPage'
 import RegolePage  from './components/RegolePage'
 import FormPage    from './components/FormPage'
 import SquadrePage from './components/SquadrePage'
+import PremiPage   from './components/PremiPage'
 import Footer      from './components/Footer'
 import styles      from './App.module.css'
 
@@ -83,6 +84,7 @@ export default function App() {
         {tab === 'regole'     && <RegolePage />}
         {tab === 'iscrizione' && <FormPage squadre={squadre} onSuccess={onSuccess} />}
         {tab === 'squadre'    && <SquadrePage squadre={squadre} onCta={goIscrizione} />}
+        {tab === 'premi'      && <PremiPage />}
       </div>
       <Footer />
 

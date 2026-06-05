@@ -116,4 +116,32 @@
   color: rgba(255,255,255,.38);
 }
 
-@media (max-width: 480px) { .toggle, .row2 { grid-template-columns: 1fr; } }
+/* ── Sezione Pagamento ── */
+.payPricing { display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 12px; padding: .85rem 1.1rem; margin-bottom: .85rem; flex-wrap: wrap; }
+.payPerPerson { display: flex; align-items: baseline; gap: .35rem; flex-shrink: 0; }
+.payAmount { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2.2rem; color: var(--gold); line-height: 1; }
+.payUnit { font-size: 13px; color: rgba(255,255,255,.5); }
+.payOptions { display: flex; flex-direction: column; gap: .3rem; }
+.payOpt { display: flex; align-items: center; gap: .5rem; font-size: 13px; }
+.payOptPlayers { color: rgba(255,255,255,.68); min-width: 140px; }
+.payOptArrow { color: rgba(255,255,255,.25); }
+.payOptTotal { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; color: var(--mg2); }
+
+.ibanBlock { background: rgba(204,56,190,.06); border: 1px solid rgba(204,56,190,.2); border-radius: 11px; padding: .9rem 1.1rem; margin-bottom: .85rem; }
+.ibanLabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.38); margin-bottom: .35rem; }
+.ibanCode { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; letter-spacing: .06em; color: #fff; word-break: break-all; margin-bottom: .2rem; }
+.ibanHint { font-size: 11px; color: rgba(255,255,255,.35); }
+
+.payIncluded { background: rgba(255,217,122,.07); border: 1px solid rgba(255,217,122,.18); border-radius: 10px; padding: .7rem 1rem; font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.6; margin-bottom: .85rem; }
+.payIncluded strong { color: var(--gold); }
+
+.upload { display: flex; align-items: center; gap: .7rem; background: rgba(255,255,255,.06); border: 1.5px dashed rgba(255,255,255,.18); border-radius: 10px; padding: .75rem 1rem; cursor: pointer; transition: border-color .2s, background .2s; }
+.upload:hover { border-color: rgba(204,56,190,.4); background: rgba(204,56,190,.05); }
+.uploadOk { border-style: solid; border-color: var(--ok); background: rgba(94,232,154,.06); }
+.uploadErr { border-style: solid; border-color: var(--err); background: rgba(255,80,80,.05); }
+.uploadEf { border-color: var(--err) !important; }
+.upIcon { font-size: 18px; flex-shrink: 0; }
+.upTxt { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.45; }
+.upTxt strong { color: rgba(255,255,255,.9); }
+
+@media (max-width: 480px) { .toggle, .row2 { grid-template-columns: 1fr; } .payPricing { flex-direction: column; align-items: flex-start; } }

@@ -1,5 +1,5 @@
 import styles from './Navbar.module.css'
-const TABS=[{id:'info',label:'Info'},{id:'regole',label:'Regole'},{id:'iscrizione',label:'Iscriviti'},{id:'squadre',label:'Squadre'}]
+const TABS=[{id:'info',label:'Info'},{id:'regole',label:'Regole'},{id:'iscrizione',label:'Iscriviti'},{id:'squadre',label:'Squadre'},{id:'premi',label:'Premi'}]
 export default function Navbar({tab,setTab,nSquadre,navRef}){
   return(
     <nav className={styles.nav} ref={navRef}>

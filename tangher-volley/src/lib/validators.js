@@ -45,9 +45,17 @@ export function validateDataNascita(data) {
   return null
 }
 
-export function validateForm(form, squadreEsistenti, aggiungiQuarto = false) {
+export function validateForm(form, squadreEsistenti, aggiungiQuarto = false, ricevutaFile = null) {
   const errors  = {}
   const globals = []
+
+  /* ── Ricevuta di pagamento ────────────────────────────── */
+  if (!ricevutaFile)
+    errors.ricevuta = 'Ricevuta di pagamento obbligatoria'
+  else if (ricevutaFile.type !== 'application/pdf')
+    errors.ricevuta = 'La ricevuta deve essere in formato PDF'
+  else if (ricevutaFile.size > MAX_FILE_MB * 1024 * 1024)
+    errors.ricevuta = `File troppo grande. Max ${MAX_FILE_MB}MB.`
 
   /* ── Dati squadra ─────────────────────────────────────── */
   if (!form.nomeSquadra.trim())

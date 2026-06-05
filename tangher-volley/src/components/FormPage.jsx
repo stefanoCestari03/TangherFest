@@ -13,6 +13,9 @@ export default function FormPage({ squadre, onSuccess }) {
   const [errors,         setErrors]        = useState({})
   const [gErrs,          setGErrs]         = useState([])
   const [aggiungiQuarto, setAggiungiQuarto] = useState(false)
+  const [ricevutaFile,   setRicevutaFile]  = useState(null)
+  const [ricevutaName,   setRicevutaName]  = useState('')
+  const [ricevutaErr,    setRicevutaErr]   = useState(null)
 
   const isTess   = form.tipo === 'tesserata'
   const tessFull = squadre.filter(s => s.tipo === 'tesserata').length >= MAX_TESSERATI
@@ -60,7 +63,7 @@ export default function FormPage({ squadre, onSuccess }) {
 
   const handleSubmit = async () => {
     if (curFull) { setGErrs(['Posti esauriti per questa categoria.']); return }
-    const { errors: errs, globals, isValid } = validateForm(form, squadre, aggiungiQuarto)
+    const { errors: errs, globals, isValid } = validateForm(form, squadre, aggiungiQuarto, ricevutaFile)
     setErrors(errs)
     setGErrs(globals)
     if (!isValid) {
@@ -95,6 +98,14 @@ export default function FormPage({ squadre, onSuccess }) {
           const path = `docs/${id}_g${i + 1}_tutore_${g.tutoreFileName}`
           await uploadDoc(g.tutoreFileObj, path)
         }
+      }
+
+      // Upload ricevuta di pagamento
+      let ricevutaPath = null
+      if (ricevutaFile) {
+        const rPath = `ricevute/${id}_ricevuta_${ricevutaName}`
+        await uploadDoc(ricevutaFile, rPath)
+        ricevutaPath = rPath
       }
 
       // Raccoglie IP (best-effort, fallback stringa vuota)
@@ -137,6 +148,7 @@ export default function FormPage({ squadre, onSuccess }) {
             facoltativo: i === 3,
           }
         }).filter(Boolean),
+        ricevutaPath,
         // Metadati legali
         metadati: {
           timestamp:         new Date().toISOString(),
@@ -172,7 +184,7 @@ export default function FormPage({ squadre, onSuccess }) {
         al torneo la <strong>firma autografa sul modulo cartaceo</strong>.
       </div>
       <button className={styles.resetBtn}
-        onClick={() => { setForm(initForm()); setStatus('idle'); setErrors({}); setGErrs([]); setAggiungiQuarto(false) }}>
+        onClick={() => { setForm(initForm()); setStatus('idle'); setErrors({}); setGErrs([]); setAggiungiQuarto(false); setRicevutaFile(null); setRicevutaName(''); setRicevutaErr(null) }}>
         Iscriviti con un'altra squadra
       </button>
     </div>
@@ -323,6 +335,70 @@ export default function FormPage({ squadre, onSuccess }) {
             abilitato={true}
           />
         )}
+      </div>
+
+      {/* Pagamento */}
+      <div className={styles.card}>
+        <div className={styles.cardTitle}>Quota di Partecipazione</div>
+
+        <div className={styles.payPricing}>
+          <div className={styles.payPerPerson}>
+            <span className={styles.payAmount}>15€</span>
+            <span className={styles.payUnit}>a persona</span>
+          </div>
+          <div className={styles.payOptions}>
+            <div className={styles.payOpt}>
+              <span className={styles.payOptPlayers}>4 giocatori</span>
+              <span className={styles.payOptArrow}>→</span>
+              <span className={styles.payOptTotal}>60€ totali</span>
+            </div>
+            <div className={styles.payOpt}>
+              <span className={styles.payOptPlayers}>3 giocatori (minimo)</span>
+              <span className={styles.payOptArrow}>→</span>
+              <span className={styles.payOptTotal}>45€ totali</span>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.ibanBlock}>
+          <div className={styles.ibanLabel}>Bonifico bancario all'associazione</div>
+          <div className={styles.ibanCode}>IT04Z0830435450000068731087</div>
+          <div className={styles.ibanHint}>Usa il nome della squadra come causale del bonifico</div>
+        </div>
+
+        <div className={styles.payIncluded}>
+          🍞 La quota include una <strong>bibita</strong> e un <strong>panino</strong> per ogni partecipante.
+        </div>
+
+        <div className={styles.fg}>
+          <label className={styles.lbl}>Ricevuta di pagamento (PDF) *</label>
+          <label className={`${styles.upload} ${ricevutaName ? (ricevutaErr ? styles.uploadErr : styles.uploadOk) : ''} ${errors.ricevuta && !ricevutaName ? styles.uploadEf : ''}`}>
+            <span className={styles.upIcon}>📄</span>
+            <span className={styles.upTxt}>
+              {ricevutaErr
+                ? <><strong style={{ color: 'var(--err)' }}>✗ {ricevutaErr}</strong><br /><small>{ricevutaName}</small></>
+                : ricevutaName
+                  ? <strong style={{ color: 'var(--ok)' }}>✓ {ricevutaName}</strong>
+                  : <><strong>Carica ricevuta PDF</strong> · Solo PDF · max 5MB</>
+              }
+            </span>
+            <input type="file" accept=".pdf" style={{ display: 'none' }}
+              onChange={e => {
+                const file = e.target.files?.[0]
+                if (!file) return
+                const err = file.type !== 'application/pdf'
+                  ? 'Solo PDF accettato'
+                  : file.size > 5 * 1024 * 1024
+                    ? 'File troppo grande. Max 5MB.'
+                    : null
+                setRicevutaFile(file)
+                setRicevutaName(file.name)
+                setRicevutaErr(err)
+              }}
+            />
+          </label>
+          {errors.ricevuta && <span className={styles.ferr}>{errors.ricevuta}</span>}
+        </div>
       </div>
 
       {gErrs.length > 0 && (
