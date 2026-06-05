@@ -363,7 +363,7 @@ export default function FormPage({ squadre, onSuccess }) {
         <div className={styles.ibanBlock}>
           <div className={styles.ibanLabel}>Bonifico bancario all'associazione</div>
           <div className={styles.ibanCode}>IT04Z0830435450000068731087</div>
-          <div className={styles.ibanHint}>Usa il nome della squadra come causale del bonifico</div>
+          <div className={styles.ibanHint}>Causale: <strong>iscrizione-NomeSquadra-tangherVolley2026</strong></div>
         </div>
 
         <div className={styles.payIncluded}>
