@@ -14,7 +14,7 @@ export default function InfoSection() {
 
         <div className={styles.infoGrid}>
           {[
-            { icon: '📅', label: 'Date', val: '8 · 9 · 10 Agosto 2026' },
+            { icon: '📅', label: 'Date', val: '7 · 8 · 9 Agosto 2026' },
             { icon: '📍', label: 'Luogo', val: 'Loc. Doss Venticcia, Segonzano' },
             { icon: '🏐', label: 'Formato', val: '3 contro 3 su erba' },
             { icon: '👥', label: 'Categorie', val: 'Tesserati e Liberi' },

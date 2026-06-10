@@ -6,7 +6,7 @@ export default function Hero({ squadre, onCta }) {
     <header className={styles.hero}>
       <div className={styles.bg}/><div className={styles.grid}/>
       <div className={styles.inner}>
-        <div className={styles.topDate}>8 · 9 · 10 Agosto 2026 · Segonzano – Val di Cembra</div>
+        <div className={styles.topDate}>7 · 8 · 9 Agosto 2026 · Segonzano – Val di Cembra</div>
         <div className={styles.topLoc}>Loc. Doss Venticcia</div>
         <div className={styles.logoWrap}>
           <span className={styles.logoTop}>Tangher</span>

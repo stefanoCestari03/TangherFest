@@ -8,7 +8,7 @@ export default function Hero({ onCta }) {
 
       <div className={styles.inner}>
         <div className={styles.topLine}>
-          <span className={styles.date}>8 · 9 · 10 Agosto 2026</span>
+          <span className={styles.date}>7 · 8 · 9 Agosto 2026</span>
           <span className={styles.sep}>·</span>
           <span className={styles.place}>Segonzano – Val di Cembra</span>
         </div>

@@ -1,7 +1,7 @@
 import styles from './InfoPage.module.css'
 
 const INFO_CARDS = [
-  { i: '📅', l: 'Date',    v: '8 · 9 · 10 Agosto 2026' },
+  { i: '📅', l: 'Date',    v: '7 · 8 · 9 Agosto 2026' },
   { i: '📍', l: 'Luogo',   v: 'Loc. Doss Venticcia, Segonzano' },
   { i: '🏐', l: 'Formato', v: '3 contro 3 su erba' },
   { i: '👥', l: 'Posti',   v: '12 Tesseratem + 12 Libere' },
