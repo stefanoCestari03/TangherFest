@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { fetchSquadre, subscribeSquadre } from './lib/db'
+import FestivalHome from './components/FestivalHome'
 import Hero        from './components/Hero'
 import Navbar      from './components/Navbar'
 import InfoPage    from './components/InfoPage'
@@ -11,12 +12,14 @@ import Footer      from './components/Footer'
 import styles      from './App.module.css'
 
 export default function App() {
+  const [view,    setView]    = useState('festival')  // 'festival' | 'volley'
   const [tab,     setTab]     = useState('info')
   const [squadre, setSquadre] = useState([])
-  const [musicOn,   setMusicOn]   = useState(true)
-  const [showHint,  setShowHint]  = useState(false)
-  const navRef      = useRef()
-  const audioRef    = useRef(null)
+  const [musicOn,  setMusicOn]  = useState(true)
+  const [showHint, setShowHint] = useState(false)
+  const navRef   = useRef()
+  const audioRef = useRef(null)
+  const startedRef = useRef(false)
 
   useEffect(() => {
     fetchSquadre().then(setSquadre).catch(console.error)
@@ -45,7 +48,6 @@ export default function App() {
       document.removeEventListener('touchstart', tryPlay)
     }
 
-    // Prova autoplay immediato; se bloccato aspetta il primo gesto
     audio.play().then(onPlay).catch(() => {
       document.addEventListener('click',      tryPlay)
       document.addEventListener('touchstart', tryPlay)
@@ -64,6 +66,17 @@ export default function App() {
     else         { audio.play();  setMusicOn(true)  }
   }
 
+  const goVolley = () => {
+    setView('volley')
+    setTab('info')
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50)
+  }
+
+  const goFestival = () => {
+    setView('festival')
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50)
+  }
+
   const goIscrizione = () => {
     setTab('iscrizione')
     setTimeout(() => navRef.current?.scrollIntoView({ behavior: 'smooth' }), 50)
@@ -74,19 +87,34 @@ export default function App() {
   return (
     <div className={styles.app}>
       <audio ref={audioRef} src="/audio/tangher.mp3" loop />
-      <div className={styles.gridBg} />
-      <div className={styles.wrap}>
-        <Hero squadre={squadre} onCta={goIscrizione} />
-      </div>
-      <Navbar tab={tab} setTab={setTab} nSquadre={squadre.length} navRef={navRef} />
-      <div className={styles.wrap}>
-        {tab === 'info'       && <InfoPage onCta={goIscrizione} />}
-        {tab === 'regole'     && <RegolePage />}
-        {tab === 'iscrizione' && <FormPage squadre={squadre} onSuccess={onSuccess} />}
-        {tab === 'squadre'    && <SquadrePage squadre={squadre} onCta={goIscrizione} />}
-        {tab === 'premi'      && <PremiPage />}
-      </div>
-      <Footer />
+
+      {view === 'festival' ? (
+        <>
+          <FestivalHome onGoVolley={goVolley} />
+          <Footer />
+        </>
+      ) : (
+        <>
+          <div className={styles.gridBg} />
+          <div className={styles.wrap}>
+            <Hero squadre={squadre} onCta={goIscrizione} />
+          </div>
+          <Navbar
+            tab={tab} setTab={setTab}
+            nSquadre={squadre.length}
+            navRef={navRef}
+            onBack={goFestival}
+          />
+          <div className={styles.wrap}>
+            {tab === 'info'       && <InfoPage onCta={goIscrizione} />}
+            {tab === 'regole'     && <RegolePage />}
+            {tab === 'iscrizione' && <FormPage squadre={squadre} onSuccess={onSuccess} />}
+            {tab === 'squadre'    && <SquadrePage squadre={squadre} onCta={goIscrizione} />}
+            {tab === 'premi'      && <PremiPage />}
+          </div>
+          <Footer />
+        </>
+      )}
 
       <button
         className={`${styles.musicBtn} ${musicOn ? styles.musicOn : ''}`}
