@@ -129,9 +129,18 @@
 
 .ibanBlock { background: rgba(204,56,190,.06); border: 1px solid rgba(204,56,190,.2); border-radius: 11px; padding: .9rem 1.1rem; margin-bottom: .85rem; }
 .ibanLabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.38); margin-bottom: .35rem; }
-.ibanCode { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; letter-spacing: .06em; color: #fff; word-break: break-all; margin-bottom: .2rem; }
+.ibanRow { display: flex; align-items: center; gap: .65rem; flex-wrap: wrap; margin-bottom: .2rem; }
+.ibanCode { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; letter-spacing: .06em; color: #fff; word-break: break-all; }
+.ibanCopyBtn { padding: 5px 13px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 20px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.7); cursor: pointer; transition: all .2s; white-space: nowrap; flex-shrink: 0; }
+.ibanCopyBtn:hover { background: rgba(255,255,255,.14); }
+.ibanCopyBtnOk { background: rgba(94,232,154,.15) !important; border-color: var(--ok) !important; color: var(--ok) !important; }
 .ibanHint { font-size: 11px; color: rgba(255,255,255,.35); }
 .ibanHint strong { color: rgba(255,255,255,.7); font-family: 'Courier New', monospace; }
+
+.contattiBlock { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 11px; padding: .85rem 1rem; margin-bottom: .85rem; display: flex; flex-direction: column; gap: .4rem; }
+.contattiLabel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.35); margin-bottom: .15rem; }
+.contattoRow { font-size: 13px; color: rgba(255,255,255,.65); text-decoration: none; display: block; transition: color .2s; }
+.contattoRow:hover { color: var(--sky); }
 
 .payIncluded { background: rgba(255,217,122,.07); border: 1px solid rgba(255,217,122,.18); border-radius: 10px; padding: .7rem 1rem; font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.6; margin-bottom: .85rem; }
 .payIncluded strong { color: var(--gold); }

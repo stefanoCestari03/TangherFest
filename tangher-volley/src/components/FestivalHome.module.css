@@ -5,66 +5,109 @@
 .heroBg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 30% 20%, #7B2FBE 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 80% 70%, #C038B8 0%, transparent 55%), linear-gradient(160deg, #1A0535 0%, #2D0A5A 50%, #1A0535 100%); z-index: 0; }
 .heroGrid { position: absolute; inset: 0; z-index: 1; background-image: linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px); background-size: 52px 52px; }
 .heroInner { position: relative; z-index: 2; max-width: 640px; width: 100%; }
-
 .heroDate { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .18em; color: var(--sky); text-transform: uppercase; margin-bottom: .15rem; }
 .heroLoc { font-size: 11px; letter-spacing: .2em; color: rgba(255,255,255,.3); text-transform: uppercase; margin-bottom: 1.5rem; }
-
 .logoWrap { line-height: .85; margin-bottom: .5rem; }
 .logoTop { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(3.8rem, 15vw, 7rem); text-transform: uppercase; display: block; color: #fff; text-shadow: 4px 4px 0 #4A10A0, 0 0 50px rgba(180,60,220,.4); }
 .logoBot { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(4.2rem, 17vw, 8rem); text-transform: uppercase; display: block; color: var(--mg2); text-shadow: 4px 4px 0 #7B1090, 0 0 50px rgba(255,80,220,.35); }
 .heroYear { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(1.1rem, 3.5vw, 1.8rem); color: var(--sky); letter-spacing: .06em; margin-bottom: 1.2rem; }
-
 .pills { display: flex; justify-content: center; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 .pill { background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); border-radius: 20px; padding: 4px 14px; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.82); }
-
 .heroSub { font-size: 13px; color: rgba(255,255,255,.45); letter-spacing: .1em; text-transform: uppercase; }
 
-/* ── Contenuto ── */
+/* ── Container ── */
 .container { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
 
-.slabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--mg2); margin-bottom: .5rem; }
-.h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.8rem, 6vw, 3rem); text-transform: uppercase; margin-bottom: .75rem; color: #fff; }
-.h2 span { color: var(--mg2); }
-.lead { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,.6); margin-bottom: 2.5rem; }
-
 /* ── Giorni ── */
-.giorni { display: flex; flex-direction: column; gap: 2.5rem; margin-bottom: 2.5rem; }
-
-.giornoHeader { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.giorno { margin-bottom: 3rem; }
+.giornoHeader { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
 .giornoLabel { flex-shrink: 0; }
-.giornoNome { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.5rem; text-transform: uppercase; color: var(--gold); display: block; line-height: 1; }
+.giornoNome { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.6rem; text-transform: uppercase; color: var(--gold); display: block; line-height: 1; }
 .giornoData { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,255,255,.35); }
 .giornoLine { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,217,122,.35), transparent); }
 
-.cards { display: flex; flex-direction: column; gap: .75rem; }
+/* ── Cards ── */
+.cards { display: flex; flex-direction: column; gap: .85rem; }
 
-/* ── Card attività ── */
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem 1.35rem; transition: border-color .2s; }
-.card:hover { border-color: rgba(255,255,255,.2); }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.3rem 1.4rem; }
 
-.cardVolley { border-color: rgba(204,56,190,.35); background: linear-gradient(135deg, rgba(204,56,190,.1), rgba(139,48,204,.06)); }
-.cardVolley:hover { border-color: rgba(204,56,190,.6); }
-
-.cardHead { display: flex; align-items: center; gap: .6rem; margin-bottom: .65rem; }
+.cardHead { display: flex; align-items: center; gap: .6rem; margin-bottom: .7rem; flex-wrap: wrap; }
 .cardIcon { font-size: 1.4rem; }
-.cardTag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: 2px 9px; border-radius: 20px; border: 1px solid; }
+.cardTag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: 2px 9px; border-radius: 20px; border: 1px solid; flex-shrink: 0; }
+.cardOra { margin-left: auto; font-size: 11px; color: rgba(255,255,255,.3); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+.cardPrice { margin-left: auto; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; color: var(--gold); }
+.cardPrice small { font-size: .75rem; color: rgba(255,255,255,.45); font-weight: 400; }
+.cardTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.65rem; text-transform: uppercase; color: #fff; margin-bottom: .4rem; letter-spacing: .03em; line-height: 1.1; }
+.cardDesc { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,.55); }
+.cardDesc strong { color: rgba(255,255,255,.9); }
+
+/* Tags */
 .tag_sport  { background: rgba(204,56,190,.18); border-color: rgba(204,56,190,.45); color: var(--mg2); }
 .tag_music  { background: rgba(112,202,255,.12); border-color: rgba(112,202,255,.3);  color: var(--sky); }
 .tag_food   { background: rgba(255,217,122,.12); border-color: rgba(255,217,122,.3);  color: var(--gold); }
 .tag_party  { background: rgba(94,232,154,.1);   border-color: rgba(94,232,154,.25);  color: var(--ok); }
-.cardOra { margin-left: auto; font-size: 11px; color: rgba(255,255,255,.3); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+.tag_fun    { background: rgba(255,150,80,.1);    border-color: rgba(255,150,80,.25);  color: #FFA060; }
+.tag_show   { background: rgba(200,120,60,.12);   border-color: rgba(200,120,60,.3);   color: #FFAA66; }
 
-.cardTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.5rem; text-transform: uppercase; color: #fff; margin-bottom: .4rem; letter-spacing: .03em; }
-.cardDesc { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,.55); margin-bottom: .5rem; }
+/* ── Cena ── */
+.cardCena { border-color: rgba(255,217,122,.25); }
 
-.ctaBtn { display: inline-block; margin-top: .65rem; padding: 12px 28px; background: linear-gradient(135deg, var(--v2), var(--mg)); color: #fff; border: none; border-radius: 50px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1rem; letter-spacing: .09em; text-transform: uppercase; box-shadow: 0 4px 22px rgba(204,56,190,.35); text-shadow: 1px 1px 0 rgba(0,0,0,.3); transition: transform .15s, box-shadow .15s; }
-.ctaBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(204,56,190,.55); }
+.menu { display: flex; flex-wrap: wrap; gap: .4rem; margin: .75rem 0; }
+.menuItem { background: rgba(255,217,122,.1); border: 1px solid rgba(255,217,122,.22); border-radius: 20px; padding: 3px 12px; font-size: 12px; color: var(--gold); font-weight: 600; }
 
-.tbaBadge { margin-top: .5rem; display: inline-block; font-size: 12px; color: rgba(255,255,255,.35); font-weight: 600; letter-spacing: .05em; }
+.prenotaBox { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: .9rem 1rem; margin: .85rem 0; }
+.prenotaTitle { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.55); margin-bottom: .2rem; }
+.prenotaDeadline { font-size: 13px; color: var(--err); font-weight: 600; margin-bottom: .7rem; }
+.waBtn { display: inline-flex; align-items: center; gap: .4rem; padding: 10px 20px; background: #25D366; color: #fff; border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .05em; text-decoration: none; transition: opacity .2s; }
+.waBtn:hover { opacity: .88; }
+
+.ibanMini { background: rgba(204,56,190,.06); border: 1px solid rgba(204,56,190,.18); border-radius: 11px; padding: .85rem 1rem; margin-top: .75rem; }
+.ibanMiniLabel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.35); margin-bottom: .5rem; }
+.ibanMiniRow { display: flex; align-items: center; gap: .6rem; margin-bottom: .4rem; flex-wrap: wrap; }
+.ibanMiniCode { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: .06em; color: #fff; word-break: break-all; }
+.causaleDisplay { font-size: 13px; color: rgba(255,255,255,.6); }
+.causaleDisplay strong { color: rgba(255,255,255,.9); }
+.ibanMiniHint { font-size: 11px; color: rgba(255,255,255,.28); margin-top: .2rem; }
+
+/* Copy button */
+.copyBtn { padding: 5px 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 20px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.7); cursor: pointer; transition: all .2s; white-space: nowrap; letter-spacing: .04em; flex-shrink: 0; }
+.copyBtn:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.3); }
+.copyBtnOk { background: rgba(94,232,154,.15) !important; border-color: var(--ok) !important; color: var(--ok) !important; }
+
+/* ── Volley ── */
+.cardVolley { border-color: rgba(204,56,190,.45); background: linear-gradient(135deg, rgba(204,56,190,.12), rgba(139,48,204,.07)); }
+.volleyHighlight { margin-left: auto; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 11px; letter-spacing: .15em; color: var(--gold); text-transform: uppercase; }
+.volleyInfo { display: flex; align-items: center; gap: 1rem; margin: .75rem 0; flex-wrap: wrap; }
+.volleyPrice { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; color: var(--gold); }
+.volleyPrice small { font-size: .75rem; color: rgba(255,255,255,.45); font-weight: 400; }
+.volleyInclude { font-size: 12px; color: rgba(255,255,255,.55); }
+
+.ctaBtn { display: inline-block; margin-top: .55rem; padding: 13px 32px; background: linear-gradient(135deg, var(--v2), var(--mg)); color: #fff; border: none; border-radius: 50px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.05rem; letter-spacing: .09em; text-transform: uppercase; box-shadow: 0 4px 22px rgba(204,56,190,.4); text-shadow: 1px 1px 0 rgba(0,0,0,.3); transition: transform .15s, box-shadow .15s; }
+.ctaBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(204,56,190,.6); }
+
+/* ── Serata ── */
+.cardSerata { border-color: rgba(255,80,220,.35); background: linear-gradient(160deg, rgba(40,5,80,.9), rgba(80,10,120,.5)); text-align: center; padding: 1.8rem 1.4rem; }
+.serataOra { margin-left: auto; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1rem; color: var(--mg2); letter-spacing: .1em; text-transform: uppercase; }
+.serataTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.6rem, 5vw, 2.2rem); text-transform: uppercase; color: #fff; line-height: 1.1; margin-bottom: 1.25rem; text-shadow: 2px 2px 0 rgba(0,0,0,.4); }
+.lineupLabel { font-size: 10px; font-weight: 700; letter-spacing: .25em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: .9rem; }
+.lineup { display: flex; flex-direction: column; gap: .3rem; }
+.artist { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.4rem, 4vw, 1.9rem); text-transform: uppercase; letter-spacing: .06em; color: var(--mg2); line-height: 1.15; transition: color .2s; }
+.artist:hover { color: #fff; }
+
+/* ── Lumberjack ── */
+.cardLumber { border-color: rgba(200,120,60,.3); background: linear-gradient(135deg, rgba(80,40,15,.6), rgba(40,20,8,.4)); }
+.lumberBy { display: flex; align-items: center; gap: .6rem; margin-top: .85rem; }
+.lumberByLabel { font-size: 11px; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .08em; }
+.lumberLogo { height: 36px; width: auto; object-fit: contain; filter: brightness(1.1); }
+.lumberLogoFallback { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1rem; color: rgba(255,255,255,.7); letter-spacing: .05em; text-transform: uppercase; }
 
 /* ── Location bar ── */
-.locationBar { display: flex; align-items: center; gap: .65rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: .85rem 1.1rem; font-size: 13px; color: rgba(255,255,255,.45); margin-top: 1rem; }
+.locationBar { display: flex; align-items: center; gap: .65rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: .85rem 1.1rem; font-size: 13px; color: rgba(255,255,255,.4); margin-top: 1rem; }
 
 @media (max-width: 480px) {
-  .giornoNome { font-size: 1.25rem; }
+  .giornoNome { font-size: 1.35rem; }
+  .ibanMiniCode { font-size: .95rem; }
+  .ibanMiniRow { flex-direction: column; align-items: flex-start; gap: .4rem; }
+  .cardHead { gap: .45rem; }
+  .cardPrice, .serataOra { margin-left: 0; }
 }

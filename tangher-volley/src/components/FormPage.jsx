@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { MAX_TESSERATI, MAX_LIBERE, VERSIONE_DOCUMENTO } from '../lib/constants'
 import { validateForm } from '../lib/validators'
 import { genId, mkGiocatore, initForm } from '../lib/helpers'
@@ -6,6 +6,25 @@ import { insertSquadra, uploadDoc } from '../lib/db'
 import SlotBar    from './SlotBar'
 import PlayerCard from './PlayerCard'
 import styles     from './FormPage.module.css'
+
+function IbanCopyBtn() {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText('IT04Z0830435450000068731087').then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2200)
+    })
+  }, [])
+  return (
+    <button
+      type="button"
+      className={copied ? `${styles.ibanCopyBtn} ${styles.ibanCopyBtnOk}` : styles.ibanCopyBtn}
+      onClick={handleCopy}
+    >
+      {copied ? '✓ Copiato!' : '📋 Copia IBAN'}
+    </button>
+  )
+}
 
 export default function FormPage({ squadre, onSuccess }) {
   const [form,           setForm]          = useState(initForm())
@@ -362,8 +381,17 @@ export default function FormPage({ squadre, onSuccess }) {
 
         <div className={styles.ibanBlock}>
           <div className={styles.ibanLabel}>Bonifico bancario all'associazione</div>
-          <div className={styles.ibanCode}>IT04Z0830435450000068731087</div>
+          <div className={styles.ibanRow}>
+            <div className={styles.ibanCode}>IT04Z0830435450000068731087</div>
+            <IbanCopyBtn />
+          </div>
           <div className={styles.ibanHint}>Causale: <strong>iscrizione-NomeSquadra-tangherVolley2026</strong></div>
+        </div>
+
+        <div className={styles.contattiBlock}>
+          <div className={styles.contattiLabel}>Contatti organizzatori</div>
+          <a href="tel:+393477208122" className={styles.contattoRow}>📞 Gabriele Magro · 347 720 8122</a>
+          <a href="tel:+393284743223" className={styles.contattoRow}>📞 Stefano Cestari · 328 474 3223</a>
         </div>
 
         <div className={styles.payIncluded}>
