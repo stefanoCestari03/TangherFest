@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TangherFest 2026 – Locandina</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a011a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 32px 16px;
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .poster {
+    width: 800px;
+    background: #120422;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 80px rgba(200,50,200,.35), 0 0 200px rgba(100,20,180,.2);
+  }
+
+  /* ── Griglia di sfondo ── */
+  .poster::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ══════════════ HERO ══════════════ */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 52px 40px 44px;
+    background:
+      radial-gradient(ellipse 90% 70% at 25% 15%, #7B2FBE 0%, transparent 55%),
+      radial-gradient(ellipse 80% 60% at 80% 80%, #C038B8 0%, transparent 50%);
+  }
+
+  .topDate {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .22em;
+    color: #70CAFF;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .topLoc {
+    font-size: 12px;
+    letter-spacing: .18em;
+    color: rgba(255,255,255,.35);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .logo-top {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 100px;
+    text-transform: uppercase;
+    color: #fff;
+    display: block;
+    line-height: .9;
+    text-shadow: 5px 5px 0 #4A10A0, 0 0 60px rgba(180,60,220,.5);
+  }
+  .logo-bot {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 114px;
+    text-transform: uppercase;
+    color: #FF70E8;
+    display: block;
+    line-height: .88;
+    text-shadow: 5px 5px 0 #7B1090, 0 0 60px rgba(255,80,220,.4);
+    margin-bottom: 10px;
+  }
+  .logo-year {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: #70CAFF;
+    letter-spacing: .12em;
+    margin-bottom: 24px;
+  }
+
+  .pills {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 30px;
+    padding: 5px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.8);
+  }
+
+  /* ══════════════ DIVIDER ══════════════ */
+  .divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #CC38BE, #FF70E8, #CC38BE, transparent);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ══════════════ BODY ══════════════ */
+  .body {
+    position: relative;
+    z-index: 1;
+    padding: 36px 44px 0;
+  }
+
+  /* ── Day header ── */
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    margin-top: 36px;
+  }
+  .day-header:first-child { margin-top: 0; }
+
+  .day-label {
+    flex-shrink: 0;
+  }
+  .day-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: #FFD97A;
+    display: block;
+    line-height: 1;
+  }
+  .day-date {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: rgba(255,255,255,.3);
+  }
+  .day-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,217,122,.4), transparent);
+  }
+
+  /* ── Event row ── */
+  .event {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+  }
+  .event-icon { font-size: 26px; flex-shrink: 0; margin-top: 1px; }
+  .event-body { flex: 1; }
+  .event-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    padding: 2px 9px;
+    border-radius: 20px;
+    border: 1px solid;
+    margin-bottom: 5px;
+  }
+  .tag-food   { background: rgba(255,217,122,.12); border-color: rgba(255,217,122,.3);  color: #FFD97A; }
+  .tag-music  { background: rgba(112,202,255,.12); border-color: rgba(112,202,255,.3);  color: #70CAFF; }
+  .tag-sport  { background: rgba(204,56,190,.18);  border-color: rgba(204,56,190,.45);  color: #FF70E8; }
+  .tag-fun    { background: rgba(255,150,80,.1);   border-color: rgba(255,150,80,.25);  color: #FFA060; }
+  .tag-party  { background: rgba(94,232,154,.1);   border-color: rgba(94,232,154,.25);  color: #5EE89A; }
+  .tag-show   { background: rgba(200,120,60,.12);  border-color: rgba(200,120,60,.3);   color: #FFAA66; }
+
+  .event-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #fff;
+    display: block;
+    line-height: 1.05;
+    margin-bottom: 4px;
+  }
+  .event-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,.55);
+    line-height: 1.6;
+  }
+  .event-desc strong { color: rgba(255,255,255,.85); }
+
+  .event-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    color: #FFD97A;
+    margin-top: 4px;
+    display: block;
+  }
+  .event-price small { font-size: 13px; color: rgba(255,255,255,.4); font-weight: 400; font-family: 'Barlow', sans-serif; }
+
+  /* Cena highlight */
+  .event-cena {
+    border-color: rgba(255,217,122,.25);
+    background: rgba(255,217,122,.05);
+  }
+
+  /* Volley highlight */
+  .event-volley {
+    border-color: rgba(204,56,190,.5);
+    background: linear-gradient(135deg, rgba(204,56,190,.12), rgba(139,48,204,.07));
+  }
+  .volley-include {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: rgba(255,255,255,.5);
+  }
+
+  /* Menu pills */
+  .menu-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 4px;
+  }
+  .menu-pill {
+    background: rgba(255,217,122,.1);
+    border: 1px solid rgba(255,217,122,.22);
+    border-radius: 20px;
+    padding: 2px 11px;
+    font-size: 11px;
+    color: #FFD97A;
+    font-weight: 600;
+  }
+
+  /* Prenotazione */
+  .prenota {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,.65);
+    line-height: 1.7;
+  }
+  .prenota strong { color: #fff; }
+  .prenota .deadline { color: #FF6B6B; font-weight: 700; }
+
+  /* ══════════════ SERATA DJ ══════════════ */
+  .serata {
+    background: linear-gradient(160deg, rgba(40,5,80,.95), rgba(80,10,120,.6));
+    border: 1.5px solid rgba(255,80,220,.4);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .serata-ora {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #FF70E8;
+    margin-bottom: 6px;
+  }
+  .serata-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 36px;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.5);
+  }
+  .lineup-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.28);
+    margin-bottom: 10px;
+  }
+  .lineup {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .artist {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #FF70E8;
+    line-height: 1.2;
+  }
+
+  /* ══════════════ FOOTER ══════════════ */
+  .footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 36px;
+    background: linear-gradient(135deg, rgba(139,48,204,.25), rgba(204,56,190,.15));
+    border-top: 1.5px solid rgba(204,56,190,.4);
+    padding: 24px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-left {
+    font-size: 12px;
+    color: rgba(255,255,255,.4);
+    line-height: 1.7;
+  }
+  .footer-left strong { color: rgba(255,255,255,.7); font-size: 13px; }
+  .footer-domain {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    color: #fff;
+    letter-spacing: .04em;
+    text-transform: lowercase;
+  }
+  .footer-domain span { color: #FF70E8; }
+
+  /* Print hint */
+  .print-hint {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(255,255,255,.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,.6);
+    font-family: 'Barlow', sans-serif;
+  }
+  @media print { .print-hint { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="topDate">7 · 8 · 9 Agosto 2026 &nbsp;·&nbsp; Segonzano – Val di Cembra</div>
+    <div class="topLoc">Loc. Doss Venticcia &nbsp;·&nbsp; Ingresso libero</div>
+    <div class="logo-top">Tangher</div>
+    <div class="logo-bot">Fest</div>
+    <div class="logo-year">2026</div>
+    <div class="pills">
+      <span class="pill">Music</span>
+      <span class="pill">Food</span>
+      <span class="pill">Party</span>
+      <span class="pill">Sport</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── BODY ── -->
+  <div class="body">
+
+    <!-- VENERDÌ -->
+    <div class="day-header">
+      <div class="day-label">
+        <span class="day-name">Venerdì</span>
+        <span class="day-date">7 Agosto</span>
+      </div>
+      <div class="day-line"></div>
+    </div>
+
+    <div class="event event-cena">
+      <span class="event-icon">🍽️</span>
+      <div class="event-body">
+        <span class="event-tag tag-food">Food</span>
+        <span class="event-title">Cena Spettacolo</span>
+        <div class="menu-pills">
+          <span class="menu-pill">Antipasto</span>
+          <span class="menu-pill">Paella</span>
+          <span class="menu-pill">Dolce</span>
+          <span class="menu-pill">Acqua e vino da tavola</span>
+        </div>
+        <span class="event-price">35€ <small>a persona</small></span>
+        <div class="prenota">
+          <span class="deadline">⚠ Prenotazione obbligatoria entro domenica 26 luglio</span><br>
+          WhatsApp: <strong>347 744 1319</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <span class="event-icon">🎷</span>
+      <div class="event-body">
+        <span class="event-tag tag-music">Music</span>
+        <span class="event-title">Adry DJ con SAX</span>
+        <div class="event-desc">A seguire la cena</div>
+      </div>
+    </div>
+
+    <!-- SABATO -->
+    <div class="day-header">
+      <div class="day-label">
+        <span class="day-name">Sabato</span>
+        <span class="day-date">8 Agosto</span>
+      </div>
+      <div class="day-line"></div>
+    </div>
+
+    <div class="event event-volley">
+      <span class="event-icon">🏐</span>
+      <div class="event-body">
+        <span class="event-tag tag-sport">Sport</span>
+        <span class="event-title">Green Volley 3×3</span>
+        <div class="event-desc">Torneo su erba &nbsp;·&nbsp; Categorie <strong>Pro</strong> e <strong>Amatori</strong> &nbsp;·&nbsp; Max 24 squadre</div>
+        <span class="event-price">15€ <small>a persona</small></span>
+        <div class="volley-include">🍞 Panino + bibita inclusi &nbsp;·&nbsp; Iscriviti su <strong>giovanisegonzano.it</strong></div>
+      </div>
+    </div>
+
+    <div class="event">
+      <span class="event-icon">🔫</span>
+      <div class="event-body">
+        <span class="event-tag tag-fun">Fun</span>
+        <span class="event-title">Laser Game</span>
+        <div class="event-desc">Durante il giorno</div>
+      </div>
+    </div>
+
+    <div class="serata">
+      <div class="serata-ora">Sabato Sera &nbsp;·&nbsp; dalle 21:30</div>
+      <div class="serata-title">La Grande Festa<br>del Sabato Sera</div>
+      <div class="lineup-label">DJ Set &nbsp;·&nbsp; Line Up</div>
+      <div class="lineup">
+        <div class="artist">Ober One</div>
+        <div class="artist">Upward</div>
+        <div class="artist">Lex e Mirko</div>
+        <div class="artist">Des3ett</div>
+        <div class="artist">Purin</div>
+        <div class="artist">Danyl</div>
+      </div>
+    </div>
+
+    <!-- DOMENICA -->
+    <div class="day-header">
+      <div class="day-label">
+        <span class="day-name">Domenica</span>
+        <span class="day-date">9 Agosto</span>
+      </div>
+      <div class="day-line"></div>
+    </div>
+
+    <div class="event">
+      <span class="event-icon">🪓</span>
+      <div class="event-body">
+        <span class="event-tag tag-show">Show</span>
+        <span class="event-title">TangherCut Lumberjack Show</span>
+        <div class="event-desc">Forza, adrenalina e spettacolo &nbsp;·&nbsp; <strong>by Team Giacomelli</strong></div>
+      </div>
+    </div>
+
+    <div class="event">
+      <span class="event-icon">🎈</span>
+      <div class="event-body">
+        <span class="event-tag tag-fun">Fun</span>
+        <span class="event-title">Animazione per Bambini</span>
+        <div class="event-desc">Giochi e divertimento per i più piccoli</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>Loc. Doss Venticcia · Segonzano (TN)</strong><br>
+      Parcheggio gratuito in loco
+    </div>
+    <div class="footer-domain">giovanisegonzano<span>.it</span></div>
+  </div>
+
+</div>
+
+<div class="print-hint">💡 Premi Ctrl+P per stampare · oppure fai uno screenshot</div>
+
+</body>
+</html>
