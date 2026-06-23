@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Green Volley 3×3 – TangherFest 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #060110;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 32px 16px;
+  font-family: 'Barlow', sans-serif;
+}
+
+.poster {
+  width: 800px;
+  background: #0e0220;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 80px rgba(204,56,190,.4), 0 0 200px rgba(100,20,180,.2);
+}
+
+/* griglia */
+.poster::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.016) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ══ HERO ══ */
+.hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 48px 44px 40px;
+  background:
+    radial-gradient(ellipse 100% 80% at 20% 10%, #6B20B0 0%, transparent 50%),
+    radial-gradient(ellipse 80% 70% at 85% 85%, #C038B8 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 55% 40%, #3D0880 0%, transparent 55%);
+}
+
+.hero-event {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .22em;
+  color: #70CAFF;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.ball { font-size: 72px; display: block; margin-bottom: 10px; filter: drop-shadow(0 0 30px rgba(255,112,232,.5)); }
+
+.title-pre {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 4px;
+}
+.title-main {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 96px;
+  text-transform: uppercase;
+  color: #fff;
+  display: block;
+  line-height: .88;
+  text-shadow: 5px 5px 0 #4A10A0, 0 0 70px rgba(180,60,220,.6);
+  margin-bottom: 4px;
+}
+.title-format {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 52px;
+  text-transform: uppercase;
+  color: #FF70E8;
+  text-shadow: 3px 3px 0 #7B1090;
+  display: block;
+  margin-bottom: 22px;
+}
+
+.hero-date-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,.08);
+  border: 1.5px solid rgba(255,255,255,.18);
+  border-radius: 50px;
+  padding: 10px 28px;
+  margin-bottom: 10px;
+}
+.hero-date-box span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #fff;
+}
+.hero-date-box small {
+  font-size: 13px;
+  color: rgba(255,255,255,.4);
+  font-weight: 400;
+  font-family: 'Barlow', sans-serif;
+}
+
+.hero-loc {
+  font-size: 13px;
+  letter-spacing: .16em;
+  color: rgba(255,255,255,.35);
+  text-transform: uppercase;
+}
+
+/* ══ DIVIDER ══ */
+.divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #CC38BE, #FF70E8, #CC38BE, transparent);
+  position: relative;
+  z-index: 1;
+}
+
+/* ══ BODY ══ */
+.body {
+  position: relative;
+  z-index: 1;
+  padding: 36px 44px 32px;
+}
+
+/* ── Categorie ── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.cat-box {
+  border-radius: 14px;
+  padding: 20px 22px;
+  text-align: center;
+}
+.cat-pro {
+  background: rgba(139,48,204,.2);
+  border: 1.5px solid rgba(139,48,204,.55);
+}
+.cat-lib {
+  background: rgba(112,202,255,.1);
+  border: 1.5px solid rgba(112,202,255,.35);
+}
+.cat-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  padding: 3px 12px;
+  border-radius: 20px;
+  border: 1px solid;
+  margin-bottom: 8px;
+}
+.badge-pro { background: rgba(139,48,204,.3); border-color: rgba(139,48,204,.6); color: #D080FF; }
+.badge-lib { background: rgba(112,202,255,.15); border-color: rgba(112,202,255,.4); color: #70CAFF; }
+.cat-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: #fff;
+  display: block;
+  margin-bottom: 8px;
+}
+.cat-rules {
+  font-size: 12px;
+  color: rgba(255,255,255,.5);
+  line-height: 1.65;
+}
+.cat-rules strong { color: rgba(255,255,255,.85); }
+
+/* ── Prezzo ── */
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: linear-gradient(135deg, rgba(204,56,190,.14), rgba(139,48,204,.08));
+  border: 1.5px solid rgba(204,56,190,.4);
+  border-radius: 14px;
+  padding: 18px 28px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+.price-main {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  color: #FFD97A;
+  line-height: 1;
+  text-shadow: 2px 2px 0 rgba(0,0,0,.4);
+}
+.price-main small { font-size: 20px; color: rgba(255,255,255,.45); font-weight: 400; font-family: 'Barlow', sans-serif; }
+.price-sep { font-size: 22px; color: rgba(255,255,255,.2); }
+.price-details { font-size: 14px; color: rgba(255,255,255,.6); line-height: 1.8; }
+.price-details strong { color: #fff; }
+.price-include {
+  font-size: 13px;
+  color: rgba(255,255,255,.45);
+  display: block;
+  margin-top: 3px;
+}
+
+/* ── Info squadra ── */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.info-box {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.info-icon { font-size: 22px; flex-shrink: 0; }
+.info-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.32); margin-bottom: 2px; }
+.info-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; color: #fff; }
+
+/* ── Iscrizione ── */
+.iscr-box {
+  background: rgba(204,56,190,.07);
+  border: 1.5px solid rgba(204,56,190,.3);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 22px;
+}
+.iscr-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #FF70E8;
+  margin-bottom: 12px;
+  letter-spacing: .04em;
+}
+.iscr-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.iscr-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.35);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.iscr-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: .04em;
+  word-break: break-all;
+}
+.iscr-causale {
+  font-size: 13px;
+  color: rgba(255,255,255,.6);
+  font-family: 'Courier New', monospace;
+}
+.iscr-contacts {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.iscr-contact {
+  font-size: 13px;
+  color: rgba(255,255,255,.6);
+  line-height: 1.6;
+}
+.iscr-contact strong { color: #fff; display: block; font-size: 14px; }
+
+/* ══ FOOTER ══ */
+.footer {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(139,48,204,.3), rgba(204,56,190,.2));
+  border-top: 2px solid rgba(204,56,190,.5);
+  padding: 22px 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-left {
+  font-size: 12.5px;
+  color: rgba(255,255,255,.45);
+  line-height: 1.7;
+}
+.footer-left strong { color: rgba(255,255,255,.75); font-size: 14px; }
+.footer-domain {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  color: #fff;
+  letter-spacing: .03em;
+}
+.footer-domain span { color: #FF70E8; }
+.footer-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,.3);
+  text-align: right;
+  font-family: 'Barlow', sans-serif;
+}
+
+.print-hint {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,.55);
+  font-family: 'Barlow', sans-serif;
+}
+@media print { .print-hint { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-event">TangherFest 2026 &nbsp;·&nbsp; Segonzano – Val di Cembra</div>
+
+    <span class="ball">🏐</span>
+
+    <div class="title-pre">Torneo di Beach Volley su Erba</div>
+    <span class="title-main">Green Volley</span>
+    <span class="title-format">3 × 3</span>
+
+    <div class="hero-date-box">
+      <span>Sabato 8 Agosto 2026</span>
+    </div>
+    <div class="hero-loc">Loc. Doss Venticcia &nbsp;·&nbsp; Segonzano (TN)</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── BODY ── -->
+  <div class="body">
+
+    <!-- Categorie -->
+    <div class="cat-grid">
+      <div class="cat-box cat-pro">
+        <span class="cat-badge badge-pro">Pro</span>
+        <span class="cat-name">Categoria Pro</span>
+        <div class="cat-rules">
+          Con pallavolisti <strong>federati FIPaV</strong><br>
+          Max 2 componenti maschili<br>
+          Min 1 componente femminile
+        </div>
+      </div>
+      <div class="cat-box cat-lib">
+        <span class="cat-badge badge-lib">Amatori</span>
+        <span class="cat-name">Categoria Amatori</span>
+        <div class="cat-rules">
+          Aperta a <strong>tutti</strong><br>
+          Nessun vincolo di genere<br>
+          Nessuna tessera richiesta
+        </div>
+      </div>
+    </div>
+
+    <!-- Prezzo -->
+    <div class="price-row">
+      <div class="price-main">15€ <small>/ persona</small></div>
+      <div class="price-sep">·</div>
+      <div class="price-details">
+        <strong>3 giocatori</strong> → 45€ totali<br>
+        <strong>4 giocatori</strong> → 60€ totali
+        <span class="price-include">🍞 Panino + bibita inclusi per ogni partecipante</span>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="info-grid">
+      <div class="info-box">
+        <span class="info-icon">👥</span>
+        <div>
+          <div class="info-lbl">Posti</div>
+          <div class="info-val">Max 24 squadre</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <span class="info-icon">📅</span>
+        <div>
+          <div class="info-lbl">Giornata</div>
+          <div class="info-val">Sabato 8 Agosto</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <span class="info-icon">📍</span>
+        <div>
+          <div class="info-lbl">Luogo</div>
+          <div class="info-val">Doss Venticcia, Segonzano</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <span class="info-icon">🅿️</span>
+        <div>
+          <div class="info-lbl">Parcheggio</div>
+          <div class="info-val">Gratuito in loco</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Iscrizione -->
+    <div class="iscr-box">
+      <div class="iscr-title">📋 Come iscriversi</div>
+
+      <div class="iscr-row">
+        <span class="iscr-label">Sito web</span>
+        <span class="iscr-value">giovanisegonzano.it</span>
+      </div>
+      <div class="iscr-row">
+        <span class="iscr-label">Bonifico</span>
+        <span class="iscr-value">IT04Z0830435450000068731087</span>
+      </div>
+      <div class="iscr-row">
+        <span class="iscr-label">Causale</span>
+        <span class="iscr-causale">iscrizione-NomeSquadra-tangherVolley2026</span>
+      </div>
+
+      <div class="iscr-contacts">
+        <div class="iscr-contact">
+          <strong>Gabriele Magro</strong>
+          347 720 8122
+        </div>
+        <div class="iscr-contact">
+          <strong>Stefano Cestari</strong>
+          328 474 3223
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>TangherFest 2026</strong><br>
+      Loc. Doss Venticcia · Segonzano (TN)
+    </div>
+    <div>
+      <div class="footer-domain">giovanisegonzano<span>.it</span></div>
+      <div class="footer-sub">Iscriviti online · Posti limitati</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="print-hint">💡 Ctrl+P per stampare · oppure screenshot</div>
+
+</body>
+</html>
