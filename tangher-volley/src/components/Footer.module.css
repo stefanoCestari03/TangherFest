@@ -1,5 +1,7 @@
 .footer{background:rgba(0,0,0,.35);border-top:1px solid rgba(204,56,190,.18);padding:2.5rem 1.5rem 2rem;text-align:center;margin-top:1.5rem;}
 .t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:2.3rem;color:#fff;line-height:.9;display:block;}
 .b{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:2.3rem;color:var(--mg2);line-height:.9;display:block;margin-bottom:.5rem;}
-.sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.3rem;}
-.copy{font-size:11px;color:rgba(255,255,255,.2);line-height:1.6;}
+.sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.5rem;}
+.ig{display:inline-flex;align-items:center;gap:.45rem;font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;letter-spacing:.04em;margin-bottom:.5rem;transition:color .2s;}
+.ig:hover{color:#E1306C;}
+.copy{font-size:11px;color:rgba(255,255,255,.2);line-height:1.6;margin-top:.3rem;}
