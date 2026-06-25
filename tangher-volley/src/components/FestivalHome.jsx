@@ -14,7 +14,7 @@ function CopyBtn({ text, label }) {
   }
   return (
     <button className={`${styles.copyBtn} ${copied ? styles.copyBtnOk : ''}`} onClick={handleCopy}>
-      {copied ? '✓ Copiato!' : `📋 ${label}`}
+      {copied ? '✓ Copiato!' : label}
     </button>
   )
 }
@@ -62,7 +62,6 @@ export default function FestivalHome({ onGoVolley }) {
             {/* Cena Spettacolo */}
             <div className={`${styles.card} ${styles.cardCena}`}>
               <div className={styles.cardHead}>
-                <span className={styles.cardIcon}>🍽️</span>
                 <span className={`${styles.cardTag} ${styles.tag_food}`}>Food</span>
                 <span className={styles.cardPrice}>35€ <small>a persona</small></span>
               </div>
@@ -75,7 +74,7 @@ export default function FestivalHome({ onGoVolley }) {
               </div>
 
               <div className={styles.prenotaBox}>
-                <div className={styles.prenotaTitle}>📋 Prenotazione obbligatoria</div>
+                <div className={styles.prenotaTitle}>Prenotazione obbligatoria</div>
                 <div className={styles.prenotaDeadline}>Entro domenica 26 luglio</div>
                 <a
                   href="https://wa.me/393477441319"
@@ -83,7 +82,7 @@ export default function FestivalHome({ onGoVolley }) {
                   rel="noopener noreferrer"
                   className={styles.waBtn}
                 >
-                  💬 Scrivi su WhatsApp · 347 744 1319
+                  Scrivi su WhatsApp · 347 744 1319
                 </a>
               </div>
 
@@ -104,7 +103,6 @@ export default function FestivalHome({ onGoVolley }) {
             {/* Adry DJ + SAX */}
             <div className={styles.card}>
               <div className={styles.cardHead}>
-                <span className={styles.cardIcon}>🎷</span>
                 <span className={`${styles.cardTag} ${styles.tag_music}`}>Music</span>
                 <span className={styles.cardOra}>A seguire la cena</span>
               </div>
@@ -130,7 +128,6 @@ export default function FestivalHome({ onGoVolley }) {
             {/* Green Volley — card prominente */}
             <div className={`${styles.card} ${styles.cardVolley}`}>
               <div className={styles.cardHead}>
-                <span className={styles.cardIcon}>🏐</span>
                 <span className={`${styles.cardTag} ${styles.tag_sport}`}>Sport</span>
                 <span className={styles.volleyHighlight}>★ TORNEO</span>
               </div>
@@ -141,7 +138,7 @@ export default function FestivalHome({ onGoVolley }) {
               </div>
               <div className={styles.volleyInfo}>
                 <span className={styles.volleyPrice}>15€ <small>a persona</small></span>
-                <span className={styles.volleyInclude}>🍞 panino + bibita inclusi</span>
+                <span className={styles.volleyInclude}>panino + bibita inclusi</span>
               </div>
               <button className={styles.ctaBtn} onClick={onGoVolley}>
                 Iscriviti al Torneo →
@@ -151,7 +148,6 @@ export default function FestivalHome({ onGoVolley }) {
             {/* Laser Game */}
             <div className={styles.card}>
               <div className={styles.cardHead}>
-                <span className={styles.cardIcon}>🔫</span>
                 <span className={`${styles.cardTag} ${styles.tag_fun}`}>Fun</span>
                 <span className={styles.cardOra}>Durante il giorno</span>
               </div>
@@ -162,7 +158,6 @@ export default function FestivalHome({ onGoVolley }) {
             {/* Serata DJ */}
             <div className={`${styles.card} ${styles.cardSerata}`}>
               <div className={styles.cardHead}>
-                <span className={styles.cardIcon}>🎉</span>
                 <span className={`${styles.cardTag} ${styles.tag_party}`}>Party</span>
                 <span className={styles.serataOra}>dalle 21:30</span>
               </div>
@@ -193,7 +188,6 @@ export default function FestivalHome({ onGoVolley }) {
             {/* Lumberjack Show */}
             <div className={`${styles.card} ${styles.cardLumber}`}>
               <div className={styles.cardHead}>
-                <span className={styles.cardIcon}>🪓</span>
                 <span className={`${styles.cardTag} ${styles.tag_show}`}>Show</span>
               </div>
               <div className={styles.cardTitle}>TangherCut<br />Lumberjack Show</div>
@@ -216,7 +210,6 @@ export default function FestivalHome({ onGoVolley }) {
             {/* Bambini */}
             <div className={styles.card}>
               <div className={styles.cardHead}>
-                <span className={styles.cardIcon}>🎈</span>
                 <span className={`${styles.cardTag} ${styles.tag_fun}`}>Fun</span>
               </div>
               <div className={styles.cardTitle}>Animazione per Bambini</div>
@@ -228,7 +221,6 @@ export default function FestivalHome({ onGoVolley }) {
 
         {/* Location bar */}
         <div className={styles.locationBar}>
-          <span>📍</span>
           <span>Loc. Doss Venticcia · Segonzano (TN) · Parcheggio gratuito in loco</span>
         </div>
 

@@ -21,7 +21,7 @@ function IbanCopyBtn() {
       className={copied ? `${styles.ibanCopyBtn} ${styles.ibanCopyBtnOk}` : styles.ibanCopyBtn}
       onClick={handleCopy}
     >
-      {copied ? '✓ Copiato!' : '📋 Copia IBAN'}
+      {copied ? '✓ Copiato!' : 'Copia IBAN'}
     </button>
   )
 }
@@ -190,7 +190,6 @@ export default function FormPage({ squadre, onSuccess }) {
 
   if (status === 'success') return (
     <div className={styles.success}>
-      <div className={styles.sucIcon}>🏐</div>
       <div className={styles.sucTitle}>Iscrizione Confermata!</div>
       <p className={styles.sucTxt}>
         La squadra <strong>{form.nomeSquadra}</strong> è ufficialmente iscritta al torneo.
@@ -199,7 +198,7 @@ export default function FormPage({ squadre, onSuccess }) {
         Una conferma sarà inviata a <strong>{form.email}</strong>.
       </p>
       <div className={styles.sucNote}>
-        ℹ️ Se nella tua squadra sono presenti <strong>minorenni</strong>, ricorda di portare
+        Se nella tua squadra sono presenti <strong>minorenni</strong>, ricorda di portare
         al torneo la <strong>firma autografa sul modulo cartaceo</strong>.
       </div>
       <button className={styles.resetBtn}
@@ -216,13 +215,12 @@ export default function FormPage({ squadre, onSuccess }) {
 
       {/* Honesty banner */}
       <div className={styles.honesty}>
-        <div className={styles.honestyIcon}>🤝</div>
         <div className={styles.honestyTitle}>Un appello all'onestà</div>
         <p className={styles.honestyTxt}>
           Per un torneo <strong>divertente ed equilibrato</strong>, ti chiediamo di inserire
           la <strong>categoria reale</strong> di ogni giocatore con dati veritieri.
           I dati inseriti hanno valore legale per i consensi firmati digitalmente.
-          <strong> Gioca leale!</strong> 🏐
+          <strong> Gioca leale!</strong>
         </p>
       </div>
 
@@ -253,14 +251,14 @@ export default function FormPage({ squadre, onSuccess }) {
           onClick={() => !tessFull && switchTipo('tesserata')}
         >
           <span className={styles.tLbl}>Categoria Pro</span>
-          <span className={styles.tSub}>{tessFull ? '⚠ Posti esauriti' : 'Con pallavolisti federati'}</span>
+          <span className={styles.tSub}>{tessFull ? 'Posti esauriti' : 'Con pallavolisti federati'}</span>
         </button>
         <button
           className={`${styles.topt} ${form.tipo === 'libera' ? styles.tSel : ''} ${libFull ? styles.tDis : ''}`}
           onClick={() => !libFull && switchTipo('libera')}
         >
           <span className={styles.tLbl}>Categoria Amatori</span>
-          <span className={styles.tSub}>{libFull ? '⚠ Posti esauriti' : 'Nessun vincolo'}</span>
+          <span className={styles.tSub}>{libFull ? 'Posti esauriti' : 'Nessun vincolo'}</span>
         </button>
       </div>
 
@@ -390,18 +388,17 @@ export default function FormPage({ squadre, onSuccess }) {
 
         <div className={styles.contattiBlock}>
           <div className={styles.contattiLabel}>Contatti organizzatori</div>
-          <a href="tel:+393477208122" className={styles.contattoRow}>📞 Gabriele Magro · 347 720 8122</a>
-          <a href="tel:+393284743223" className={styles.contattoRow}>📞 Stefano Cestari · 328 474 3223</a>
+          <a href="tel:+393477208122" className={styles.contattoRow}>Gabriele Magro · 347 720 8122</a>
+          <a href="tel:+393284743223" className={styles.contattoRow}>Stefano Cestari · 328 474 3223</a>
         </div>
 
         <div className={styles.payIncluded}>
-          🍞 La quota include una <strong>bibita</strong> e un <strong>panino</strong> per ogni partecipante.
+          La quota include una <strong>bibita</strong> e un <strong>panino</strong> per ogni partecipante.
         </div>
 
         <div className={styles.fg}>
           <label className={styles.lbl}>Ricevuta di pagamento (PDF) *</label>
           <label className={`${styles.upload} ${ricevutaName ? (ricevutaErr ? styles.uploadErr : styles.uploadOk) : ''} ${errors.ricevuta && !ricevutaName ? styles.uploadEf : ''}`}>
-            <span className={styles.upIcon}>📄</span>
             <span className={styles.upTxt}>
               {ricevutaErr
                 ? <><strong style={{ color: 'var(--err)' }}>✗ {ricevutaErr}</strong><br /><small>{ricevutaName}</small></>
@@ -431,18 +428,18 @@ export default function FormPage({ squadre, onSuccess }) {
 
       {gErrs.length > 0 && (
         <div className={styles.gErr}>
-          {gErrs.map((e, i) => <div key={i}>⚠ {e}</div>)}
+          {gErrs.map((e, i) => <div key={i}>{e}</div>)}
         </div>
       )}
       {Object.keys(errors).length > 0 && gErrs.length === 0 && (
-        <div className={styles.gErr}>⚠ Correggi i campi evidenziati in rosso prima di procedere.</div>
+        <div className={styles.gErr}>Correggi i campi evidenziati in rosso prima di procedere.</div>
       )}
 
       <button className={styles.subBtn}
         onClick={handleSubmit}
         disabled={status === 'loading' || curFull}
       >
-        {status === 'loading' ? '⏳ Invio in corso...' : 'Invia Iscrizione →'}
+        {status === 'loading' ? 'Invio in corso...' : 'Invia Iscrizione →'}
       </button>
 
       <p className={styles.disc}>

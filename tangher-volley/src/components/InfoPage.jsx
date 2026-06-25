@@ -1,17 +1,17 @@
 import styles from './InfoPage.module.css'
 
 const INFO_CARDS = [
-  { i: '📅', l: 'Date',    v: '7 · 8 · 9 Agosto 2026' },
-  { i: '📍', l: 'Luogo',   v: 'Loc. Doss Venticcia, Segonzano' },
-  { i: '🏐', l: 'Formato', v: '3 contro 3 su erba' },
-  { i: '👥', l: 'Posti',   v: '12 Tesseratem + 12 Libere' },
+  { l: 'Date',    v: '7 · 8 · 9 Agosto 2026' },
+  { l: 'Luogo',   v: 'Loc. Doss Venticcia, Segonzano' },
+  { l: 'Formato', v: '3 contro 3 su erba' },
+  { l: 'Posti',   v: '12 Tesserati + 12 Amatori' },
 ]
 
 const ATMOSFERA = [
-  { icon: '🎵', title: 'Musica Live',   desc: 'Concerti e DJ set ogni sera nelle aree festival' },
-  { icon: '🍕', title: 'Food & Drink',  desc: 'Stand gastronomici con prodotti tipici trentini' },
-  { icon: '🏐', title: 'Green Volley',  desc: 'Il torneo 3×3 su erba, aperto a tutti i livelli' },
-  { icon: '🎉', title: 'Party & Fun',   desc: 'Atmosfera unica tra amici, natura e divertimento' },
+  { title: 'Musica Live',   desc: 'Concerti e DJ set ogni sera nelle aree festival' },
+  { title: 'Food & Drink',  desc: 'Stand gastronomici con prodotti tipici trentini' },
+  { title: 'Green Volley',  desc: 'Il torneo 3×3 su erba, aperto a tutti i livelli' },
+  { title: 'Party & Fun',   desc: 'Atmosfera unica tra amici, natura e divertimento' },
 ]
 
 export default function InfoPage({ onCta }) {
@@ -30,7 +30,6 @@ export default function InfoPage({ onCta }) {
       <div className={styles.infoGrid}>
         {INFO_CARDS.map(x => (
           <div key={x.l} className={styles.icard}>
-            <span className={styles.iicon}>{x.i}</span>
             <div>
               <div className={styles.ilbl}>{x.l}</div>
               <div className={styles.ival}>{x.v}</div>
@@ -53,7 +52,6 @@ export default function InfoPage({ onCta }) {
       <div className={styles.atmosGrid}>
         {ATMOSFERA.map(x => (
           <div key={x.title} className={styles.atmosCard}>
-            <div className={styles.atmosIcon}>{x.icon}</div>
             <div className={styles.atmosTitle}>{x.title}</div>
             <div className={styles.atmosDesc}>{x.desc}</div>
           </div>
@@ -72,12 +70,11 @@ export default function InfoPage({ onCta }) {
 
       <div className={styles.locationCard}>
         {[
-          { icon: '📍', title: 'Indirizzo',    val: 'Loc. Doss Venticcia · Segonzano (TN)' },
-          { icon: '🚗', title: 'In auto',       val: 'SS47 da Trento → SP11 verso Segonzano · ~30 min' },
-          { icon: '🅿️', title: 'Parcheggio',   val: 'Disponibile in loco, gratuito' },
+          { title: 'Indirizzo',  val: 'Loc. Doss Venticcia · Segonzano (TN)' },
+          { title: 'In auto',    val: 'SS47 da Trento → SP11 verso Segonzano · ~30 min' },
+          { title: 'Parcheggio', val: 'Disponibile in loco, gratuito' },
         ].map(r => (
           <div key={r.title} className={styles.locationRow}>
-            <span className={styles.locationIcon}>{r.icon}</span>
             <div>
               <div className={styles.locationTitle}>{r.title}</div>
               <div className={styles.locationVal}>{r.val}</div>

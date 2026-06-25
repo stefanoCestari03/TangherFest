@@ -1,9 +1,9 @@
 import styles from './PremiPage.module.css'
 
 const PODIO = [
-  { pos: 1, icon: '🥇', label: '1° Classificato' },
-  { pos: 2, icon: '🥈', label: '2° Classificato' },
-  { pos: 3, icon: '🥉', label: '3° Classificato' },
+  { pos: 1, label: '1° Classificato' },
+  { pos: 2, label: '2° Classificato' },
+  { pos: 3, label: '3° Classificato' },
 ]
 
 const CATEGORIE = [
@@ -32,10 +32,8 @@ export default function PremiPage() {
             <div className={styles.podio}>
               {PODIO.map(p => (
                 <div key={p.pos} className={`${styles.podCard} ${styles[`pos${p.pos}`]}`}>
-                  <span className={styles.podIcon}>{p.icon}</span>
                   <span className={styles.podLabel}>{p.label}</span>
                   <span className={styles.podMystery}>???</span>
-                  <span className={styles.podLock}>🔒</span>
                 </div>
               ))}
             </div>
@@ -44,7 +42,6 @@ export default function PremiPage() {
       </div>
 
       <div className={styles.hint}>
-        <span className={styles.hintIcon}>✨</span>
         <div>
           <strong>Vale la pena giocarsi tutto.</strong><br />
           I premi verranno svelati solo sul palco, al momento della premiazione.
