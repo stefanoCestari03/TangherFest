@@ -10,14 +10,14 @@ const FORMATO_STEPS = [
 const DOCUMENTI = [
   { icon: '🪪', title: 'Documento di identità',  desc: 'Obbligatorio per tutti i giocatori, caricato al momento dell\'iscrizione.' },
   { icon: '🏥', title: 'Certificato medico',      desc: 'Sportivo non agonistico valido per la pratica del volley.' },
-  { icon: '📋', title: 'Tessera FIPaV',           desc: 'Solo per i giocatori tesserati — portarla al torneo.' },
+  { icon: '📋', title: 'Tessera FIPaV',           desc: 'Solo se sei tesserato — portala al torneo. Non obbligatoria per partecipare alla categoria Pro.' },
   { icon: '✍️', title: 'Modulo genitore',         desc: 'Per i minorenni: firma autografa del tutore sul modulo cartaceo.' },
 ]
 
 const FAQ = [
   {
-    q: 'Posso giocare senza essere tesserato?',
-    a: 'Sì. La categoria Libera è aperta a tutti, senza vincoli di tessera o livello.',
+    q: 'Posso giocare in categoria Pro senza essere tesserato FIPaV?',
+    a: 'Sì. La categoria Pro è per chi ha un buon livello di gioco, indipendentemente dalla tessera federale. L\'unico vincolo è avere almeno 1 componente femminile tra i 3 titolari.',
   },
   {
     q: 'I minorenni possono partecipare?',
@@ -53,12 +53,12 @@ export default function RegolePage() {
       <div className={styles.rulesGrid}>
         <div className={styles.rbox}>
           <span className={`${styles.rbadge} ${styles.rbT}`}>Pro</span>
-          <div className={styles.rtitle}>Con pallavolisti federati</div>
+          <div className={styles.rtitle}>Buon livello di gioco — tesserati e non</div>
           <ul className={styles.rlist}>
-            <li>Tessera FIPaV obbligatoria per i tesserati</li>
-            <li><strong>Max 2 maschi tra i 3 titolari in campo</strong></li>
-            <li><strong>Minimo 1 componente femminile tra i titolari</strong></li>
+            <li><strong>Minimo 1 componente femminile tra i 3 titolari</strong></li>
+            <li>Max 2 maschi tra i 3 titolari in campo</li>
             <li>Riserva (4° giocatore): nessun vincolo di genere</li>
+            <li>I tesserati FIPaV portino la tessera al torneo</li>
             <li>Documento di identità per tutti i giocatori</li>
             <li>Max 12 squadre per questa categoria</li>
           </ul>
