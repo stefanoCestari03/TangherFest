@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { MAX_TESSERATI, MAX_LIBERE, VERSIONE_DOCUMENTO } from '../lib/constants'
 import { validateForm } from '../lib/validators'
 import { genId, mkGiocatore, initForm } from '../lib/helpers'
-import { insertSquadra, uploadDoc } from '../lib/db'
+import { insertSquadra, uploadDoc, fetchSquadreValidation } from '../lib/db'
 import SlotBar    from './SlotBar'
 import PlayerCard from './PlayerCard'
 import styles     from './FormPage.module.css'
@@ -82,7 +82,9 @@ export default function FormPage({ squadre, onSuccess }) {
 
   const handleSubmit = async () => {
     if (curFull) { setGErrs(['Posti esauriti per questa categoria.']); return }
-    const { errors: errs, globals, isValid } = validateForm(form, squadre, aggiungiQuarto, ricevutaFile)
+    // Fetch fresh minimal data for duplicate validation (non espone IP/ricevute/metadati)
+    const squadreValidation = await fetchSquadreValidation().catch(() => squadre)
+    const { errors: errs, globals, isValid } = validateForm(form, squadreValidation, aggiungiQuarto, ricevutaFile)
     setErrors(errs)
     setGErrs(globals)
     if (!isValid) {
