@@ -4,7 +4,7 @@ const INFO_CARDS = [
   { l: 'Date',    v: '7 · 8 · 9 Agosto 2026' },
   { l: 'Luogo',   v: 'Loc. Doss Venticcia, Segonzano' },
   { l: 'Formato', v: '3 contro 3 su erba' },
-  { l: 'Posti',   v: '12 Tesserati + 12 Amatori' },
+  { l: 'Posti',   v: '12 Pro + 12 Amatori' },
 ]
 
 const ATMOSFERA = [
@@ -23,8 +23,8 @@ export default function InfoPage({ onCta }) {
       <h2 className={styles.h2}>Green Volley <span>3×3</span></h2>
       <p className={styles.lead}>
         Benvenuti al torneo di <strong>Green Volley 3×3</strong> della Tangher Fest 2026!
-        Tre giorni di sport sull'erba verde di Segonzano — aperto a tutti,
-        tesserati e non, immerso nella magia della Val di Cembra.
+        Due categorie: <strong>Pro</strong> per chi sa giocare (con o senza tessera FIPaV, ragazza obbligatoria tra i titolari)
+        e <strong>Amatori</strong> per chi gioca per divertimento senza vincoli di genere.
       </p>
 
       <div className={styles.infoGrid}>

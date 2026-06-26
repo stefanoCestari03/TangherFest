@@ -231,15 +231,16 @@ export default function FormPage({ squadre, onSuccess }) {
         <div className={styles.tipoHintRow}>
           <span className={styles.tipoHintBadge}>Pro</span>
           <span className={styles.tipoHintTxt}>
-            Scegli questa se <strong>almeno un giocatore è tesserato FIPaV</strong> —
-            anche solo uno. Obbliga ad almeno 1 giocatrice F e massimo 2 uomini tesserati tra i titolari.
+            Per chi sa giocare a pallavolo — <strong>con o senza tessera FIPaV</strong>.
+            L'unico vincolo è che tra i 3 titolari ci sia <strong>almeno 1 componente femminile</strong>.
+            I tesserati FIPaV rientrano obbligatoriamente in questa categoria.
           </span>
         </div>
         <div className={styles.tipoHintRow}>
           <span className={`${styles.tipoHintBadge} ${styles.tipoHintBadgeLib}`}>Amatori</span>
           <span className={styles.tipoHintTxt}>
-            Scegli questa se <strong>nessuno è tesserato</strong> —
-            nessun vincolo di genere, aperta a tutti i livelli compresi i principianti.
+            Per chi gioca per divertimento o si avvicina alla pallavolo per la prima volta.
+            <strong> Nessun vincolo di genere</strong>, aperta a tutti i livelli.
           </span>
         </div>
       </div>
@@ -251,7 +252,7 @@ export default function FormPage({ squadre, onSuccess }) {
           onClick={() => !tessFull && switchTipo('tesserata')}
         >
           <span className={styles.tLbl}>Categoria Pro</span>
-          <span className={styles.tSub}>{tessFull ? 'Posti esauriti' : 'Con pallavolisti federati'}</span>
+          <span className={styles.tSub}>{tessFull ? 'Posti esauriti' : '1 ragazza obbligatoria tra i titolari'}</span>
         </button>
         <button
           className={`${styles.topt} ${form.tipo === 'libera' ? styles.tSel : ''} ${libFull ? styles.tDis : ''}`}
@@ -264,8 +265,9 @@ export default function FormPage({ squadre, onSuccess }) {
 
       {isTess && (
         <div className={styles.warn}>
-          <strong>Regola:</strong> tra i 3 titolari: max 2 componenti maschili + almeno 1 femminile obbligatoria.
-          La riserva (4° giocatore) è libera senza vincoli di genere. Allega la tessera FIPaV per i tesserati.
+          <strong>Regola Pro:</strong> tra i 3 titolari è obbligatoria almeno 1 componente femminile (max 2 maschi).
+          La riserva (4° giocatore) è libera senza vincoli di genere.
+          Se hai giocatori con tessera FIPaV, allega la loro tessera.
         </div>
       )}
 
