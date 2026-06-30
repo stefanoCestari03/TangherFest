@@ -274,7 +274,7 @@ export default function FormSection() {
                   <span className={styles.uploadTxt}>
                     {player.fileName
                       ? <><strong style={{ color: '#FF70E8' }}>✓ {player.fileName}</strong></>
-                      : <><strong>Carica file</strong> o trascina qui · JPG, PNG, PDF · max 5MB</>
+                      : <><strong>Carica file</strong> o trascina qui, PDF fronte retro · max 5MB</>
                     }
                   </span>
                 </div>
@@ -282,7 +282,7 @@ export default function FormSection() {
                   type="file"
                   ref={fileRefs[idx]}
                   style={{ display: 'none' }}
-                  accept=".jpg,.jpeg,.png,.pdf"
+                  accept=".pdf"
                   onChange={e => handleFile(idx, e)}
                 />
               </div>
