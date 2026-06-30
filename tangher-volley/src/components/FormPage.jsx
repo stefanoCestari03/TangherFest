@@ -105,20 +105,14 @@ export default function FormPage({ squadre, onSuccess }) {
         const g = form.giocatori[i]
         if (i === 3 && !aggiungiQuarto) { docs.push(null); continue }
 
-        // Documento identità — fronte
-        let fronteDoc = null, retroDoc = null
-        if (g.docFronteObj) {
-          const path = `docs/${id}_g${i + 1}_fronte_${g.docFronteName}`
-          await uploadDoc(g.docFronteObj, path)
-          fronteDoc = path
+        // Documento identità (PDF unico fronte+retro)
+        let docPath = null
+        if (g.docFileObj) {
+          const path = `docs/${id}_g${i + 1}_${g.docFileName}`
+          await uploadDoc(g.docFileObj, path)
+          docPath = path
         }
-        // Documento identità — retro
-        if (g.docRetroObj) {
-          const path = `docs/${id}_g${i + 1}_retro_${g.docRetroName}`
-          await uploadDoc(g.docRetroObj, path)
-          retroDoc = path
-        }
-        docs.push({ fronte: fronteDoc, retro: retroDoc })
+        docs.push(docPath)
 
         // Documento tutore (se minorenne)
         if (g.tutoreFileObj) {
@@ -170,9 +164,8 @@ export default function FormPage({ squadre, onSuccess }) {
               email:    g.tutoreEmail.trim(),
               hasDoc:   !!g.tutoreFileObj,
             } : null,
-            hasDoc:    !!(g.docFronteObj && g.docRetroObj),
-            docFronte: docs[i]?.fronte || null,
-            docRetro:  docs[i]?.retro  || null,
+            hasDoc: !!g.docFileObj,
+            doc:    docs[i] || null,
             facoltativo: i === 3,
           }
         }).filter(Boolean),

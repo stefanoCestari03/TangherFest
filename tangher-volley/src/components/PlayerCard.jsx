@@ -3,11 +3,12 @@ import { validateFile } from '../lib/validators'
 import { isMinorenne, calcolaEta } from '../lib/helpers'
 import styles from './PlayerCard.module.css'
 
-function UploadPdf({ label, fileName, fileErr, onChange, hasError }) {
+function UploadPdf({ label, hint, fileName, fileErr, onChange, hasError }) {
   const cls = fileName ? (fileErr ? styles.upErr : styles.upOk) : hasError ? styles.upErr : ''
   return (
     <div className={styles.fg}>
       <label className={styles.lbl}>{label} *</label>
+      {hint && <div className={styles.uploadHint}>{hint}</div>}
       <label className={`${styles.upload} ${cls}`}>
         <span className={styles.upTxt}>
           {fileErr
@@ -65,14 +66,9 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
     return null
   }
 
-  const handleDocFronte = (file) => {
+  const handleDocFile = (file) => {
     const err = validatePdf(file)
-    set('docFronteObj', file); set('docFronteName', file.name); set('docFronteErr', err || '')
-  }
-
-  const handleDocRetro = (file) => {
-    const err = validatePdf(file)
-    set('docRetroObj', file); set('docRetroName', file.name); set('docRetroErr', err || '')
+    set('docFileObj', file); set('docFileName', file.name); set('docFileErr', err || '')
   }
 
   const handleTutoreFile = (file) => {
@@ -180,26 +176,16 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
           </div>
         </div>
 
-        {/* ── Documento identità fronte + retro ── */}
-        <div className={styles.sectionTitle}>Documento di identità (fronte e retro)</div>
-        <div className={styles.row2}>
-          <UploadPdf
-            label="Fronte"
-            fileName={g.docFronteName}
-            fileErr={g.docFronteErr}
-            hasError={!!errors[`${pre}_docFronte`]}
-            onChange={handleDocFronte}
-          />
-          <UploadPdf
-            label="Retro"
-            fileName={g.docRetroName}
-            fileErr={g.docRetroErr}
-            hasError={!!errors[`${pre}_docRetro`]}
-            onChange={handleDocRetro}
-          />
-        </div>
-        {errors[`${pre}_docFronte`] && <span className={styles.ferr}>{errors[`${pre}_docFronte`]}</span>}
-        {errors[`${pre}_docRetro`]  && <span className={styles.ferr}>{errors[`${pre}_docRetro`]}</span>}
+        {/* ── Documento identità (fronte e retro in un unico PDF) ── */}
+        <UploadPdf
+          label="Documento di identità — fronte e retro in un unico PDF"
+          hint="Scansiona o fotografa fronte e retro nello stesso file PDF"
+          fileName={g.docFileName}
+          fileErr={g.docFileErr}
+          hasError={!!errors[`${pre}_doc`]}
+          onChange={handleDocFile}
+        />
+        {errors[`${pre}_doc`] && <span className={styles.ferr}>{errors[`${pre}_doc`]}</span>}
 
         {/* ── Consensi Maggiorenne ── */}
         {!minore && (

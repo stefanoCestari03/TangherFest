@@ -41,9 +41,8 @@ export const mkGiocatore = (genere = 'M') => ({
   tutoreFileObj:   null,
   tutoreFileErr:   '',
   accettaTutore:   false,
-  // Documento identità — fronte + retro (PDF obbligatorio)
-  docFronteName: '', docFronteObj: null, docFronteErr: '',
-  docRetroName:  '', docRetroObj:  null, docRetroErr:  '',
+  // Documento identità — PDF unico con fronte e retro
+  docFileName: '', docFileObj: null, docFileErr: '',
   // Flag facoltativo (4° giocatore)
   facoltativo: false,
 })

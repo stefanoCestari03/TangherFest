@@ -126,12 +126,9 @@ export function validateForm(form, squadreEsistenti, aggiungiQuarto = false, ric
     // Categoria
     if (!g.categoria) errors[`${pre}_cat`] = 'Seleziona categoria'
 
-    // Documento identità — fronte obbligatorio
-    if (!g.docFronteObj)      errors[`${pre}_docFronte`] = 'Fronte documento obbligatorio'
-    else if (g.docFronteErr)  errors[`${pre}_docFronte`] = g.docFronteErr
-    // Documento identità — retro obbligatorio
-    if (!g.docRetroObj)       errors[`${pre}_docRetro`]  = 'Retro documento obbligatorio'
-    else if (g.docRetroErr)   errors[`${pre}_docRetro`]  = g.docRetroErr
+    // Documento identità — PDF unico obbligatorio
+    if (!g.docFileObj)     errors[`${pre}_doc`] = 'Documento di identità obbligatorio (PDF con fronte e retro)'
+    else if (g.docFileErr) errors[`${pre}_doc`] = g.docFileErr
 
     // CF duplicato
     const cfClean = g.codiceFiscale.trim().toUpperCase()

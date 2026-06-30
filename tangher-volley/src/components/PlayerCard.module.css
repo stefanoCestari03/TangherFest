@@ -51,6 +51,7 @@
 .upIcon { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
 .upTxt  { font-size: 12px; color: rgba(255,255,255,.36); line-height: 1.5; }
 .upTxt strong { color: var(--mg2); }
+.uploadHint { font-size: 11px; color: rgba(96,200,255,.65); margin-bottom: .3rem; letter-spacing: .02em; }
 
 /* Checkbox */
 .checkWrap { margin-bottom: .65rem; }
