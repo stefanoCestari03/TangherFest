@@ -3,10 +3,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --mg:    #CC38BE;
-  --mg2:   #FF70E8;
-  --sky:   #70CAFF;
-  --v2:    #8B30CC;
+  --mg:    #C830B5;
+  --mg2:   #FF45DF;
+  --sky:   #60C8FF;
+  --v2:    #7B22CC;
   --gold:  #FFD97A;
   --ok:    #5EE89A;
   --err:   #FF6B6B;

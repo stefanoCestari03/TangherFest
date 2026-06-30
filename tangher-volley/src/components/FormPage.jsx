@@ -105,14 +105,20 @@ export default function FormPage({ squadre, onSuccess }) {
         const g = form.giocatori[i]
         if (i === 3 && !aggiungiQuarto) { docs.push(null); continue }
 
-        // Documento principale
-        if (g.fileObj) {
-          const path = `docs/${id}_g${i + 1}_${g.fileName}`
-          await uploadDoc(g.fileObj, path)
-          docs.push(path)
-        } else {
-          docs.push(null)
+        // Documento identità — fronte
+        let fronteDoc = null, retroDoc = null
+        if (g.docFronteObj) {
+          const path = `docs/${id}_g${i + 1}_fronte_${g.docFronteName}`
+          await uploadDoc(g.docFronteObj, path)
+          fronteDoc = path
         }
+        // Documento identità — retro
+        if (g.docRetroObj) {
+          const path = `docs/${id}_g${i + 1}_retro_${g.docRetroName}`
+          await uploadDoc(g.docRetroObj, path)
+          retroDoc = path
+        }
+        docs.push({ fronte: fronteDoc, retro: retroDoc })
 
         // Documento tutore (se minorenne)
         if (g.tutoreFileObj) {
@@ -164,8 +170,9 @@ export default function FormPage({ squadre, onSuccess }) {
               email:    g.tutoreEmail.trim(),
               hasDoc:   !!g.tutoreFileObj,
             } : null,
-            hasDoc: !!g.fileObj,
-            doc:    docs[i],
+            hasDoc:    !!(g.docFronteObj && g.docRetroObj),
+            docFronte: docs[i]?.fronte || null,
+            docRetro:  docs[i]?.retro  || null,
             facoltativo: i === 3,
           }
         }).filter(Boolean),

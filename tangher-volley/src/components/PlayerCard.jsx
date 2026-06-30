@@ -3,22 +3,21 @@ import { validateFile } from '../lib/validators'
 import { isMinorenne, calcolaEta } from '../lib/helpers'
 import styles from './PlayerCard.module.css'
 
-function UploadField({ label, fileName, fileErr, onChange, required = false }) {
-  const cls = fileName ? (fileErr ? styles.upErr : styles.upOk) : ''
+function UploadPdf({ label, fileName, fileErr, onChange, hasError }) {
+  const cls = fileName ? (fileErr ? styles.upErr : styles.upOk) : hasError ? styles.upErr : ''
   return (
     <div className={styles.fg}>
-      <label className={styles.lbl}>{label}{required && ' *'}</label>
+      <label className={styles.lbl}>{label} *</label>
       <label className={`${styles.upload} ${cls}`}>
-        <span className={styles.upIcon}>📎</span>
         <span className={styles.upTxt}>
           {fileErr
             ? <><strong style={{ color: 'var(--err)' }}>✗ {fileErr}</strong><br /><small>{fileName}</small></>
             : fileName
               ? <strong style={{ color: 'var(--ok)' }}>✓ {fileName}</strong>
-              : <><strong>Carica file</strong> · JPG, PNG, PDF · max 5MB</>
+              : <><strong>Carica PDF</strong> · Solo PDF · max 5MB</>
           }
         </span>
-        <input type="file" accept=".jpg,.jpeg,.png,.pdf" style={{ display: 'none' }}
+        <input type="file" accept=".pdf,application/pdf" style={{ display: 'none' }}
           onChange={e => {
             const file = e.target.files?.[0]
             if (!file) return
@@ -60,17 +59,26 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
 
   const set = (k, v) => onChange(idx, k, v)
 
-  const handleFile = (file) => {
-    const err = validateFile(file)
-    set('fileObj', file); set('fileName', file.name); set('fileErr', err || '')
+  const validatePdf = (file) => {
+    if (file.type !== 'application/pdf') return 'Solo PDF accettato'
+    if (file.size > 5 * 1024 * 1024) return 'File troppo grande. Max 5MB.'
+    return null
+  }
+
+  const handleDocFronte = (file) => {
+    const err = validatePdf(file)
+    set('docFronteObj', file); set('docFronteName', file.name); set('docFronteErr', err || '')
+  }
+
+  const handleDocRetro = (file) => {
+    const err = validatePdf(file)
+    set('docRetroObj', file); set('docRetroName', file.name); set('docRetroErr', err || '')
   }
 
   const handleTutoreFile = (file) => {
-    const err = validateFile(file)
+    const err = validatePdf(file)
     set('tutoreFileObj', file); set('tutoreFileName', file.name); set('tutoreFileErr', err || '')
   }
-
-  const docLabel = 'Documento di identità'
 
   return (
     <div className={`${styles.card} ${!abilitato ? styles.cardDisabled : ''}`}>
@@ -172,14 +180,26 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
           </div>
         </div>
 
-        {/* ── Documento ── */}
-        <UploadField
-          label={docLabel}
-          fileName={g.fileName}
-          fileErr={g.fileErr}
-          required={isTesserata && idx < 2}
-          onChange={handleFile}
-        />
+        {/* ── Documento identità fronte + retro ── */}
+        <div className={styles.sectionTitle}>Documento di identità (fronte e retro)</div>
+        <div className={styles.row2}>
+          <UploadPdf
+            label="Fronte"
+            fileName={g.docFronteName}
+            fileErr={g.docFronteErr}
+            hasError={!!errors[`${pre}_docFronte`]}
+            onChange={handleDocFronte}
+          />
+          <UploadPdf
+            label="Retro"
+            fileName={g.docRetroName}
+            fileErr={g.docRetroErr}
+            hasError={!!errors[`${pre}_docRetro`]}
+            onChange={handleDocRetro}
+          />
+        </div>
+        {errors[`${pre}_docFronte`] && <span className={styles.ferr}>{errors[`${pre}_docFronte`]}</span>}
+        {errors[`${pre}_docRetro`]  && <span className={styles.ferr}>{errors[`${pre}_docRetro`]}</span>}
 
         {/* ── Consensi Maggiorenne ── */}
         {!minore && (
@@ -255,11 +275,11 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
               {errors[`${pre}_temail`] && <span className={styles.ferr}>{errors[`${pre}_temail`]}</span>}
             </div>
 
-            <UploadField
-              label="Carta d'identità genitore/tutore"
+            <UploadPdf
+              label="Documento identità genitore/tutore"
               fileName={g.tutoreFileName}
               fileErr={g.tutoreFileErr}
-              required
+              hasError={!!errors[`${pre}_tdoc`]}
               onChange={handleTutoreFile}
             />
 
