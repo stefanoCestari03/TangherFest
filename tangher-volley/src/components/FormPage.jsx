@@ -212,9 +212,6 @@ export default function FormPage({ squadre, onSuccess }) {
       <p className={styles.sucTxt}>
         La squadra <strong>{form.nomeSquadra}</strong> è ufficialmente iscritta al torneo.
       </p>
-      <p className={styles.sucTxt}>
-        Una conferma sarà inviata a <strong>{form.email}</strong>.
-      </p>
       <div className={styles.sucNote}>
         Se nella tua squadra sono presenti <strong>minorenni</strong>, ricorda di portare
         al torneo la <strong>firma autografa sul modulo cartaceo</strong>.
