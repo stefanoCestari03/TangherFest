@@ -14,7 +14,6 @@ export default function Hero({ squadre, onCta }) {
         </div>
         <div className={styles.year}>2026</div>
         <div className={styles.pills}>{['Music','Food','Party','Sport'].map(t=><span key={t} className={styles.pill}>{t}</span>)}</div>
-        <div className={styles.divider}/>
         <h1 className={styles.eventTitle}>Green Volley <span>3×3</span></h1>
         <p className={styles.eventSub}>Torneo su erba · Aperto a tutti</p>
         <div className={styles.counters}>
