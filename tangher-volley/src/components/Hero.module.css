@@ -1,5 +1,5 @@
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;padding:3rem 1.5rem;}
-.bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 110%,#1240C0 0%,transparent 60%),radial-gradient(ellipse 80% 60% at 30% 20%,#7B2FBE 0%,transparent 60%),radial-gradient(ellipse 70% 50% at 80% 70%,#C038B8 0%,transparent 55%),linear-gradient(160deg,#0A1848 0%,#2D0A5A 50%,#1A0535 100%);z-index:0;}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 30% 20%,#7B2FBE 0%,transparent 60%),radial-gradient(ellipse 70% 50% at 80% 70%,#C038B8 0%,transparent 55%),linear-gradient(160deg,#1A0535 0%,#2D0A5A 50%,#1A0535 100%);z-index:0;}
 .grid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:52px 52px;}
 .inner{position:relative;z-index:2;max-width:640px;width:100%;}
 .topDate{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.18em;color:var(--sky);text-transform:uppercase;margin-bottom:.15rem;}

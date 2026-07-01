@@ -96,9 +96,7 @@ export default function App() {
       ) : (
         <>
           <div className={styles.gridBg} />
-          <div className={styles.wrap}>
-            <Hero squadre={squadre} onCta={goIscrizione} />
-          </div>
+          <Hero squadre={squadre} onCta={goIscrizione} />
           <Navbar
             tab={tab} setTab={setTab}
             nSquadre={squadre.length}
