@@ -58,5 +58,7 @@ export const initForm = () => ({
     mkGiocatore('M'),
     mkGiocatore('F'),
     { ...mkGiocatore('M'), facoltativo: true },
+    { ...mkGiocatore('M'), facoltativo: true },
+    { ...mkGiocatore('M'), facoltativo: true },
   ],
 })

@@ -31,7 +31,7 @@ export default function FormPage({ squadre, onSuccess }) {
   const [status,         setStatus]        = useState('idle')
   const [errors,         setErrors]        = useState({})
   const [gErrs,          setGErrs]         = useState([])
-  const [aggiungiQuarto, setAggiungiQuarto] = useState(false)
+  const [nRiserve, setNRiserve] = useState(0)
   const [ricevutaFile,   setRicevutaFile]  = useState(null)
   const [ricevutaName,   setRicevutaName]  = useState('')
   const [ricevutaErr,    setRicevutaErr]   = useState(null)
@@ -43,23 +43,22 @@ export default function FormPage({ squadre, onSuccess }) {
 
   const setField = (k, v) => setForm(f => ({ ...f, [k]: v }))
 
-  const handleToggleQuarto = (e) => {
-    const on = e.target.checked
-    setAggiungiQuarto(on)
-    if (!on) {
-      setForm(f => ({
-        ...f,
-        giocatori: f.giocatori.map((g, i) =>
-          i === 3 ? { ...mkGiocatore('M'), facoltativo: true } : g
-        ),
-      }))
-      // Pulisce eventuali errori del 4° giocatore
-      setErrors(prev => {
-        const next = { ...prev }
-        Object.keys(next).filter(k => k.startsWith('g3')).forEach(k => delete next[k])
-        return next
-      })
-    }
+  const handleAddRiserva = () => setNRiserve(n => Math.min(n + 1, 3))
+
+  const handleRemoveRiserva = () => {
+    const idx = 2 + nRiserve
+    setForm(f => ({
+      ...f,
+      giocatori: f.giocatori.map((g, i) =>
+        i === idx ? { ...mkGiocatore('M'), facoltativo: true } : g
+      ),
+    }))
+    setErrors(prev => {
+      const next = { ...prev }
+      Object.keys(next).filter(k => k.startsWith(`g${idx}`)).forEach(k => delete next[k])
+      return next
+    })
+    setNRiserve(n => Math.max(n - 1, 0))
   }
 
   const setGiocatore = (idx, k, v) =>
@@ -72,10 +71,10 @@ export default function FormPage({ squadre, onSuccess }) {
     setForm(f => ({
       ...f, tipo: t,
       giocatori: t === 'tesserata'
-        ? [mkGiocatore('M'), mkGiocatore('M'), mkGiocatore('F'), { ...mkGiocatore('M'), facoltativo: true }]
-        : [mkGiocatore('M'), mkGiocatore('M'), mkGiocatore('M'), { ...mkGiocatore('M'), facoltativo: true }]
+        ? [mkGiocatore('M'), mkGiocatore('M'), mkGiocatore('F'), { ...mkGiocatore('M'), facoltativo: true }, { ...mkGiocatore('M'), facoltativo: true }, { ...mkGiocatore('M'), facoltativo: true }]
+        : [mkGiocatore('M'), mkGiocatore('M'), mkGiocatore('M'), { ...mkGiocatore('M'), facoltativo: true }, { ...mkGiocatore('M'), facoltativo: true }, { ...mkGiocatore('M'), facoltativo: true }]
     }))
-    setAggiungiQuarto(false)
+    setNRiserve(0)
     setErrors({})
     setGErrs([])
   }
@@ -84,7 +83,7 @@ export default function FormPage({ squadre, onSuccess }) {
     if (curFull) { setGErrs(['Posti esauriti per questa categoria.']); return }
     // Fetch fresh minimal data for duplicate validation (non espone IP/ricevute/metadati)
     const squadreValidation = await fetchSquadreValidation().catch(() => squadre)
-    const { errors: errs, globals, isValid } = validateForm(form, squadreValidation, aggiungiQuarto, ricevutaFile)
+    const { errors: errs, globals, isValid } = validateForm(form, squadreValidation, nRiserve, ricevutaFile)
     setErrors(errs)
     setGErrs(globals)
     if (!isValid) {
@@ -103,7 +102,7 @@ export default function FormPage({ squadre, onSuccess }) {
 
       for (let i = 0; i < form.giocatori.length; i++) {
         const g = form.giocatori[i]
-        if (i === 3 && !aggiungiQuarto) { docs.push(null); continue }
+        if (i >= 3 + nRiserve) { docs.push(null); continue }
 
         // Documento identità (PDF unico fronte+retro)
         let docPath = null
@@ -145,7 +144,7 @@ export default function FormPage({ squadre, onSuccess }) {
         telefono:          form.telefono.trim(),
         tipo:              form.tipo,
         giocatori: form.giocatori.map((g, i) => {
-          if (i === 3 && !aggiungiQuarto) return null
+          if (i >= 3 + nRiserve) return null
           return {
             nome:           g.nome.trim(),
             cognome:        g.cognome.trim(),
@@ -166,7 +165,7 @@ export default function FormPage({ squadre, onSuccess }) {
             } : null,
             hasDoc: !!g.docFileObj,
             doc:    docs[i] || null,
-            facoltativo: i === 3,
+            facoltativo: i >= 3,
           }
         }).filter(Boolean),
         ricevutaPath,
@@ -204,7 +203,7 @@ export default function FormPage({ squadre, onSuccess }) {
         al torneo la <strong>firma autografa sul modulo cartaceo</strong>.
       </div>
       <button className={styles.resetBtn}
-        onClick={() => { setForm(initForm()); setStatus('idle'); setErrors({}); setGErrs([]); setAggiungiQuarto(false); setRicevutaFile(null); setRicevutaName(''); setRicevutaErr(null) }}>
+        onClick={() => { setForm(initForm()); setStatus('idle'); setErrors({}); setGErrs([]); setNRiserve(0); setRicevutaFile(null); setRicevutaName(''); setRicevutaErr(null) }}>
         Iscriviti con un'altra squadra
       </button>
     </div>
@@ -312,7 +311,7 @@ export default function FormPage({ squadre, onSuccess }) {
       <div className={styles.card}>
         <div className={styles.cardTitle}>
           Giocatori
-          <span className={styles.cardSub}>3 obbligatori · 1 facoltativo (riserva)</span>
+          <span className={styles.cardSub}>3 obbligatori · fino a 3 riserve</span>
         </div>
 
         {form.giocatori.slice(0, 3).map((g, i) => (
@@ -327,35 +326,32 @@ export default function FormPage({ squadre, onSuccess }) {
           />
         ))}
 
-        {/* Toggle 4° giocatore */}
-        <div className={`${styles.addFourthWrap} ${aggiungiQuarto ? styles.addFourthActive : ''}`}>
-          <label className={styles.addFourthLabel}>
-            <input
-              type="checkbox"
-              className={styles.addFourthCheck}
-              checked={aggiungiQuarto}
-              onChange={handleToggleQuarto}
-            />
-            <span className={`${styles.addFourthBox} ${aggiungiQuarto ? styles.addFourthBoxOn : ''}`}>
-              {aggiungiQuarto ? '✓' : '+'}
-            </span>
-            <div>
-              <span className={styles.addFourthTitle}>Aggiungi 4° giocatore</span>
-              <span className={styles.addFourthSub}> — riserva facoltativa</span>
-            </div>
-          </label>
-        </div>
-
-        {aggiungiQuarto && (
+        {/* Riserve facoltative */}
+        {nRiserve > 0 && Array.from({ length: nRiserve }, (_, k) => k + 3).map(i => (
           <PlayerCard
-            idx={3}
-            giocatore={form.giocatori[3]}
+            key={i}
+            idx={i}
+            giocatore={form.giocatori[i]}
             isTesserata={isTess}
             onChange={setGiocatore}
             errors={errors}
             abilitato={true}
           />
-        )}
+        ))}
+
+        {/* Controlli riserve */}
+        <div className={styles.riserveRow}>
+          {nRiserve > 0 && (
+            <button type="button" className={styles.removeRiservaBtn} onClick={handleRemoveRiserva}>
+              − Rimuovi riserva
+            </button>
+          )}
+          {nRiserve < 3 && (
+            <button type="button" className={styles.addRiservaBtn} onClick={handleAddRiserva}>
+              + Riserva ({3 + nRiserve + 1}° giocatore)
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Pagamento */}
@@ -368,16 +364,13 @@ export default function FormPage({ squadre, onSuccess }) {
             <span className={styles.payUnit}>a persona</span>
           </div>
           <div className={styles.payOptions}>
-            <div className={styles.payOpt}>
-              <span className={styles.payOptPlayers}>4 giocatori</span>
-              <span className={styles.payOptArrow}>→</span>
-              <span className={styles.payOptTotal}>60€ totali</span>
-            </div>
-            <div className={styles.payOpt}>
-              <span className={styles.payOptPlayers}>3 giocatori (minimo)</span>
-              <span className={styles.payOptArrow}>→</span>
-              <span className={styles.payOptTotal}>45€ totali</span>
-            </div>
+            {[3, 4, 5, 6].map(n => (
+              <div key={n} className={styles.payOpt}>
+                <span className={styles.payOptPlayers}>{n} giocatori{n === 3 ? ' (minimo)' : ''}</span>
+                <span className={styles.payOptArrow}>→</span>
+                <span className={styles.payOptTotal}>{n * 15}€ totali</span>
+              </div>
+            ))}
           </div>
         </div>
 

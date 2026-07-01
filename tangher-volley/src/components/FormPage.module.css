@@ -59,62 +59,49 @@
 .resetBtn { margin-top: 1rem; padding: 11px 30px; background: transparent; border: 1.5px solid rgba(204,56,190,.42); border-radius: 50px; color: var(--mg2); cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; transition: background .2s; }
 .resetBtn:hover { background: rgba(204,56,190,.09); }
 
-/* ── Toggle 4° giocatore ── */
-.addFourthWrap {
-  margin: .6rem 0 .5rem;
-  border: 1.5px dashed rgba(204,56,190,.28);
-  border-radius: 11px;
-  overflow: hidden;
-  transition: border-color .2s, background .2s;
-  cursor: pointer;
-}
-.addFourthWrap:hover { background: rgba(204,56,190,.05); }
-.addFourthActive {
-  border-style: solid;
-  border-color: var(--mg);
-  background: rgba(204,56,190,.06);
-}
-.addFourthLabel {
+/* ── Riserve ── */
+.riserveRow {
   display: flex;
-  align-items: center;
-  gap: .75rem;
-  padding: .8rem 1rem;
-  cursor: pointer;
-  user-select: none;
+  gap: .5rem;
+  margin-top: .65rem;
+  flex-wrap: wrap;
 }
-.addFourthCheck { display: none; }
-.addFourthBox {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  border: 1.5px solid rgba(204,56,190,.4);
+.addRiservaBtn {
+  flex: 1;
+  padding: .72rem 1rem;
   background: rgba(204,56,190,.07);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(255,255,255,.4);
-  transition: all .15s;
-}
-.addFourthBoxOn {
-  background: rgba(94,232,154,.15);
-  border-color: var(--ok);
-  color: var(--ok);
-}
-.addFourthTitle {
+  border: 1.5px dashed rgba(204,56,190,.35);
+  border-radius: 10px;
+  color: var(--mg2);
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 14px;
-  text-transform: uppercase;
+  font-size: 13px;
   letter-spacing: .06em;
-  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
 }
-.addFourthSub {
-  font-size: 12px;
-  color: rgba(255,255,255,.38);
+.addRiservaBtn:hover {
+  background: rgba(204,56,190,.14);
+  border-color: var(--mg);
+  border-style: solid;
 }
+.removeRiservaBtn {
+  padding: .72rem 1rem;
+  background: rgba(255,80,80,.06);
+  border: 1px solid rgba(255,80,80,.2);
+  border-radius: 10px;
+  color: rgba(255,110,110,.8);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s;
+}
+.removeRiservaBtn:hover { background: rgba(255,80,80,.12); }
 
 /* ── Sezione Pagamento ── */
 .payPricing { display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 12px; padding: .85rem 1.1rem; margin-bottom: .85rem; flex-wrap: wrap; }

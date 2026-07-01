@@ -45,7 +45,7 @@ export function validateDataNascita(data) {
   return null
 }
 
-export function validateForm(form, squadreEsistenti, aggiungiQuarto = false, ricevutaFile = null) {
+export function validateForm(form, squadreEsistenti, nRiserve = 0, ricevutaFile = null) {
   const errors  = {}
   const globals = []
 
@@ -99,7 +99,7 @@ export function validateForm(form, squadreEsistenti, aggiungiQuarto = false, ric
   })
 
   form.giocatori.forEach((g, i) => {
-    const attivo = i < 3 || (i === 3 && aggiungiQuarto)
+    const attivo = i < 3 + nRiserve
     if (!attivo) return
 
     const pre = `g${i}`
