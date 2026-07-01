@@ -7,6 +7,8 @@ import SlotBar    from './SlotBar'
 import PlayerCard from './PlayerCard'
 import styles     from './FormPage.module.css'
 
+const sanitize = name => name.replace(/[^a-zA-Z0-9._-]/g, '_')
+
 function IbanCopyBtn() {
   const [copied, setCopied] = useState(false)
   const handleCopy = useCallback(() => {
@@ -107,7 +109,7 @@ export default function FormPage({ squadre, onSuccess }) {
         // Documento identità (PDF unico fronte+retro)
         let docPath = null
         if (g.docFileObj) {
-          const path = `docs/${id}_g${i + 1}_${g.docFileName}`
+          const path = `docs/${id}_g${i + 1}_${sanitize(g.docFileName)}`
           await uploadDoc(g.docFileObj, path)
           docPath = path
         }
@@ -115,7 +117,7 @@ export default function FormPage({ squadre, onSuccess }) {
 
         // Documento tutore (se minorenne)
         if (g.tutoreFileObj) {
-          const path = `docs/${id}_g${i + 1}_tutore_${g.tutoreFileName}`
+          const path = `docs/${id}_g${i + 1}_tutore_${sanitize(g.tutoreFileName)}`
           await uploadDoc(g.tutoreFileObj, path)
         }
       }
@@ -123,7 +125,7 @@ export default function FormPage({ squadre, onSuccess }) {
       // Upload ricevuta di pagamento
       let ricevutaPath = null
       if (ricevutaFile) {
-        const rPath = `ricevute/${id}_ricevuta_${ricevutaName}`
+        const rPath = `ricevute/${id}_ricevuta_${sanitize(ricevutaName)}`
         await uploadDoc(ricevutaFile, rPath)
         ricevutaPath = rPath
       }
