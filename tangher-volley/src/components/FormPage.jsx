@@ -196,7 +196,10 @@ export default function FormPage({ squadre, onSuccess }) {
     <div className={styles.success}>
       <div className={styles.sucTitle}>Iscrizione Confermata!</div>
       <p className={styles.sucTxt}>
-        La squadra <strong>{form.nomeSquadra}</strong> è ufficialmente iscritta al torneo.
+        La squadra <strong>{form.nomeSquadra}</strong> è ufficialmente iscritta al torneo Green Volley 3×3 – TangherFest 2026.
+      </p>
+      <p className={styles.sucTxt}>
+        Puoi verificare la tua iscrizione nella sezione <strong>Squadre</strong> — se il nome compare nella lista sei dentro!
       </p>
       <div className={styles.sucNote}>
         Se nella tua squadra sono presenti <strong>minorenni</strong>, ricorda di portare
