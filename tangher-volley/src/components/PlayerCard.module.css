@@ -53,6 +53,11 @@
 .upTxt strong { color: var(--mg2); }
 .uploadHint { font-size: 11px; color: rgba(96,200,255,.65); margin-bottom: .3rem; letter-spacing: .02em; }
 
+.minoreComingSoon { margin-top: .85rem; background: rgba(255,200,80,.06); border: 1px solid rgba(255,200,80,.22); border-radius: 11px; padding: .9rem 1rem; }
+.minoreComingSoonTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--gold); margin-bottom: .35rem; }
+.minoreComingSoonTxt { font-size: 12.5px; color: rgba(255,255,255,.58); line-height: 1.6; }
+.minoreComingSoonTxt strong { color: rgba(255,255,255,.9); }
+
 /* Checkbox */
 .checkWrap { margin-bottom: .65rem; }
 .checkLabel { display: flex; gap: .6rem; cursor: pointer; align-items: flex-start; padding: .6rem .8rem; border-radius: 9px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); transition: background .15s; }

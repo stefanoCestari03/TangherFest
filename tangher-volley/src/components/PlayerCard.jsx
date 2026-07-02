@@ -215,71 +215,14 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
           </div>
         )}
 
-        {/* ── Sezione Minorenni ── */}
+        {/* ── Minorenni — temporaneamente non accettati ── */}
         {minore && (
-          <div className={`${styles.section} ${styles.sectionMinore}`}>
-            <div className={styles.sectionTitle}>
-              <span className={styles.minoreIcon}>👨‍👧</span>
-              Dati Genitore / Tutore legale
-            </div>
-            <p className={styles.sectionDesc}>
-              Il partecipante è minorenne. È obbligatorio compilare i dati del genitore o tutore legale
-              e caricare la copia del documento di identità.
+          <div className={styles.minoreComingSoon}>
+            <div className={styles.minoreComingSoonTitle}>Partecipante minorenne</div>
+            <p className={styles.minoreComingSoonTxt}>
+              L'iscrizione dei minorenni non è ancora disponibile online.
+              A breve sarà pubblicato il <strong>modulo cartaceo da scaricare</strong> — torna a controllare!
             </p>
-
-            <div className={styles.row2}>
-              <div className={styles.fg}>
-                <label className={styles.lbl}>Nome genitore/tutore *</label>
-                <input className={`${styles.input} ${errors[`${pre}_tnome`] ? styles.ef : ''}`}
-                  type="text" placeholder="Nome"
-                  value={g.tutoreNome} onChange={e => set('tutoreNome', e.target.value)} />
-                {errors[`${pre}_tnome`] && <span className={styles.ferr}>{errors[`${pre}_tnome`]}</span>}
-              </div>
-              <div className={styles.fg}>
-                <label className={styles.lbl}>Cognome genitore/tutore *</label>
-                <input className={`${styles.input} ${errors[`${pre}_tcog`] ? styles.ef : ''}`}
-                  type="text" placeholder="Cognome"
-                  value={g.tutoreCognome} onChange={e => set('tutoreCognome', e.target.value)} />
-                {errors[`${pre}_tcog`] && <span className={styles.ferr}>{errors[`${pre}_tcog`]}</span>}
-              </div>
-            </div>
-
-            <div className={styles.fg}>
-              <label className={styles.lbl}>Codice Fiscale genitore/tutore *</label>
-              <input className={`${styles.input} ${errors[`${pre}_tcf`] ? styles.ef : ''}`}
-                type="text" placeholder="RSSMRA85T10A562S"
-                maxLength={16}
-                value={g.tutoreCF} onChange={e => set('tutoreCF', e.target.value.toUpperCase())} />
-              {errors[`${pre}_tcf`] && <span className={styles.ferr}>{errors[`${pre}_tcf`]}</span>}
-            </div>
-
-            <div className={styles.fg}>
-              <label className={styles.lbl}>Email genitore/tutore *</label>
-              <input className={`${styles.input} ${errors[`${pre}_temail`] ? styles.ef : ''}`}
-                type="email" placeholder="genitore@email.it"
-                value={g.tutoreEmail} onChange={e => set('tutoreEmail', e.target.value)} />
-              {errors[`${pre}_temail`] && <span className={styles.ferr}>{errors[`${pre}_temail`]}</span>}
-            </div>
-
-            <UploadPdf
-              label="Documento identità genitore/tutore"
-              fileName={g.tutoreFileName}
-              fileErr={g.tutoreFileErr}
-              hasError={!!errors[`${pre}_tdoc`]}
-              onChange={handleTutoreFile}
-            />
-
-            <CheckboxField
-              id={`${pre}_ttut`}
-              checked={g.accettaTutore}
-              onChange={v => set('accettaTutore', v)}
-              error={errors[`${pre}_ttut`]}
-            >
-              In qualità di <strong>genitore/tutore legale</strong>, autorizzo la partecipazione
-              del minore al torneo e mi assumo la <strong>responsabilità legale</strong> descritta
-              nel modulo di scarico di responsabilità. Dichiaro inoltre che il minore è in possesso
-              di certificato medico sportivo valido.
-            </CheckboxField>
           </div>
         )}
 

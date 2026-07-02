@@ -105,6 +105,12 @@ export function validateForm(form, squadreEsistenti, nRiserve = 0, ricevutaFile 
     const pre = `g${i}`
     const minore = isMinorenne(g.dataNascita)
 
+    // Minorenni temporaneamente non accettati
+    if (minore) {
+      errors[`${pre}_data`] = 'Iscrizione minorenni non ancora disponibile — il modulo sarà pubblicato a breve'
+      return
+    }
+
     // Nome / Cognome
     if (!g.nome.trim())    errors[`${pre}_nome`]    = 'Obbligatorio'
     if (!g.cognome.trim()) errors[`${pre}_cognome`] = 'Obbligatorio'
