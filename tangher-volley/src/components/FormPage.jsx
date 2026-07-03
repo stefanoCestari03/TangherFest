@@ -99,12 +99,13 @@ export default function FormPage({ squadre, onSuccess }) {
 
     setStatus('loading')
     try {
-      const id   = genId()
-      const docs = []
+      const id          = genId()
+      const docs        = []
+      const liberatorie = []
 
       for (let i = 0; i < form.giocatori.length; i++) {
         const g = form.giocatori[i]
-        if (i >= 3 + nRiserve) { docs.push(null); continue }
+        if (i >= 3 + nRiserve) { docs.push(null); liberatorie.push(null); continue }
 
         // Documento identità (PDF unico fronte+retro)
         let docPath = null
@@ -114,6 +115,15 @@ export default function FormPage({ squadre, onSuccess }) {
           docPath = path
         }
         docs.push(docPath)
+
+        // Liberatoria firmata
+        let libPath = null
+        if (g.liberatoriaFileObj) {
+          const path = `liberatorie/${id}_g${i + 1}_${sanitize(g.liberatoriaFileName)}`
+          await uploadDoc(g.liberatoriaFileObj, path)
+          libPath = path
+        }
+        liberatorie.push(libPath)
 
         // Documento tutore (se minorenne)
         if (g.tutoreFileObj) {
@@ -167,6 +177,8 @@ export default function FormPage({ squadre, onSuccess }) {
             } : null,
             hasDoc: !!g.docFileObj,
             doc:    docs[i] || null,
+            hasLiberatoria: !!g.liberatoriaFileObj,
+            liberatoria:    liberatorie[i] || null,
             facoltativo: i >= 3,
           }
         }).filter(Boolean),
