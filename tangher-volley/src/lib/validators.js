@@ -136,9 +136,6 @@ export function validateForm(form, squadreEsistenti, nRiserve = 0, ricevutaFile 
     if (!g.docFileObj)     errors[`${pre}_doc`] = 'Documento di identità obbligatorio (PDF con fronte e retro)'
     else if (g.docFileErr) errors[`${pre}_doc`] = g.docFileErr
 
-    // Liberatoria firmata obbligatoria
-    if (!g.liberatoriaFileObj)     errors[`${pre}_lib`] = 'Carica la liberatoria firmata e compilata'
-    else if (g.liberatoriaFileErr) errors[`${pre}_lib`] = g.liberatoriaFileErr
 
     // CF duplicato
     const cfClean = g.codiceFiscale.trim().toUpperCase()

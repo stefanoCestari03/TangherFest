@@ -76,10 +76,6 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
     set('tutoreFileObj', file); set('tutoreFileName', file.name); set('tutoreFileErr', err || '')
   }
 
-  const handleLiberatoriaFile = (file) => {
-    const err = validatePdf(file)
-    set('liberatoriaFileObj', file); set('liberatoriaFileName', file.name); set('liberatoriaFileErr', err || '')
-  }
 
   return (
     <div className={`${styles.card} ${!abilitato ? styles.cardDisabled : ''}`}>
@@ -192,28 +188,15 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
         />
         {errors[`${pre}_doc`] && <span className={styles.ferr}>{errors[`${pre}_doc`]}</span>}
 
-        {/* ── Liberatoria firmata ── */}
-        {!minore && <>
+        {/* ── Liberatoria da scaricare e portare al torneo ── */}
+        {!minore && (
           <div className={styles.libDownloadRow}>
-            <span className={styles.libDownloadLbl}>Scarica, compila e firma la liberatoria:</span>
-            <a
-              href="/Liberatoria_Maggiorenni_TangherFest2026.pdf"
-              download
-              className={styles.libDownloadBtn}
-            >
+            <span className={styles.libDownloadLbl}>Scarica, compila e porta firmata al torneo:</span>
+            <a href="/Liberatoria_Maggiorenni_TangherFest2026.pdf" download className={styles.libDownloadBtn}>
               Liberatoria Maggiorenni (PDF)
             </a>
           </div>
-          <UploadPdf
-            label="Liberatoria firmata — carica il PDF compilato"
-            hint="Stampa, compila, firma e scansiona il modulo scaricato"
-            fileName={g.liberatoriaFileName}
-            fileErr={g.liberatoriaFileErr}
-            hasError={!!errors[`${pre}_lib`]}
-            onChange={handleLiberatoriaFile}
-          />
-          {errors[`${pre}_lib`] && <span className={styles.ferr}>{errors[`${pre}_lib`]}</span>}
-        </>}
+        )}
 
         {/* ── Consensi Maggiorenne ── */}
         {!minore && (
