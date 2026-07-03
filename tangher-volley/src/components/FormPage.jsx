@@ -28,7 +28,7 @@ function IbanCopyBtn() {
   )
 }
 
-export default function FormPage({ squadre, onSuccess }) {
+export default function FormPage({ nTesserati, nLibere, onSuccess }) {
   const [form,           setForm]          = useState(initForm())
   const [status,         setStatus]        = useState('idle')
   const [errors,         setErrors]        = useState({})
@@ -39,8 +39,8 @@ export default function FormPage({ squadre, onSuccess }) {
   const [ricevutaErr,    setRicevutaErr]   = useState(null)
 
   const isTess   = form.tipo === 'tesserata'
-  const tessFull = squadre.filter(s => s.tipo === 'tesserata').length >= MAX_TESSERATI
-  const libFull  = squadre.filter(s => s.tipo === 'libera').length    >= MAX_LIBERE
+  const tessFull = nTesserati >= MAX_TESSERATI
+  const libFull  = nLibere    >= MAX_LIBERE
   const curFull  = isTess ? tessFull : libFull
 
   const setField = (k, v) => setForm(f => ({ ...f, [k]: v }))
@@ -84,7 +84,7 @@ export default function FormPage({ squadre, onSuccess }) {
   const handleSubmit = async () => {
     if (curFull) { setGErrs(['Posti esauriti per questa categoria.']); return }
     // Fetch fresh minimal data for duplicate validation (non espone IP/ricevute/metadati)
-    const squadreValidation = await fetchSquadreValidation().catch(() => squadre)
+    const squadreValidation = await fetchSquadreValidation().catch(() => [])
     const { errors: errs, globals, isValid } = validateForm(form, squadreValidation, nRiserve, ricevutaFile)
     setErrors(errs)
     setGErrs(globals)
@@ -240,7 +240,7 @@ export default function FormPage({ squadre, onSuccess }) {
         </p>
       </div>
 
-      <SlotBar squadre={squadre} />
+      <SlotBar nTesserati={nTesserati} nLibere={nLibere} />
 
       {/* Guida scelta tipo */}
       <div className={styles.tipoHint}>

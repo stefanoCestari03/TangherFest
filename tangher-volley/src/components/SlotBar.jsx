@@ -1,8 +1,6 @@
 import { MAX_TESSERATI, MAX_LIBERE } from '../lib/constants'
 import styles from './SlotBar.module.css'
-export default function SlotBar({ squadre }) {
-  const t=squadre.filter(s=>s.tipo==='tesserata').length
-  const l=squadre.filter(s=>s.tipo==='libera').length
+export default function SlotBar({ nTesserati: t, nLibere: l }) {
   return <div className={styles.grid}>
     <div className={`${styles.card} ${styles.tess}`}>
       <div className={styles.lbl}>Tesseratem</div>

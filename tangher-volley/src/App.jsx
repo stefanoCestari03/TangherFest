@@ -106,7 +106,11 @@ export default function App() {
           <div className={styles.wrap}>
             {tab === 'info'       && <InfoPage onCta={goIscrizione} />}
             {tab === 'regole'     && <RegolePage />}
-            {tab === 'iscrizione' && <FormPage squadre={squadre} onSuccess={onSuccess} />}
+            {tab === 'iscrizione' && <FormPage
+              nTesserati={squadre.filter(s => s.tipo === 'tesserata').length}
+              nLibere={squadre.filter(s => s.tipo === 'libera').length}
+              onSuccess={onSuccess}
+            />}
             {tab === 'squadre'    && <SquadrePage squadre={squadre} onCta={goIscrizione} />}
             {tab === 'premi'      && <PremiPage />}
           </div>
