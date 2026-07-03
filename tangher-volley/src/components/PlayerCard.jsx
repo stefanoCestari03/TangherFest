@@ -188,12 +188,20 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
         />
         {errors[`${pre}_doc`] && <span className={styles.ferr}>{errors[`${pre}_doc`]}</span>}
 
-        {/* ── Liberatoria da scaricare e portare al torneo ── */}
+        {/* ── Liberatoria obbligatoria (maggiorenni) ── */}
         {!minore && (
-          <div className={styles.libDownloadRow}>
-            <span className={styles.libDownloadLbl}>Scarica, compila e porta firmata al torneo:</span>
-            <a href="/Liberatoria_Maggiorenni_TangherFest2026.pdf" download className={styles.libDownloadBtn}>
-              Liberatoria Maggiorenni (PDF)
+          <div className={styles.liberatoriaBox}>
+            <div className={styles.liberatoriaHeader}>
+              <span className={styles.liberatoriaIcon}>⚠</span>
+              <span className={styles.liberatoriaTitle}>Liberatoria obbligatoria per partecipare</span>
+            </div>
+            <p className={styles.liberatoriaTxt}>
+              La partecipazione al torneo è <strong>vincolata alla consegna della liberatoria firmata</strong>{' '}
+              il giorno del torneo. Senza il modulo firmato e consegnato alla segreteria{' '}
+              <strong>non sarà possibile scendere in campo</strong>.
+            </p>
+            <a href="/Liberatoria_Maggiorenni_TangherFest2026.pdf" download className={styles.libDownloadBtnBig}>
+              ↓ Scarica Liberatoria Maggiorenni (PDF)
             </a>
           </div>
         )}
@@ -229,18 +237,19 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
         {/* ── Minorenni — temporaneamente non accettati ── */}
         {minore && (
           <div className={styles.minoreComingSoon}>
-            <div className={styles.minoreComingSoonTitle}>Partecipante minorenne</div>
+            <div className={styles.minoreComingSoonTitle}>⚠ Partecipante minorenne — liberatoria obbligatoria</div>
             <p className={styles.minoreComingSoonTxt}>
-              L'iscrizione online dei minorenni non è ancora disponibile.
-              Scarica il modulo, fallo compilare e firmare dal genitore/tutore e consegnalo il giorno del torneo.
+              L'iscrizione online dei minorenni non è ancora disponibile.<br />
+              Scarica il modulo, fallo compilare e firmare dal genitore o tutore legale e consegnalo alla segreteria il giorno del torneo.{' '}
+              <strong>Senza il modulo firmato non sarà possibile partecipare.</strong>
             </p>
             <a
               href="/Liberatoria_Minorenni_TangherFest2026.pdf"
               download
-              className={styles.libDownloadBtn}
-              style={{ marginTop: '.6rem', display: 'inline-block' }}
+              className={styles.libDownloadBtnBig}
+              style={{ marginTop: '.6rem' }}
             >
-              Liberatoria Minorenni (PDF)
+              ↓ Scarica Liberatoria Minorenni (PDF)
             </a>
           </div>
         )}
