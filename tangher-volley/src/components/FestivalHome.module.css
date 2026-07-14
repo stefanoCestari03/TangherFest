@@ -104,6 +104,27 @@
 .lumberLogo { height: 36px; width: auto; object-fit: contain; filter: brightness(1.1); }
 .lumberLogoFallback { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1rem; color: rgba(255,255,255,.7); letter-spacing: .05em; text-transform: uppercase; }
 
+/* ── Locandine ── */
+.locandineSection { margin-top: 2.5rem; }
+.locandineSLabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--mg2); margin-bottom: .5rem; }
+.locandineH2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.8rem,6vw,3rem); text-transform: uppercase; margin-bottom: 1.25rem; color: #fff; }
+.locandineH2 span { color: var(--mg2); }
+.locandineGiorno { margin-bottom: 1.5rem; }
+.locandineDayLabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: .65rem; padding-bottom: .4rem; border-bottom: 1px solid rgba(255,255,255,.07); }
+.locandineGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .65rem; }
+.locandineCard { display: block; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); transition: transform .2s, box-shadow .2s; }
+.locandineCard:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.45); }
+.locandineImg { width: 100%; height: auto; display: block; }
+
+/* ── Instagram CTA ── */
+.igCta { display: block; text-decoration: none; margin: 1.5rem 0 1rem; border-radius: 16px; background: linear-gradient(135deg, rgba(131,58,180,.25), rgba(225,48,108,.2), rgba(253,121,50,.15)); border: 1.5px solid rgba(225,48,108,.35); transition: border-color .2s, box-shadow .2s; }
+.igCta:hover { border-color: rgba(225,48,108,.65); box-shadow: 0 6px 28px rgba(225,48,108,.22); }
+.igCtaInner { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 1.25rem; }
+.igCtaIcon { width: 32px; height: 32px; flex-shrink: 0; color: #E1306C; }
+.igCtaHandle { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: .04em; color: #fff; text-transform: lowercase; }
+.igCtaSub { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 2px; }
+.igCtaArrow { margin-left: auto; font-size: 1.2rem; color: rgba(225,48,108,.7); flex-shrink: 0; }
+
 /* ── Location bar ── */
 .locationBar { display: flex; align-items: center; gap: .65rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: .85rem 1.1rem; font-size: 13px; color: rgba(255,255,255,.4); margin-top: 1rem; }
 
