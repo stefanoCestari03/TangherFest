@@ -72,7 +72,7 @@ export default function InfoPage({ onCta }) {
       <div className={styles.locationCard}>
         {[
           { title: 'Indirizzo',  val: 'Loc. Doss Venticcia · Segonzano (TN)' },
-          { title: 'In auto',    val: 'SS47 da Trento → SP11 verso Segonzano · ~30 min' },
+          { title: 'In auto',    val: 'SS47 da Trento → SP71 verso Segonzano · ~30 min' },
           { title: 'Parcheggio', val: 'Disponibile in loco, gratuito' },
         ].map(r => (
           <div key={r.title} className={styles.locationRow}>
