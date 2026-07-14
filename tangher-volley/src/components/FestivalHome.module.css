@@ -58,8 +58,11 @@
 .prenotaBox { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: .9rem 1rem; margin: .85rem 0; }
 .prenotaTitle { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.55); margin-bottom: .2rem; }
 .prenotaDeadline { font-size: 13px; color: var(--err); font-weight: 600; margin-bottom: .7rem; }
-.waBtn { display: inline-flex; align-items: center; gap: .4rem; padding: 10px 20px; background: #25D366; color: #fff; border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .05em; text-decoration: none; transition: opacity .2s; }
-.waBtn:hover { opacity: .88; }
+.waBtn { display: inline-flex; align-items: center; gap: .65rem; padding: 11px 20px 11px 14px; background: linear-gradient(135deg, #1fad55, #25D366); color: #fff; border-radius: 50px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-decoration: none; box-shadow: 0 4px 18px rgba(37,211,102,.38); transition: transform .15s, box-shadow .15s; width: 100%; justify-content: center; }
+.waBtn:hover { transform: translateY(-2px); box-shadow: 0 7px 26px rgba(37,211,102,.52); }
+.waBtnIcon { width: 22px; height: 22px; flex-shrink: 0; }
+.waBtnMain { display: block; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; line-height: 1.2; }
+.waBtnSub { display: block; font-size: 11px; font-weight: 600; opacity: .82; letter-spacing: .04em; }
 
 .ibanMini { background: rgba(204,56,190,.06); border: 1px solid rgba(204,56,190,.18); border-radius: 11px; padding: .85rem 1rem; margin-top: .75rem; }
 .ibanMiniLabel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.35); margin-bottom: .5rem; }
