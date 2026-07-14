@@ -20,3 +20,7 @@
 .countSep{opacity:.3;font-size:1.3rem;align-self:center;}
 .cta{display:inline-block;padding:14px 44px;background:linear-gradient(135deg,var(--v2),var(--mg));color:#fff;border:none;border-radius:50px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 4px 28px rgba(204,56,190,.45);text-shadow:1px 1px 0 rgba(0,0,0,.3);transition:transform .15s,box-shadow .15s;}
 .cta:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(204,56,190,.6);}
+.waRow{margin-top:.9rem;}
+.waBtn{display:inline-flex;align-items:center;gap:.45rem;padding:10px 22px;background:rgba(37,211,102,.12);border:1.5px solid rgba(37,211,102,.38);border-radius:50px;color:#25d366;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;transition:background .15s,box-shadow .15s;}
+.waBtn:hover{background:rgba(37,211,102,.22);box-shadow:0 4px 20px rgba(37,211,102,.25);}
+.waIcon{width:18px;height:18px;flex-shrink:0;}

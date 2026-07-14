@@ -130,7 +130,7 @@ export default function RegolePage() {
       <div className={styles.slabel}>Come si gioca</div>
       <h2 className={styles.h2}>Formato del <span>torneo</span></h2>
       <p className={styles.lead}>
-        Il torneo si svolge nell'arco dei <strong>tre giorni</strong> dell'evento,
+        Il torneo si svolge nella giornata del <strong>sabato 8 agosto</strong>,
         con partite su campo in erba naturale.
       </p>
 

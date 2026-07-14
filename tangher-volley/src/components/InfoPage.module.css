@@ -35,6 +35,10 @@
 .ctaTxt { font-size: 13px; color: rgba(255,255,255,.55); margin-bottom: 1.1rem; }
 .ctaBtn { padding: 13px 36px; background: linear-gradient(135deg, var(--v2), var(--mg)); border: none; border-radius: 50px; color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 20px rgba(204,56,190,.3); transition: opacity .2s, transform .15s; }
 .ctaBtn:hover { opacity: .88; transform: translateY(-1px); }
+.waSep { font-size: 11px; color: rgba(255,255,255,.3); letter-spacing: .1em; text-transform: uppercase; margin: .9rem 0 .7rem; }
+.waBtn { display: inline-flex; align-items: center; gap: .45rem; padding: 11px 24px; background: rgba(37,211,102,.12); border: 1.5px solid rgba(37,211,102,.38); border-radius: 50px; color: #25d366; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: .07em; text-transform: uppercase; text-decoration: none; transition: background .15s, box-shadow .15s; }
+.waBtn:hover { background: rgba(37,211,102,.22); box-shadow: 0 4px 20px rgba(37,211,102,.25); }
+.waIcon { width: 18px; height: 18px; flex-shrink: 0; }
 
 @media (max-width: 500px) {
   .atmosGrid { grid-template-columns: 1fr 1fr; }
