@@ -57,6 +57,18 @@ export default function FestivalHome({ onGoVolley }) {
             <div className={styles.giornoLine} />
           </div>
 
+          <div className={styles.posterStrip}>
+            {[
+              { src: '/locandine/paella.png',            alt: 'Cena Spettacolo Paella' },
+              { src: '/locandine/valentino-magnani.png', alt: 'Valentino Magnani' },
+              { src: '/locandine/adrij-deejay.png',      alt: 'Adrij Deejay' },
+            ].map(p => (
+              <a key={p.src} href={p.src} target="_blank" rel="noreferrer" className={styles.posterItem}>
+                <img src={p.src} alt={p.alt} className={styles.posterImg} loading="lazy" />
+              </a>
+            ))}
+          </div>
+
           <div className={styles.cards}>
 
             {/* Cena Spettacolo */}
@@ -125,6 +137,17 @@ export default function FestivalHome({ onGoVolley }) {
               <span className={styles.giornoData}>8 Agosto</span>
             </div>
             <div className={styles.giornoLine} />
+          </div>
+
+          <div className={styles.posterStrip}>
+            {[
+              { src: '/locandine/apple-dj-trece.png', alt: 'Apple DJ + Trece' },
+              { src: '/locandine/gabriele-purin.png', alt: 'Gabriele Purin' },
+            ].map(p => (
+              <a key={p.src} href={p.src} target="_blank" rel="noreferrer" className={styles.posterItem}>
+                <img src={p.src} alt={p.alt} className={styles.posterImg} loading="lazy" />
+              </a>
+            ))}
           </div>
 
           <div className={styles.cards}>
@@ -220,41 +243,6 @@ export default function FestivalHome({ onGoVolley }) {
               <div className={styles.cardDesc}>Giochi, animazione e divertimento per i più piccoli.</div>
             </div>
 
-          </div>
-        </div>
-
-        {/* ════════════ LOCANDINE ════════════ */}
-        <div className={styles.locandineSection}>
-          <div className={styles.locandineSLabel}>Artisti & Eventi</div>
-          <h2 className={styles.locandineH2}>Le <span>Locandine</span></h2>
-
-          <div className={styles.locandineGiorno}>
-            <div className={styles.locandineDayLabel}>Venerdì 7 Agosto</div>
-            <div className={styles.locandineGrid}>
-              {[
-                { src: '/locandine/adrij-deejay.png',      alt: 'Adrij Deejay – Ven 7 Agosto' },
-                { src: '/locandine/paella.png',            alt: 'Cena Spettacolo Paella – Ven 7 Agosto' },
-                { src: '/locandine/valentino-magnani.png', alt: 'Valentino Magnani – Ven 7 Agosto' },
-              ].map(p => (
-                <a key={p.src} href={p.src} target="_blank" rel="noreferrer" className={styles.locandineCard}>
-                  <img src={p.src} alt={p.alt} className={styles.locandineImg} loading="lazy" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className={styles.locandineGiorno}>
-            <div className={styles.locandineDayLabel}>Sabato 8 Agosto</div>
-            <div className={styles.locandineGrid}>
-              {[
-                { src: '/locandine/apple-dj-trece.png',  alt: 'Apple DJ + Trece – Sab 8 Agosto' },
-                { src: '/locandine/gabriele-purin.png',  alt: 'Gabriele Purin – Sab 8 Agosto' },
-              ].map(p => (
-                <a key={p.src} href={p.src} target="_blank" rel="noreferrer" className={styles.locandineCard}>
-                  <img src={p.src} alt={p.alt} className={styles.locandineImg} loading="lazy" />
-                </a>
-              ))}
-            </div>
           </div>
         </div>
 

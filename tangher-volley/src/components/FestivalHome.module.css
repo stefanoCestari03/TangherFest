@@ -104,17 +104,12 @@
 .lumberLogo { height: 36px; width: auto; object-fit: contain; filter: brightness(1.1); }
 .lumberLogoFallback { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1rem; color: rgba(255,255,255,.7); letter-spacing: .05em; text-transform: uppercase; }
 
-/* ── Locandine ── */
-.locandineSection { margin-top: 2.5rem; }
-.locandineSLabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--mg2); margin-bottom: .5rem; }
-.locandineH2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.8rem,6vw,3rem); text-transform: uppercase; margin-bottom: 1.25rem; color: #fff; }
-.locandineH2 span { color: var(--mg2); }
-.locandineGiorno { margin-bottom: 1.5rem; }
-.locandineDayLabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: .65rem; padding-bottom: .4rem; border-bottom: 1px solid rgba(255,255,255,.07); }
-.locandineGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .65rem; }
-.locandineCard { display: block; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); transition: transform .2s, box-shadow .2s; }
-.locandineCard:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.45); }
-.locandineImg { width: 100%; height: auto; display: block; }
+/* ── Poster strip (dentro ogni giorno) ── */
+.posterStrip { display: flex; gap: .7rem; overflow-x: auto; padding-bottom: .75rem; margin-bottom: 1rem; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.posterStrip::-webkit-scrollbar { display: none; }
+.posterItem { flex-shrink: 0; width: 160px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); scroll-snap-align: start; transition: transform .2s, box-shadow .2s; display: block; }
+.posterItem:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 32px rgba(0,0,0,.5); }
+.posterImg { width: 100%; height: auto; display: block; }
 
 /* ── Instagram CTA ── */
 .igCta { display: block; text-decoration: none; margin: 1.5rem 0 1rem; border-radius: 16px; background: linear-gradient(135deg, rgba(131,58,180,.25), rgba(225,48,108,.2), rgba(253,121,50,.15)); border: 1.5px solid rgba(225,48,108,.35); transition: border-color .2s, box-shadow .2s; }
