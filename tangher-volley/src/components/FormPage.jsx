@@ -249,9 +249,8 @@ export default function FormPage({ nTesserati, nLibere, onSuccess }) {
         <div className={styles.tipoHintRow}>
           <span className={styles.tipoHintBadge}>Pro</span>
           <span className={styles.tipoHintTxt}>
-            Per chi sa giocare a pallavolo — <strong>con o senza tessera FIPaV</strong>.
+            Per chi sa giocare a pallavolo a un buon livello.
             L'unico vincolo è che tra i 3 titolari ci sia <strong>almeno 1 componente femminile</strong>.
-            I tesserati FIPaV rientrano obbligatoriamente in questa categoria.
           </span>
         </div>
         <div className={styles.tipoHintRow}>
@@ -285,7 +284,6 @@ export default function FormPage({ nTesserati, nLibere, onSuccess }) {
         <div className={styles.warn}>
           <strong>Regola Pro:</strong> tra i 3 titolari è obbligatoria almeno 1 componente femminile (max 2 maschi).
           La riserva (4° giocatore) è libera senza vincoli di genere.
-          Se hai giocatori con tessera FIPaV, allega la loro tessera.
         </div>
       )}
 

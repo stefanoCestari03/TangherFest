@@ -24,8 +24,8 @@ export default function InfoPage({ onCta }) {
       <h2 className={styles.h2}>Green Volley <span>3×3</span></h2>
       <p className={styles.lead}>
         Benvenuti al torneo di <strong>Green Volley 3×3</strong> della Tangher Fest 2026!
-        Due categorie: <strong>Pro</strong> per chi sa giocare (con o senza tessera FIPaV, ragazza obbligatoria tra i titolari)
-        e <strong>Amatori</strong> per chi gioca per divertimento senza vincoli di genere.
+        Due categorie basate sul livello di gioco: <strong>Pro</strong> per chi sa giocare (ragazza obbligatoria tra i titolari)
+        e <strong>Amatori</strong> per chi gioca per divertimento, senza vincoli di genere.
       </p>
 
       <div className={styles.infoGrid}>

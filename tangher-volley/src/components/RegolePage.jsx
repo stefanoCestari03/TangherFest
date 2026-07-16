@@ -10,14 +10,13 @@ const FORMATO_STEPS = [
 const DOCUMENTI = [
   { icon: '🪪', title: 'Documento di identità',  desc: 'Obbligatorio per tutti i giocatori, caricato al momento dell\'iscrizione.' },
   { icon: '🏥', title: 'Certificato medico',      desc: 'Sportivo non agonistico valido per la pratica del volley.' },
-  { icon: '📋', title: 'Tessera FIPaV',           desc: 'Solo se sei tesserato — portala al torneo. Non obbligatoria per partecipare alla categoria Pro.' },
   { icon: '✍️', title: 'Modulo genitore',         desc: 'Per i minorenni: firma autografa del tutore sul modulo cartaceo.' },
 ]
 
 const FAQ = [
   {
-    q: 'Posso giocare in categoria Pro senza essere tesserato FIPaV?',
-    a: 'Sì. La categoria Pro è per chi ha un buon livello di gioco, indipendentemente dalla tessera federale. L\'unico vincolo è avere almeno 1 componente femminile tra i 3 titolari.',
+    q: 'Come scelgo tra Pro e Amatori?',
+    a: 'Scegli in base al livello reale di gioco della tua squadra. Pro è per chi gioca a pallavolo con una buona padronanza del gioco; Amatori è per chi gioca per divertimento. L\'unico vincolo tecnico del Pro è avere almeno 1 componente femminile tra i 3 titolari.',
   },
   {
     q: 'I minorenni possono partecipare?',
@@ -53,12 +52,11 @@ export default function RegolePage() {
       <div className={styles.rulesGrid}>
         <div className={styles.rbox}>
           <span className={`${styles.rbadge} ${styles.rbT}`}>Pro</span>
-          <div className={styles.rtitle}>Buon livello di gioco — tesserati e non</div>
+          <div className={styles.rtitle}>Per chi sa giocare a pallavolo</div>
           <ul className={styles.rlist}>
             <li><strong>Minimo 1 componente femminile tra i 3 titolari</strong></li>
             <li>Max 2 maschi tra i 3 titolari in campo</li>
             <li>Riserva (4° giocatore): nessun vincolo di genere</li>
-            <li>I tesserati FIPaV portino la tessera al torneo</li>
             <li>Documento di identità per tutti i giocatori</li>
             <li>Max 12 squadre per questa categoria</li>
           </ul>
@@ -67,7 +65,6 @@ export default function RegolePage() {
           <span className={`${styles.rbadge} ${styles.rbL}`}>Amatori</span>
           <div className={styles.rtitle}>Aperta a tutti</div>
           <ul className={styles.rlist}>
-            <li>Nessuna tessera federale richiesta</li>
             <li><strong>Nessun vincolo di genere</strong></li>
             <li>Aperta a tutti i livelli e età</li>
             <li>Documento di identità richiesto</li>
