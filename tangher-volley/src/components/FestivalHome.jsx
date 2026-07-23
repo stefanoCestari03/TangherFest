@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styles from './FestivalHome.module.css'
 
 const IBAN = 'IT04Z0830435450000068731087'
-const DJ_LINEUP = ['Ober One', 'Upward', 'Lex e Mirko', 'Des3ett', 'Purin', 'Danyl']
+const DJ_LINEUP = ['Apple DJ + Trece', 'Gabriele Purin', 'Upward', 'Mirko & Lex', 'Dany.L', 'Desbett']
 
 function CopyBtn({ text, label }) {
   const [copied, setCopied] = useState(false)
@@ -68,6 +68,7 @@ export default function FestivalHome({ onGoVolley }) {
               </a>
             ))}
           </div>
+
 
           <div className={styles.cards}>
 
@@ -141,8 +142,14 @@ export default function FestivalHome({ onGoVolley }) {
 
           <div className={styles.posterStrip}>
             {[
-              { src: '/locandine/apple-dj-trece.png', alt: 'Apple DJ + Trece' },
-              { src: '/locandine/gabriele-purin.png', alt: 'Gabriele Purin' },
+              { src: '/locandine/green-volley.png',    alt: 'Green Volley 3x3' },
+              { src: '/locandine/apple-dj-trece.png',  alt: 'Apple DJ + Trece' },
+              { src: '/locandine/gabriele-purin.png',  alt: 'Gabriele Purin' },
+              { src: '/locandine/upward.png',          alt: 'Upward' },
+              { src: '/locandine/country-lets-go.png', alt: 'Country Lets Go' },
+              { src: '/locandine/mirko-lex.png',       alt: 'Mirko & Lex' },
+              { src: '/locandine/dany-l.png',          alt: 'Dany.L' },
+              { src: '/locandine/desbett.png',         alt: 'Desbett' },
             ].map(p => (
               <a key={p.src} href={p.src} target="_blank" rel="noreferrer" className={styles.posterItem}>
                 <img src={p.src} alt={p.alt} className={styles.posterImg} loading="lazy" />
@@ -208,6 +215,16 @@ export default function FestivalHome({ onGoVolley }) {
               <span className={styles.giornoData}>9 Agosto</span>
             </div>
             <div className={styles.giornoLine} />
+          </div>
+
+          <div className={styles.posterStrip}>
+            {[
+              { src: '/locandine/timber-team-giacomelli.png', alt: 'Timber Team Giacomelli – Lumberjack Show' },
+            ].map(p => (
+              <a key={p.src} href={p.src} target="_blank" rel="noreferrer" className={styles.posterItem}>
+                <img src={p.src} alt={p.alt} className={styles.posterImg} loading="lazy" />
+              </a>
+            ))}
           </div>
 
           <div className={styles.cards}>
