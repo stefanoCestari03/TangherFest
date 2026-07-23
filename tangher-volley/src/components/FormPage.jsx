@@ -390,7 +390,8 @@ export default function FormPage({ nTesserati, nLibere, onSuccess }) {
         </div>
 
         <div className={styles.ibanBlock}>
-          <div className={styles.ibanLabel}>Bonifico bancario all'associazione</div>
+          <div className={styles.ibanLabel}>Bonifico bancario</div>
+          <div className={styles.ibanBenef}>Beneficiario: <strong>Giovani Segonzano</strong></div>
           <div className={styles.ibanRow}>
             <div className={styles.ibanCode}>IT04Z0830435450000068731087</div>
             <IbanCopyBtn />

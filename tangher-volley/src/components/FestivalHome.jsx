@@ -103,7 +103,7 @@ export default function FestivalHome({ onGoVolley }) {
               </div>
 
               <div className={styles.ibanMini}>
-                <div className={styles.ibanMiniLabel}>Bonifico bancario</div>
+                <div className={styles.ibanMiniLabel}>Bonifico bancario · Beneficiario: <strong style={{color:'rgba(255,255,255,.75)'}}>Giovani Segonzano</strong></div>
                 <div className={styles.ibanMiniRow}>
                   <span className={styles.ibanMiniCode}>{IBAN}</span>
                   <CopyBtn text={IBAN} label="Copia IBAN" />

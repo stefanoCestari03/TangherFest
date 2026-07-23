@@ -15,7 +15,7 @@ function SlotRow({ tipo, count, max }) {
   return (
     <div className={`${styles.slotRow} ${isTess ? '' : styles.slotLib}`}>
       <div className={styles.slotHeader}>
-        <span className={styles.slotName}>{isTess ? 'Tesseratem' : 'Libere'}</span>
+        <span className={styles.slotName}>{isTess ? 'Pro' : 'Amatori'}</span>
         <span className={`${styles.slotCount} ${full ? styles.slotFull : ''}`}>
           {count}<span className={styles.slotMax}>/{max}</span>
         </span>

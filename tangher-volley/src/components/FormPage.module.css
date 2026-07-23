@@ -126,7 +126,9 @@
 .payOptTotal { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; color: var(--mg2); }
 
 .ibanBlock { background: rgba(204,56,190,.06); border: 1px solid rgba(204,56,190,.2); border-radius: 11px; padding: .9rem 1.1rem; margin-bottom: .85rem; }
-.ibanLabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.38); margin-bottom: .35rem; }
+.ibanLabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.38); margin-bottom: .2rem; }
+.ibanBenef { font-size: 13px; color: rgba(255,255,255,.55); margin-bottom: .4rem; }
+.ibanBenef strong { color: rgba(255,255,255,.9); }
 .ibanRow { display: flex; align-items: center; gap: .65rem; flex-wrap: wrap; margin-bottom: .2rem; }
 .ibanCode { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; letter-spacing: .06em; color: #fff; word-break: break-all; }
 .ibanCopyBtn { padding: 5px 13px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 20px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.7); cursor: pointer; transition: all .2s; white-space: nowrap; flex-shrink: 0; }
