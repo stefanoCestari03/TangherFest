@@ -242,6 +242,11 @@ export default function FormPage({ nTesserati, nLibere, onSuccess }) {
         </p>
       </div>
 
+      <div className={styles.deadline}>
+        <span className={styles.deadlineIcon}>📅</span>
+        <span>Iscrizioni aperte fino al <strong>31 luglio 2026</strong></span>
+      </div>
+
       <SlotBar nTesserati={nTesserati} nLibere={nLibere} />
 
       {/* Guida scelta tipo */}

@@ -1,11 +1,12 @@
 import styles from './InfoPage.module.css'
 
 const INFO_CARDS = [
-  { l: 'Giorno torneo', v: 'Sabato 8 Agosto 2026' },
-  { l: 'Evento',        v: 'TangherFest 7 · 8 · 9 Agosto' },
-  { l: 'Luogo',         v: 'Loc. Doss Venticcia, Segonzano' },
-  { l: 'Formato',       v: '3 contro 3 su erba' },
-  { l: 'Posti',         v: '12 Pro + 12 Amatori' },
+  { l: 'Giorno torneo',        v: 'Sabato 8 Agosto 2026' },
+  { l: 'Scadenza iscrizioni',  v: '31 Luglio 2026', highlight: true },
+  { l: 'Evento',               v: 'TangherFest 7 · 8 · 9 Agosto' },
+  { l: 'Luogo',                v: 'Loc. Doss Venticcia, Segonzano' },
+  { l: 'Formato',              v: '3 contro 3 su erba' },
+  { l: 'Posti',                v: '12 Pro + 12 Amatori' },
 ]
 
 const ATMOSFERA = [
@@ -30,10 +31,10 @@ export default function InfoPage({ onCta }) {
 
       <div className={styles.infoGrid}>
         {INFO_CARDS.map(x => (
-          <div key={x.l} className={styles.icard}>
+          <div key={x.l} className={`${styles.icard} ${x.highlight ? styles.icardDeadline : ''}`}>
             <div>
               <div className={styles.ilbl}>{x.l}</div>
-              <div className={styles.ival}>{x.v}</div>
+              <div className={`${styles.ival} ${x.highlight ? styles.ivalDeadline : ''}`}>{x.v}</div>
             </div>
           </div>
         ))}
@@ -87,7 +88,7 @@ export default function InfoPage({ onCta }) {
       {/* CTA */}
       <div className={styles.cta}>
         <div className={styles.ctaTitle}>Pronto a scendere in campo?</div>
-        <p className={styles.ctaTxt}>Iscriviti ora — i posti sono limitati a 24 squadre totali.</p>
+        <p className={styles.ctaTxt}>Iscriviti ora — i posti sono limitati a 24 squadre totali. <strong>Iscrizioni aperte fino al 31 luglio.</strong></p>
         <button className={styles.ctaBtn} onClick={onCta}>Iscriviti al Torneo →</button>
       </div>
 
