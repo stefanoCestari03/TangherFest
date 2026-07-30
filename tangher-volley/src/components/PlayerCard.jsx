@@ -234,25 +234,77 @@ export default function PlayerCard({ idx, giocatore: g, isTesserata, onChange, e
           </div>
         )}
 
-        {/* ── Minorenni — temporaneamente non accettati ── */}
-        {minore && (
-          <div className={styles.minoreComingSoon}>
-            <div className={styles.minoreComingSoonTitle}>⚠ Partecipante minorenne — liberatoria obbligatoria</div>
-            <p className={styles.minoreComingSoonTxt}>
-              L'iscrizione online dei minorenni non è ancora disponibile.<br />
-              Scarica il modulo, fallo compilare e firmare dal genitore o tutore legale e consegnalo alla segreteria il giorno del torneo.{' '}
-              <strong>Senza il modulo firmato non sarà possibile partecipare.</strong>
+        {/* ── Minorenni — liberatoria + dati tutore ── */}
+        {minore && (<>
+          <div className={styles.liberatoriaBox}>
+            <div className={styles.liberatoriaHeader}>
+              <span className={styles.liberatoriaIcon}>⚠</span>
+              <span className={styles.liberatoriaTitle}>Partecipante minorenne — liberatoria obbligatoria</span>
+            </div>
+            <p className={styles.liberatoriaTxt}>
+              Scarica il modulo, fallo firmare dal genitore o tutore e{' '}
+              <strong>consegnalo alla segreteria il giorno del torneo</strong>.{' '}
+              Senza il modulo firmato <strong>non sarà possibile partecipare</strong>.
             </p>
-            <a
-              href="/Liberatoria_Minorenni_TangherFest2026.pdf"
-              download
-              className={styles.libDownloadBtnBig}
-              style={{ marginTop: '.6rem' }}
-            >
+            <a href="/Liberatoria_Minorenni_TangherFest2026.pdf" download className={styles.libDownloadBtnBig}>
               ↓ Scarica Liberatoria Minorenni (PDF)
             </a>
           </div>
-        )}
+
+          <div className={styles.section}>
+            <div className={styles.sectionTitle}>Dati Genitore / Tutore Legale</div>
+            <div className={styles.sectionMinore}>
+              <div className={styles.row2}>
+                <div className={styles.fg}>
+                  <label className={styles.lbl}>Nome genitore *</label>
+                  <input className={`${styles.input} ${errors[`${pre}_tnome`] ? styles.ef : ''}`}
+                    type="text" placeholder="Nome"
+                    value={g.tutoreNome} onChange={e => set('tutoreNome', e.target.value)} />
+                  {errors[`${pre}_tnome`] && <span className={styles.ferr}>{errors[`${pre}_tnome`]}</span>}
+                </div>
+                <div className={styles.fg}>
+                  <label className={styles.lbl}>Cognome genitore *</label>
+                  <input className={`${styles.input} ${errors[`${pre}_tcog`] ? styles.ef : ''}`}
+                    type="text" placeholder="Cognome"
+                    value={g.tutoreCognome} onChange={e => set('tutoreCognome', e.target.value)} />
+                  {errors[`${pre}_tcog`] && <span className={styles.ferr}>{errors[`${pre}_tcog`]}</span>}
+                </div>
+              </div>
+              <div className={styles.row2}>
+                <div className={styles.fg}>
+                  <label className={styles.lbl}>Codice Fiscale genitore *</label>
+                  <input className={`${styles.input} ${errors[`${pre}_tcf`] ? styles.ef : ''}`}
+                    type="text" placeholder="RSSMRA85T10A562S" maxLength={16}
+                    value={g.tutoreCF} onChange={e => set('tutoreCF', e.target.value.toUpperCase())} />
+                  {errors[`${pre}_tcf`] && <span className={styles.ferr}>{errors[`${pre}_tcf`]}</span>}
+                </div>
+                <div className={styles.fg}>
+                  <label className={styles.lbl}>Email genitore *</label>
+                  <input className={`${styles.input} ${errors[`${pre}_temail`] ? styles.ef : ''}`}
+                    type="email" placeholder="genitore@email.it"
+                    value={g.tutoreEmail} onChange={e => set('tutoreEmail', e.target.value)} />
+                  {errors[`${pre}_temail`] && <span className={styles.ferr}>{errors[`${pre}_temail`]}</span>}
+                </div>
+              </div>
+              <UploadPdf
+                label="Documento identità genitore — fronte e retro in un unico PDF"
+                fileName={g.tutoreFileName}
+                fileErr={g.tutoreFileErr}
+                hasError={!!errors[`${pre}_tdoc`]}
+                onChange={handleTutoreFile}
+              />
+              {errors[`${pre}_tdoc`] && <span className={styles.ferr}>{errors[`${pre}_tdoc`]}</span>}
+              <CheckboxField
+                id={`${pre}_ttut`}
+                checked={g.accettaTutore}
+                onChange={v => set('accettaTutore', v)}
+                error={errors[`${pre}_ttut`]}
+              >
+                In qualità di genitore/tutore, <strong>autorizzo la partecipazione del minore</strong> e mi assumo la responsabilità legale descritta nel modulo di scarico.
+              </CheckboxField>
+            </div>
+          </div>
+        </>)}
 
       </>}
     </div>
