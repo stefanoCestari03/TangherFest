@@ -123,6 +123,23 @@
 /* ── Location bar ── */
 .locationBar { display: flex; align-items: center; gap: .65rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: .85rem 1.1rem; font-size: 13px; color: rgba(255,255,255,.4); margin-top: 1rem; }
 
+/* ── Bio Volley Promo ── */
+.biolagoPromo { margin-top: 1.5rem; background: rgba(30,80,200,.09); border: 1.5px solid rgba(60,120,255,.22); border-radius: 16px; padding: 1.1rem 1.2rem; }
+.biolagoChip { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .18em; color: rgba(100,170,255,.75); border: 1px solid rgba(100,170,255,.25); border-radius: 20px; padding: 2px 10px; margin-bottom: .75rem; }
+.biolagoInner { display: flex; gap: 1rem; align-items: flex-start; }
+.bioPosterWrap { flex-shrink: 0; width: 110px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(60,120,255,.25); display: block; transition: transform .2s, box-shadow .2s; }
+.bioPosterWrap:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(30,80,200,.45); }
+.bioPoster { width: 100%; height: auto; display: block; }
+.bioInfo { flex: 1; min-width: 0; }
+.bioTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.5rem; text-transform: uppercase; color: #fff; line-height: 1; margin-bottom: .2rem; }
+.bioDate { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(100,170,255,.75); margin-bottom: .5rem; }
+.bioDesc { font-size: 12.5px; color: rgba(255,255,255,.5); line-height: 1.6; margin-bottom: .7rem; }
+.bioContacts { display: flex; flex-direction: column; gap: .4rem; }
+.bioIg { display: inline-flex; align-items: center; gap: .35rem; font-size: 12.5px; font-weight: 700; color: #E1306C; text-decoration: none; transition: color .15s; }
+.bioIg:hover { color: #ff6090; }
+.bioTel { font-size: 12.5px; color: rgba(255,255,255,.55); text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .04em; transition: color .15s; }
+.bioTel:hover { color: #fff; }
+
 @media (max-width: 480px) {
   .giornoNome { font-size: 1.35rem; }
   .ibanMiniCode { font-size: .95rem; }
