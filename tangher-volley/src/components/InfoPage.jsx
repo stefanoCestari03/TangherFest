@@ -6,7 +6,7 @@ const INFO_CARDS = [
   { l: 'Evento',               v: 'TangherFest 7 · 8 · 9 Agosto' },
   { l: 'Luogo',                v: 'Loc. Doss Venticcia, Segonzano' },
   { l: 'Formato',              v: '3 contro 3 su erba' },
-  { l: 'Posti',                v: '12 Pro + 12 Amatori' },
+  { l: 'Posti',                v: '16 Pro + 16 Amatori' },
 ]
 
 const ATMOSFERA = [
@@ -88,7 +88,7 @@ export default function InfoPage({ onCta }) {
       {/* CTA */}
       <div className={styles.cta}>
         <div className={styles.ctaTitle}>Pronto a scendere in campo?</div>
-        <p className={styles.ctaTxt}>Iscriviti ora — i posti sono limitati a 24 squadre totali. <strong>Iscrizioni aperte fino al 31 luglio.</strong></p>
+        <p className={styles.ctaTxt}>Iscriviti ora — i posti sono limitati a 32 squadre totali. <strong>Iscrizioni aperte fino al 31 luglio.</strong></p>
         <button className={styles.ctaBtn} onClick={onCta}>Iscriviti al Torneo →</button>
       </div>
 

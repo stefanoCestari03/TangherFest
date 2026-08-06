@@ -1,0 +1,125 @@
+/* ── Layout ──────────────────────────────────────────────────────────────────── */
+.wrap { padding: 2.5rem 0 4rem; }
+.slabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--mg2); margin-bottom: .5rem; }
+.h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.8rem,6vw,3rem); text-transform: uppercase; margin-bottom: .5rem; color: #fff; }
+.h2 span { color: var(--mg2); }
+.lead { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,.55); margin-bottom: 1.5rem; }
+
+/* ── Admin bar ───────────────────────────────────────────────────────────────── */
+.adminBar { margin-bottom: 1.25rem; }
+.adminLoginTrigger { background: none; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; color: rgba(255,255,255,.38); font-size: 11px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .45rem .85rem; cursor: pointer; transition: all .2s; }
+.adminLoginTrigger:hover { border-color: rgba(255,255,255,.28); color: rgba(255,255,255,.65); }
+.adminRow { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; background: rgba(139,48,204,.1); border: 1px solid rgba(139,48,204,.25); border-radius: 10px; padding: .65rem 1rem; }
+.adminBadge { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: .85rem; text-transform: uppercase; color: var(--mg2); }
+.adminEmail { font-size: 11px; color: rgba(255,255,255,.4); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btnSm { background: rgba(139,48,204,.3); border: 1px solid rgba(139,48,204,.4); border-radius: 6px; color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: .35rem .75rem; cursor: pointer; transition: opacity .2s; white-space: nowrap; }
+.btnSm:hover { opacity: .8; }
+.btnSm:disabled { opacity: .45; cursor: default; }
+.btnSmGhost { background: none; border: 1px solid rgba(255,255,255,.12); border-radius: 6px; color: rgba(255,255,255,.4); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: .35rem .75rem; cursor: pointer; transition: all .2s; }
+.btnSmGhost:hover { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.7); }
+
+/* ── Login form ──────────────────────────────────────────────────────────────── */
+.loginForm { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: .65rem; max-width: 320px; }
+.loginTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.1rem; text-transform: uppercase; color: #fff; }
+.loginInput { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: .65rem .8rem; color: #fff; font-size: 13px; outline: none; transition: border-color .2s; }
+.loginInput:focus { border-color: rgba(204,56,190,.5); }
+.loginInput::placeholder { color: rgba(255,255,255,.3); }
+.formErr { font-size: 12px; color: var(--err); }
+.loginBtn { padding: .7rem; background: linear-gradient(135deg, var(--v2), var(--mg)); border: none; border-radius: 8px; color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: .95rem; text-transform: uppercase; cursor: pointer; transition: opacity .2s; }
+.loginBtn:hover { opacity: .85; }
+.loginBtn:disabled { opacity: .5; cursor: default; }
+
+/* ── Empty state ─────────────────────────────────────────────────────────────── */
+.empty { text-align: center; padding: 3.5rem 1rem; }
+.emptyIcon { font-size: 3rem; margin-bottom: .75rem; }
+.emptyTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.4rem; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: .5rem; }
+.emptyText { font-size: 13px; color: rgba(255,255,255,.38); line-height: 1.75; }
+
+/* ── Category tabs ───────────────────────────────────────────────────────────── */
+.catTabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
+.catTab { flex: 1; max-width: 120px; padding: .6rem 1rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 8px; color: rgba(255,255,255,.45); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: all .2s; }
+.catTab.catAct { background: rgba(139,48,204,.2); border-color: rgba(204,56,190,.4); color: #fff; }
+
+/* ── Section ─────────────────────────────────────────────────────────────────── */
+.section { margin-bottom: 2.5rem; }
+.sectionMeta { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .18em; color: rgba(255,255,255,.3); margin-bottom: .3rem; }
+.sectionTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.45rem; text-transform: uppercase; color: #fff; margin-bottom: 1rem; }
+
+/* ── Group grid ──────────────────────────────────────────────────────────────── */
+.groupGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: .9rem; }
+.groupCard { background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.groupHeader { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.05rem; text-transform: uppercase; color: var(--mg2); background: rgba(204,56,190,.08); border-bottom: 1px solid rgba(204,56,190,.12); padding: .6rem 1rem; letter-spacing: .06em; }
+
+/* ── Standings table ─────────────────────────────────────────────────────────── */
+.table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+.table thead tr { border-bottom: 1px solid rgba(255,255,255,.07); }
+.table th { padding: .4rem .5rem; color: rgba(255,255,255,.3); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; text-align: center; }
+.table th:nth-child(2), .table td:nth-child(2) { text-align: left; }
+.table td { padding: .45rem .5rem; color: rgba(255,255,255,.75); text-align: center; border-bottom: 1px solid rgba(255,255,255,.04); }
+.table tbody tr:last-child td { border-bottom: none; }
+.tdPos { color: rgba(255,255,255,.4) !important; width: 20px; }
+.tdTeam { max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trAdvance td { background: rgba(100,230,100,.04); }
+.trAdvance .tdPos { color: var(--ok) !important; font-weight: 700; }
+.pos { color: var(--ok) !important; font-weight: 700; }
+.neg { color: var(--err) !important; }
+
+/* ── Match list ──────────────────────────────────────────────────────────────── */
+.matchList { border-top: 1px solid rgba(255,255,255,.06); padding: .35rem 0; }
+.matchRow { display: flex; align-items: center; gap: .4rem; padding: .4rem .75rem; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,.03); }
+.matchRow:last-child { border-bottom: none; }
+.matchDone { opacity: .85; }
+.matchTime { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.3); white-space: nowrap; flex-shrink: 0; width: 38px; }
+.matchTeams { flex: 1; display: flex; align-items: center; gap: .4rem; min-width: 0; flex-wrap: wrap; }
+.matchVs { color: rgba(255,255,255,.25); font-size: 10px; flex-shrink: 0; }
+.matchScore { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 14px; color: #fff; flex-shrink: 0; }
+.winner { color: var(--ok); font-weight: 700; }
+
+/* ── Edit button ─────────────────────────────────────────────────────────────── */
+.editBtn { background: none; border: 1px solid rgba(255,255,255,.12); border-radius: 5px; color: rgba(255,255,255,.4); font-size: 11px; padding: .2rem .4rem; cursor: pointer; transition: all .15s; flex-shrink: 0; }
+.editBtn:hover { border-color: var(--mg2); color: var(--mg2); }
+
+/* ── Knockout bracket ────────────────────────────────────────────────────────── */
+.bracket { display: flex; gap: .75rem; overflow-x: auto; padding-bottom: .5rem; }
+.bracketRound { min-width: 180px; flex-shrink: 0; }
+.bracketRoundLabel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: rgba(255,255,255,.3); margin-bottom: .5rem; white-space: nowrap; }
+.bracketMatches { display: flex; flex-direction: column; gap: .6rem; }
+.bracketCard { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: .65rem .75rem; position: relative; }
+.bracketCard.matchDone { border-color: rgba(255,255,255,.12); }
+.bracketMeta { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.28); margin-bottom: .45rem; }
+.bracketTeam { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,.65); padding: .2rem 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+.bracketTeam:last-of-type { border-bottom: none; }
+.bracketTeam.winner { color: var(--ok); font-weight: 700; }
+.bScore { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 15px; color: #fff; margin-left: .5rem; }
+.bracketCard .editBtn { position: absolute; top: .45rem; right: .45rem; }
+
+/* ── Legenda campi ───────────────────────────────────────────────────────────── */
+.campiLegend { font-size: 11px; color: rgba(255,255,255,.3); margin-top: -.5rem; margin-bottom: 1.5rem; }
+.legendTitle { font-weight: 700; margin-right: .4rem; }
+
+/* ── Score modal ─────────────────────────────────────────────────────────────── */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.modal { background: #150826; border: 1px solid rgba(204,56,190,.3); border-radius: 18px; padding: 1.75rem; width: 100%; max-width: 380px; }
+.modalTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.4rem; text-transform: uppercase; color: #fff; margin-bottom: .25rem; }
+.modalSub { font-size: 11px; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1.5rem; }
+.scoreRow { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
+.scoreCol { flex: 1; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.scoreTeam { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: rgba(255,255,255,.45); text-align: center; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scoreInput { width: 80px; text-align: center; background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.15); border-radius: 10px; padding: .75rem .5rem; color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem; outline: none; transition: border-color .2s; }
+.scoreInput:focus { border-color: rgba(204,56,190,.6); }
+.scoreDash { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem; color: rgba(255,255,255,.3); flex-shrink: 0; }
+.modalErr { font-size: 12px; color: var(--err); margin-bottom: .75rem; }
+.modalActions { display: flex; gap: .65rem; }
+.cancelBtn { flex: 1; padding: .75rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; color: rgba(255,255,255,.55); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: .95rem; text-transform: uppercase; cursor: pointer; transition: opacity .2s; }
+.cancelBtn:hover { opacity: .75; }
+.saveBtn { flex: 2; padding: .75rem; background: linear-gradient(135deg, var(--v2), var(--mg)); border: none; border-radius: 10px; color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1rem; text-transform: uppercase; cursor: pointer; transition: opacity .2s, transform .15s; }
+.saveBtn:hover { opacity: .88; transform: translateY(-1px); }
+.saveBtn:disabled { opacity: .5; cursor: default; transform: none; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .groupGrid { grid-template-columns: 1fr; }
+  .bracket { flex-direction: column; }
+  .bracketRound { min-width: 0; }
+  .scoreInput { width: 68px; font-size: 1.6rem; }
+}

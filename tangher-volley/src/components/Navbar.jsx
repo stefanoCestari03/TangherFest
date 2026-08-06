@@ -4,6 +4,7 @@ const TABS = [
   { id: 'regole',     label: 'Regole' },
   { id: 'iscrizione', label: 'Iscriviti' },
   { id: 'squadre',    label: 'Squadre' },
+  { id: 'torneo',     label: 'Torneo' },
   { id: 'premi',      label: 'Premi' },
 ]
 export default function Navbar({ tab, setTab, nSquadre, navRef, onBack }) {
