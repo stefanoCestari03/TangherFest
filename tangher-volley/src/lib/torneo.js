@@ -43,7 +43,7 @@ export function buildSchedule(proTeams, amatoriTeams) {
           partite.push({
             categoria, fase: 'girone', girone: gA.label, campo,
             slot: mIdx * 2 + 1,
-            ora_prevista: addTime(9 * 60, mIdx * 36),
+            ora_prevista: addTime(9 * 60, mIdx * 40),        // 20 min a partita, 40 per coppia
             squadra1_id: gA.teams[i].id, squadra2_id: gA.teams[j].id,
             squadra1_nome: gA.teams[i].nomeSquadra, squadra2_nome: gA.teams[j].nomeSquadra,
             completata: false,
@@ -58,7 +58,7 @@ export function buildSchedule(proTeams, amatoriTeams) {
             partite.push({
               categoria, fase: 'girone', girone: gB.label, campo,
               slot: mIdx * 2 + 2,
-              ora_prevista: addTime(9 * 60, mIdx * 36 + 18),
+              ora_prevista: addTime(9 * 60, mIdx * 40 + 20), // sfalsato di 20 min rispetto al girone A
               squadra1_id: gB.teams[i].id, squadra2_id: gB.teams[j].id,
               squadra1_nome: gB.teams[i].nomeSquadra, squadra2_nome: gB.teams[j].nomeSquadra,
               completata: false,
@@ -75,25 +75,27 @@ export function buildSchedule(proTeams, amatoriTeams) {
     const KS = 14 * 60 // 14:00
 
     if (n === 1) {
-      partite.push({ categoria, fase: 'finale', campo: campoBase, slot: 100,
-        ora_prevista: addTime(KS, 0), squadra1_nome: `1° ${groups[0].label}`, squadra2_nome: `2° ${groups[0].label}`, completata: false })
+      // Solo finale (top 2 del girone unico)
+      partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[0].label}`, squadra2_nome: `2° ${groups[0].label}`, completata: false })
     } else if (n === 2) {
+      // 2 gironi → 4 squadre → SF + Finale  (14:00 e 14:20)
       partite.push({ categoria, fase: 'semifinale', campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[0].label}`, squadra2_nome: `2° ${groups[1].label}`, completata: false })
       partite.push({ categoria, fase: 'semifinale', campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[1].label}`, squadra2_nome: `2° ${groups[0].label}`, completata: false })
       partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Vin. SF1', squadra2_nome: 'Vin. SF2', completata: false })
       partite.push({ categoria, fase: 'terzo_posto',campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Perd. SF1', squadra2_nome: 'Perd. SF2', completata: false })
     } else if (n === 3) {
+      // 3 gironi → 4 squadre (3 vincitori + miglior 2°) → SF + Finale  (14:00 e 14:20)
       partite.push({ categoria, fase: 'semifinale', campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[0].label}`, squadra2_nome: `Miglior 2°`, completata: false })
       partite.push({ categoria, fase: 'semifinale', campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[1].label}`, squadra2_nome: `1° ${groups[2].label}`, completata: false })
       partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Vin. SF1', squadra2_nome: 'Vin. SF2', completata: false })
       partite.push({ categoria, fase: 'terzo_posto',campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Perd. SF1', squadra2_nome: 'Perd. SF2', completata: false })
     } else {
-      // 4 gironi → quarti
+      // 4 gironi → 8 squadre → QF + SF + Finale  (14:00 / 14:20 / 14:40 / 15:00)
       const [A, B, C, D] = groups
-      partite.push({ categoria, fase: 'quarti', campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${A.label}`, squadra2_nome: `2° ${D.label}`, completata: false })
-      partite.push({ categoria, fase: 'quarti', campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${B.label}`, squadra2_nome: `2° ${C.label}`, completata: false })
-      partite.push({ categoria, fase: 'quarti', campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: `1° ${C.label}`, squadra2_nome: `2° ${B.label}`, completata: false })
-      partite.push({ categoria, fase: 'quarti', campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: `1° ${D.label}`, squadra2_nome: `2° ${A.label}`, completata: false })
+      partite.push({ categoria, fase: 'quarti',     campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${A.label}`, squadra2_nome: `2° ${D.label}`, completata: false })
+      partite.push({ categoria, fase: 'quarti',     campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${B.label}`, squadra2_nome: `2° ${C.label}`, completata: false })
+      partite.push({ categoria, fase: 'quarti',     campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: `1° ${C.label}`, squadra2_nome: `2° ${B.label}`, completata: false })
+      partite.push({ categoria, fase: 'quarti',     campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: `1° ${D.label}`, squadra2_nome: `2° ${A.label}`, completata: false })
       partite.push({ categoria, fase: 'semifinale', campo: campoBase,   slot: 102, ora_prevista: addTime(KS, 40), squadra1_nome: 'Vin. QF1', squadra2_nome: 'Vin. QF2', completata: false })
       partite.push({ categoria, fase: 'semifinale', campo: campoBase+1, slot: 102, ora_prevista: addTime(KS, 40), squadra1_nome: 'Vin. QF3', squadra2_nome: 'Vin. QF4', completata: false })
       partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 103, ora_prevista: addTime(KS, 60), squadra1_nome: 'Vin. SF1', squadra2_nome: 'Vin. SF2', completata: false })
