@@ -37,6 +37,15 @@
 .emptyTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.4rem; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: .5rem; }
 .emptyText { font-size: 13px; color: rgba(255,255,255,.38); line-height: 1.75; }
 
+/* ── Info box formato torneo ─────────────────────────────────────────────────── */
+.infoBox { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 1.1rem 1.2rem; margin-bottom: 1.5rem; }
+.infoBoxTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1rem; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: .85rem; letter-spacing: .06em; }
+.infoBoxGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .6rem; }
+.infoItem { display: flex; align-items: flex-start; gap: .65rem; }
+.infoIcon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.infoLabel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.3); margin-bottom: 2px; }
+.infoVal { font-size: 12px; color: rgba(255,255,255,.6); line-height: 1.5; }
+
 /* ── Category tabs ───────────────────────────────────────────────────────────── */
 .catTabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
 .catTab { flex: 1; max-width: 120px; padding: .6rem 1rem; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 8px; color: rgba(255,255,255,.45); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: all .2s; }

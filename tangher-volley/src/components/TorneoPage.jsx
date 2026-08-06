@@ -248,6 +248,9 @@ export default function TorneoPage({ squadre }) {
       {/* Calendario presente */}
       {hasSchedule && (
         <>
+          {/* Info formato torneo */}
+          <TorneoInfo proGroups={proGroups} amatGroups={amatGroups} />
+
           {/* Toggle categoria */}
           <div className={styles.catTabs}>
             <button className={`${styles.catTab} ${categoria === 'pro' ? styles.catAct : ''}`}
@@ -330,6 +333,81 @@ export default function TorneoPage({ squadre }) {
           </div>
         </div>
       )}
+    </div>
+  )
+}
+
+// ── TorneoInfo ───────────────────────────────────────────────────────────────
+function TorneoInfo({ proGroups, amatGroups }) {
+  const nProG  = proGroups.length
+  const nAmatG = amatGroups.length
+
+  function advanceDesc(n) {
+    if (n <= 1) return 'Le prime 2 del girone si sfidano in finale'
+    if (n <= 3) return `Le prime 2 di ogni girone (4 squadre) → Semifinali → Finale`
+    return `Le prime 2 di ogni girone (8 squadre) → Quarti → Semifinali → Finale`
+  }
+
+  function afternoonEnd(n) {
+    if (n <= 1) return '14:20'
+    if (n <= 3) return '14:40'
+    return '15:20'
+  }
+
+  return (
+    <div className={styles.infoBox}>
+      <div className={styles.infoBoxTitle}>Come funziona il torneo</div>
+      <div className={styles.infoBoxGrid}>
+
+        <div className={styles.infoItem}>
+          <div className={styles.infoIcon}>🕘</div>
+          <div>
+            <div className={styles.infoLabel}>Mattina · Gironi</div>
+            <div className={styles.infoVal}>09:00 – 13:00 · partite da 1 set a 21</div>
+          </div>
+        </div>
+
+        <div className={styles.infoItem}>
+          <div className={styles.infoIcon}>🏐</div>
+          <div>
+            <div className={styles.infoLabel}>Pro ({nProG} {nProG === 1 ? 'girone' : 'gironi'})</div>
+            <div className={styles.infoVal}>Ogni squadra gioca 3 partite nel proprio girone · Campi 1–2</div>
+          </div>
+        </div>
+
+        <div className={styles.infoItem}>
+          <div className={styles.infoIcon}>🏐</div>
+          <div>
+            <div className={styles.infoLabel}>Amatori ({nAmatG} {nAmatG === 1 ? 'girone' : 'gironi'})</div>
+            <div className={styles.infoVal}>Ogni squadra gioca 3 partite nel proprio girone · Campi 3–4</div>
+          </div>
+        </div>
+
+        <div className={styles.infoItem}>
+          <div className={styles.infoIcon}>🏆</div>
+          <div>
+            <div className={styles.infoLabel}>Qualificazione</div>
+            <div className={styles.infoVal}>{advanceDesc(Math.max(nProG, nAmatG))}</div>
+          </div>
+        </div>
+
+        <div className={styles.infoItem}>
+          <div className={styles.infoIcon}>☀️</div>
+          <div>
+            <div className={styles.infoLabel}>Pomeriggio · Eliminazione diretta</div>
+            <div className={styles.infoVal}>14:00 → fine prevista {afternoonEnd(Math.max(nProG, nAmatG))} · spareggio 3° posto incluso</div>
+          </div>
+        </div>
+
+        <div className={styles.infoItem}>
+          <div className={styles.infoIcon}>📊</div>
+          <div>
+            <div className={styles.infoLabel}>Spareggio a pari vittorie</div>
+            <div className={styles.infoVal}>Differenza punti (fatti – subiti), poi punti totali segnati</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   )
 }
