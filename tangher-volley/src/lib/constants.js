@@ -1,5 +1,5 @@
-export const MAX_TESSERATI = 15
-export const MAX_LIBERE    = 12
+export const MAX_TESSERATI = 16
+export const MAX_LIBERE    = 16
 
 // Categorie per squadre TESSERATEM (giocatori federati)
 export const CATEGORIE_TESSERATA = [
