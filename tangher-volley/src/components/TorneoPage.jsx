@@ -99,11 +99,17 @@ export default function TorneoPage({ squadre }) {
     try {
       const pro  = squadre.filter(s => s.tipo === 'tesserata')
       const amat = squadre.filter(s => s.tipo === 'libera')
-      if (pro.length < 2 && amat.length < 2) throw new Error('Servono almeno 2 squadre per categoria')
+      if (pro.length < 2 && amat.length < 2)
+        throw new Error(`Nessuna squadra iscritta trovata (Pro: ${pro.length}, Amatori: ${amat.length})`)
       await deleteAllPartite()
-      await insertPartite(buildSchedule(pro, amat))
+      const schedule = buildSchedule(pro, amat)
+      if (schedule.length === 0) throw new Error('Il generatore non ha prodotto partite — controlla le squadre iscritte')
+      await insertPartite(schedule)
       setPartite(await fetchPartite())
-    } catch (e) { setErr(e.message) }
+    } catch (e) {
+      window.alert('Errore generazione calendario:\n\n' + e.message)
+      setErr(e.message)
+    }
     finally { setGenerating(false) }
   }
 
@@ -215,6 +221,9 @@ export default function TorneoPage({ squadre }) {
           <button className={styles.adminLoginTrigger} onClick={() => setShowLogin(v => !v)}>
             🔒 Area Admin
           </button>
+        )}
+        {isAdmin && err && !editMatch && (
+          <div className={styles.adminErr}>⚠ {err}</div>
         )}
       </div>
 

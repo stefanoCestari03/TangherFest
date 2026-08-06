@@ -15,6 +15,7 @@
 .btnSm { background: rgba(139,48,204,.3); border: 1px solid rgba(139,48,204,.4); border-radius: 6px; color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: .35rem .75rem; cursor: pointer; transition: opacity .2s; white-space: nowrap; }
 .btnSm:hover { opacity: .8; }
 .btnSm:disabled { opacity: .45; cursor: default; }
+.adminErr { margin-top: .5rem; font-size: 12px; color: #ff8080; background: rgba(200,40,40,.1); border: 1px solid rgba(200,40,40,.25); border-radius: 8px; padding: .45rem .85rem; }
 .btnSmDanger { background: rgba(200,40,40,.2); border: 1px solid rgba(200,40,40,.35); border-radius: 6px; color: #ff8080; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: .35rem .75rem; cursor: pointer; transition: opacity .2s; white-space: nowrap; }
 .btnSmDanger:hover { opacity: .75; }
 .btnSmGhost { background: none; border: 1px solid rgba(255,255,255,.12); border-radius: 6px; color: rgba(255,255,255,.4); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: .35rem .75rem; cursor: pointer; transition: all .2s; }
