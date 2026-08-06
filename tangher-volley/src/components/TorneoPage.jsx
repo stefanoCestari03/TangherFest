@@ -107,6 +107,15 @@ export default function TorneoPage({ squadre }) {
     finally { setGenerating(false) }
   }
 
+  // ── Elimina calendario ───────────────────────────────────────────────────────
+  async function handleDelete() {
+    if (!window.confirm('Eliminare tutto il calendario? Tutti i risultati andranno persi.')) return
+    try {
+      await deleteAllPartite()
+      setPartite([])
+    } catch (e) { setErr(e.message) }
+  }
+
   // ── Aggiorna spareggi con i nomi reali dei qualificati ──────────────────────
   async function handleAutoFill() {
     const groups = getGroups(categoria)
@@ -193,6 +202,11 @@ export default function TorneoPage({ squadre }) {
             {hasSchedule && (
               <button className={styles.btnSm} onClick={handleAutoFill}>
                 🔀 Aggiorna spareggi
+              </button>
+            )}
+            {hasSchedule && (
+              <button className={styles.btnSmDanger} onClick={handleDelete}>
+                🗑 Elimina calendario
               </button>
             )}
             <button className={styles.btnSmGhost} onClick={handleLogout}>Esci</button>
