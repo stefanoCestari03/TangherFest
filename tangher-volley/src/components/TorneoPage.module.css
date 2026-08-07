@@ -128,6 +128,15 @@
 .saveBtn:hover { opacity: .88; transform: translateY(-1px); }
 .saveBtn:disabled { opacity: .5; cursor: default; transform: none; }
 
+/* ── Swap modal ──────────────────────────────────────────────────────────────── */
+.swapRow { display: flex; align-items: flex-end; gap: .75rem; margin-bottom: 1rem; }
+.swapCol { flex: 1; display: flex; flex-direction: column; gap: .35rem; }
+.swapLabel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,255,255,.38); }
+.swapArrow { font-size: 1.3rem; color: rgba(204,56,190,.7); flex-shrink: 0; padding-bottom: .3rem; }
+.swapSelect { width: 100%; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: .6rem .75rem; color: #fff; font-size: 13px; outline: none; cursor: pointer; appearance: none; transition: border-color .2s; }
+.swapSelect:focus { border-color: rgba(204,56,190,.5); }
+.swapSelect option { background: #150826; color: #fff; }
+
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .groupGrid { grid-template-columns: 1fr; }

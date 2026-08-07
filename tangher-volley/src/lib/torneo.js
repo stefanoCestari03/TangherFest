@@ -197,6 +197,37 @@ export async function deleteAllPartite() {
   if (error) throw error
 }
 
+export async function swapTeamsInSchedule(allPartite, cat, teamA, gironeA, teamB, gironeB) {
+  const campoA = allPartite.find(p => p.categoria === cat && p.girone === gironeA)?.campo
+  const campoB = allPartite.find(p => p.categoria === cat && p.girone === gironeB)?.campo
+  if (!campoA || !campoB) throw new Error('Campi non trovati per i gironi selezionati')
+
+  const updates = []
+
+  allPartite
+    .filter(p => p.categoria === cat && p.fase === 'girone' && p.girone === gironeA &&
+      (p.squadra1_id === teamA.id || p.squadra2_id === teamA.id))
+    .forEach(m => {
+      const u = { girone: gironeB, campo: campoB }
+      if (m.squadra1_id === teamA.id) { u.squadra1_id = teamB.id; u.squadra1_nome = teamB.nomeSquadra }
+      else                            { u.squadra2_id = teamB.id; u.squadra2_nome = teamB.nomeSquadra }
+      updates.push({ id: m.id, ...u })
+    })
+
+  allPartite
+    .filter(p => p.categoria === cat && p.fase === 'girone' && p.girone === gironeB &&
+      (p.squadra1_id === teamB.id || p.squadra2_id === teamB.id))
+    .forEach(m => {
+      const u = { girone: gironeA, campo: campoA }
+      if (m.squadra1_id === teamB.id) { u.squadra1_id = teamA.id; u.squadra1_nome = teamA.nomeSquadra }
+      else                            { u.squadra2_id = teamA.id; u.squadra2_nome = teamA.nomeSquadra }
+      updates.push({ id: m.id, ...u })
+    })
+
+  if (updates.length === 0) throw new Error('Nessuna partita trovata per queste squadre')
+  await Promise.all(updates.map(({ id, ...data }) => supabase.from('partite').update(data).eq('id', id)))
+}
+
 export function subscribePartite(onAny) {
   const ch = supabase
     .channel('public:partite')

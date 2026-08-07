@@ -76,7 +76,8 @@ export default function App() {
     setTimeout(() => navRef.current?.scrollIntoView({ behavior: 'smooth' }), 50)
   }
 
-  const onSuccess = (nuova) => setSquadre(prev => [...prev, nuova])
+  const onSuccess  = (nuova) => setSquadre(prev => [...prev, nuova])
+  const onWithdraw = (id)    => setSquadre(prev => prev.filter(s => s.id !== id))
 
   const changeTab = (t) => {
     setTab(t)
@@ -108,7 +109,7 @@ export default function App() {
               nLibere={squadre.filter(s => s.tipo === 'libera').length}
               onSuccess={onSuccess}
             />}
-            {tab === 'squadre'    && <SquadrePage squadre={squadre} onCta={goIscrizione} />}
+            {tab === 'squadre'    && <SquadrePage squadre={squadre} onCta={goIscrizione} onWithdraw={onWithdraw} />}
             {tab === 'torneo'     && <TorneoPage squadre={squadre} />}
             {tab === 'premi'      && <PremiPage />}
           </div>

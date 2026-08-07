@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import {
   fetchPartite, insertPartite, updatePunteggio, updatePartitaNomi,
   deleteAllPartite, subscribePartite, buildSchedule, computeStandings,
+  swapTeamsInSchedule,
 } from '../lib/torneo'
 import styles from './TorneoPage.module.css'
 
@@ -28,6 +29,11 @@ export default function TorneoPage({ squadre }) {
   const [editMatch, setEditMatch] = useState(null)
   const [p1, setP1] = useState('')
   const [p2, setP2] = useState('')
+
+  // Swap modal
+  const [swapOpen, setSwapOpen] = useState(false)
+  const [swapA,    setSwapA]    = useState('')
+  const [swapB,    setSwapB]    = useState('')
 
   const [loading,    setLoading]    = useState(false)
   const [generating, setGenerating] = useState(false)
@@ -230,6 +236,31 @@ export default function TorneoPage({ squadre }) {
     setErr(null)
   }
 
+  // ── Swap gironi ──────────────────────────────────────────────────────────────
+  function getTeamsInGroup(group) {
+    const map = {}
+    group.matches.forEach(m => {
+      if (m.squadra1_id) map[m.squadra1_id] = { id: m.squadra1_id, nomeSquadra: m.squadra1_nome }
+      if (m.squadra2_id) map[m.squadra2_id] = { id: m.squadra2_id, nomeSquadra: m.squadra2_nome }
+    })
+    return Object.values(map).sort((a, b) => a.nomeSquadra.localeCompare(b.nomeSquadra))
+  }
+
+  async function handleSwap() {
+    const groups = currentGroups
+    if (groups.length < 2 || !swapA || !swapB) { setErr('Seleziona una squadra per ogni girone'); return }
+    const teamA = getTeamsInGroup(groups[0]).find(t => t.id === swapA)
+    const teamB = getTeamsInGroup(groups[1]).find(t => t.id === swapB)
+    if (!teamA || !teamB) { setErr('Squadre non trovate'); return }
+    setLoading(true); setErr(null)
+    try {
+      await swapTeamsInSchedule(partite, categoria, teamA, groups[0].label, teamB, groups[1].label)
+      setPartite(await fetchPartite())
+      setSwapOpen(false); setSwapA(''); setSwapB('')
+    } catch (e) { setErr(e.message) }
+    finally { setLoading(false) }
+  }
+
   // ── Render ───────────────────────────────────────────────────────────────────
   return (
     <div className={styles.wrap}>
@@ -253,6 +284,11 @@ export default function TorneoPage({ squadre }) {
             {hasSchedule && (
               <button className={styles.btnSm} onClick={handleAutoFill}>
                 🔀 Aggiorna spareggi
+              </button>
+            )}
+            {hasSchedule && currentGroups.length >= 2 && (
+              <button className={styles.btnSm} onClick={() => { setSwapOpen(true); setSwapA(''); setSwapB(''); setErr(null) }}>
+                ↔ Scambia gironi
               </button>
             )}
             {hasSchedule && (
@@ -350,6 +386,50 @@ export default function TorneoPage({ squadre }) {
           </div>
         </>
       )}
+
+      {/* Modal swap gironi */}
+      {swapOpen && (() => {
+        const groups = currentGroups
+        const teamsA = groups[0] ? getTeamsInGroup(groups[0]) : []
+        const teamsB = groups[1] ? getTeamsInGroup(groups[1]) : []
+        return (
+          <div className={styles.overlay} onClick={() => setSwapOpen(false)}>
+            <div className={styles.modal} onClick={e => e.stopPropagation()}>
+              <div className={styles.modalTitle}>Scambia squadre</div>
+              <div className={styles.modalSub}>
+                {categoria === 'pro' ? 'Pro' : 'Amatori'} · Girone {groups[0]?.label} ↔ Girone {groups[1]?.label}
+              </div>
+
+              <div className={styles.swapRow}>
+                <div className={styles.swapCol}>
+                  <div className={styles.swapLabel}>Girone {groups[0]?.label}</div>
+                  <select className={styles.swapSelect} value={swapA} onChange={e => setSwapA(e.target.value)}>
+                    <option value="">Seleziona…</option>
+                    {teamsA.map(t => <option key={t.id} value={t.id}>{t.nomeSquadra}</option>)}
+                  </select>
+                </div>
+                <div className={styles.swapArrow}>↔</div>
+                <div className={styles.swapCol}>
+                  <div className={styles.swapLabel}>Girone {groups[1]?.label}</div>
+                  <select className={styles.swapSelect} value={swapB} onChange={e => setSwapB(e.target.value)}>
+                    <option value="">Seleziona…</option>
+                    {teamsB.map(t => <option key={t.id} value={t.id}>{t.nomeSquadra}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              {err && <div className={styles.modalErr}>{err}</div>}
+
+              <div className={styles.modalActions}>
+                <button className={styles.cancelBtn} onClick={() => setSwapOpen(false)}>Annulla</button>
+                <button className={styles.saveBtn} onClick={handleSwap} disabled={loading || !swapA || !swapB}>
+                  {loading ? 'Scambio…' : 'Conferma scambio'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
 
       {/* Modal inserimento punteggio */}
       {editMatch && (

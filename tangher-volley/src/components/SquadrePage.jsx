@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { supabase } from '../lib/supabase'
+import { deleteSquadra } from '../lib/db'
 import { CAT_LABEL, MAX_TESSERATI, MAX_LIBERE } from '../lib/constants'
 import { formatDate } from '../lib/helpers'
 import styles from './SquadrePage.module.css'
@@ -33,9 +35,22 @@ function SlotRow({ tipo, count, max }) {
   )
 }
 
-function TeamCard({ sq, rank }) {
+function TeamCard({ sq, rank, isAdmin, onWithdraw }) {
+  const [confirm,  setConfirm]  = useState(false)
+  const [removing, setRemoving] = useState(false)
+  const [cardErr,  setCardErr]  = useState(null)
+
   const isTess = sq.tipo === 'tesserata'
   const nuovo  = isRecente(sq.creato_il)
+
+  async function handleWithdraw() {
+    setRemoving(true); setCardErr(null)
+    try {
+      await deleteSquadra(sq.id)
+      onWithdraw(sq.id)
+    } catch (e) { setCardErr(e.message); setRemoving(false); setConfirm(false) }
+  }
+
   return (
     <div className={`${styles.card} ${isTess ? '' : styles.cardLib}`}>
       <div className={styles.cardRank}>#{String(rank).padStart(2, '0')}</div>
@@ -71,6 +86,25 @@ function TeamCard({ sq, rank }) {
           ))}
         </div>
       </div>
+
+      {isAdmin && (
+        <div className={styles.adminZone}>
+          {cardErr && <div className={styles.cardErr}>{cardErr}</div>}
+          {confirm ? (
+            <div className={styles.confirmRow}>
+              <span className={styles.confirmTxt}>Ritirare la squadra? L&apos;operazione è irreversibile.</span>
+              <button className={styles.btnConfirm} onClick={handleWithdraw} disabled={removing}>
+                {removing ? '...' : 'Sì, ritira'}
+              </button>
+              <button className={styles.btnCancel} onClick={() => setConfirm(false)}>Annulla</button>
+            </div>
+          ) : (
+            <button className={styles.btnWithdraw} onClick={() => setConfirm(true)}>
+              Ritira squadra
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -92,9 +126,16 @@ function EmptyState({ search, onCta }) {
   )
 }
 
-export default function SquadrePage({ squadre, onCta }) {
-  const [filtro, setFiltro] = useState('tutte')
-  const [search, setSearch] = useState('')
+export default function SquadrePage({ squadre, onCta, onWithdraw }) {
+  const [filtro,   setFiltro]   = useState('tutte')
+  const [search,   setSearch]   = useState('')
+  const [isAdmin,  setIsAdmin]  = useState(false)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => setIsAdmin(!!session))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setIsAdmin(!!s))
+    return () => subscription.unsubscribe()
+  }, [])
 
   const tC = squadre.filter(s => s.tipo === 'tesserata').length
   const lC = squadre.filter(s => s.tipo === 'libera').length
@@ -163,7 +204,7 @@ export default function SquadrePage({ squadre, onCta }) {
       ) : (
         <div className={styles.list}>
           {filtered.map((sq, i) => (
-            <TeamCard key={sq.id} sq={sq} rank={i + 1} />
+            <TeamCard key={sq.id} sq={sq} rank={i + 1} isAdmin={isAdmin} onWithdraw={onWithdraw} />
           ))}
         </div>
       )}

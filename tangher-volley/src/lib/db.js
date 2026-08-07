@@ -41,6 +41,11 @@ export async function uploadDoc(file, path) {
   return path
 }
 
+export async function deleteSquadra(id) {
+  const { error } = await supabase.from('squadre').delete().eq('id', id)
+  if (error) throw error
+}
+
 export function subscribeSquadre(onInsert) {
   const channel = supabase
     .channel('public:squadre')
