@@ -1,5 +1,5 @@
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
-.wrap { padding: 2.5rem 0 4rem; }
+.wrap { padding: 2.5rem 0 4rem; max-width: 100%; overflow-x: hidden; }
 .slabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--mg2); margin-bottom: .5rem; }
 .h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.8rem,6vw,3rem); text-transform: uppercase; margin-bottom: .5rem; color: #fff; }
 .h2 span { color: var(--mg2); }
@@ -160,7 +160,16 @@
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .groupGrid { grid-template-columns: 1fr; }
-  .bracket { flex-direction: column; }
-  .bracketRound { min-width: 0; }
+  .infoBoxGrid { grid-template-columns: 1fr; }
+  .bracket { flex-direction: column; overflow-x: hidden; }
+  .bracketRound { min-width: 0; width: 100%; }
   .scoreInput { width: 68px; font-size: 1.6rem; }
+  .modal { padding: 1.25rem; border-radius: 14px; }
+  .scoreRow { gap: .5rem; }
+  .scoreTeam { font-size: 10px; max-width: 85px; }
+  .swapRow { flex-direction: column; gap: .5rem; }
+  .swapArrow { align-self: center; transform: rotate(90deg); padding-bottom: 0; }
+  .adminRow { gap: .4rem; }
+  .catTabs { gap: .4rem; }
+  .h2 { font-size: clamp(1.5rem, 7vw, 2.5rem); }
 }

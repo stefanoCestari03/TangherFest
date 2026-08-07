@@ -1,3 +1,4 @@
 .app{background:linear-gradient(170deg,#0A1848 0%,#1A0A60 25%,#380A90 55%,#1E0445 100%);min-height:100vh;position:relative;}
 .gridBg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:52px 52px;}
-.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 1.1rem;}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 1rem;overflow-x:hidden;}
+@media(max-width:480px){.wrap{padding:0 .85rem;}}
