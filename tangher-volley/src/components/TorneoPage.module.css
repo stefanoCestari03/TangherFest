@@ -128,6 +128,26 @@
 .saveBtn:hover { opacity: .88; transform: translateY(-1px); }
 .saveBtn:disabled { opacity: .5; cursor: default; transform: none; }
 
+/* ── Best-of-3 set modal ─────────────────────────────────────────────────────── */
+.setsBlock { margin-bottom: 1rem; }
+.setsHeader { display: flex; align-items: center; gap: .5rem; margin-bottom: .65rem; }
+.setsTeam { flex: 1; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.55); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.setsSep { flex: 0 0 60px; }
+.setRow { display: flex; align-items: center; gap: .5rem; margin-bottom: .45rem; }
+.setInput { flex: 1; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: .55rem .5rem; color: #fff; font-size: 1.3rem; font-weight: 700; text-align: center; outline: none; transition: border-color .2s; width: 0; }
+.setInput:focus { border-color: rgba(204,56,190,.5); }
+.setInput::placeholder { color: rgba(255,255,255,.2); font-size: .9rem; }
+.setLabel { flex: 0 0 52px; text-align: center; font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+.addSetBtn { width: 100%; margin: .4rem 0; padding: .45rem; background: none; border: 1px dashed rgba(255,255,255,.15); border-radius: 8px; color: rgba(255,255,255,.4); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: all .2s; }
+.addSetBtn:hover { border-color: rgba(204,56,190,.4); color: rgba(204,56,190,.8); }
+.setsTotale { display: flex; align-items: center; justify-content: center; gap: .75rem; margin-top: .75rem; padding-top: .75rem; border-top: 1px solid rgba(255,255,255,.08); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 2rem; color: rgba(255,255,255,.25); }
+.setsTotSep { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.2); font-style: normal; }
+.setWinner { color: #fff; }
+
+/* ── Bracket set chips ───────────────────────────────────────────────────────── */
+.bracketSets { display: flex; gap: .3rem; flex-wrap: wrap; margin-top: .3rem; padding-top: .3rem; border-top: 1px solid rgba(255,255,255,.06); }
+.bracketSetChip { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.45); background: rgba(255,255,255,.05); border-radius: 4px; padding: 1px 5px; font-variant-numeric: tabular-nums; }
+
 /* ── Swap modal ──────────────────────────────────────────────────────────────── */
 .swapRow { display: flex; align-items: flex-end; gap: .75rem; margin-bottom: 1rem; }
 .swapCol { flex: 1; display: flex; flex-direction: column; gap: .35rem; }

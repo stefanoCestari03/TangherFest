@@ -184,6 +184,24 @@ export async function updatePunteggio(id, p1, p2) {
   if (error) throw error
 }
 
+// Salva partita al meglio dei 3 set (finale / 3° posto)
+// sets = [{p1, p2}, {p1, p2}, ?{p1, p2}]  — punteggio1/2 = set vinti
+export async function updateMatchSets(id, sets) {
+  const w1 = sets.filter(s => s.p1 > s.p2).length
+  const w2 = sets.filter(s => s.p2 > s.p1).length
+  const { error } = await supabase
+    .from('partite')
+    .update({
+      sets,
+      punteggio1: w1,
+      punteggio2: w2,
+      completata: true,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', id)
+  if (error) throw error
+}
+
 export async function updatePartitaNomi(id, nome1, nome2, id1, id2) {
   const { error } = await supabase
     .from('partite')
