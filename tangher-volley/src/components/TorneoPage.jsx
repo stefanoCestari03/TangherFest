@@ -122,50 +122,86 @@ export default function TorneoPage({ squadre }) {
     } catch (e) { setErr(e.message) }
   }
 
-  // ── Aggiorna spareggi con i nomi reali dei qualificati ──────────────────────
-  async function handleAutoFill() {
-    const groups = getGroups(categoria)
-    if (groups.length === 0) return
+  // ── Propaga risultati nel tabellone (usa dati freschi dal DB) ────────────────
+  function buildBracketUpdates(cat, allPartite) {
+    const map = {}
+    allPartite.filter(p => p.categoria === cat && p.fase === 'girone').forEach(p => {
+      if (!map[p.girone]) map[p.girone] = { label: p.girone, matches: [] }
+      map[p.girone].matches.push(p)
+    })
+    const groups = Object.values(map).sort((a, b) => a.label.localeCompare(b.label))
+    if (groups.length === 0) return []
 
-    const standingsMap = {}
-    groups.forEach(g => { standingsMap[g.label] = computeStandings(g.matches) })
-
-    const knockout = getKnockout(categoria)
-    const campoBase = categoria === 'pro' ? 1 : 3
+    const ko = allPartite.filter(p => p.categoria === cat && p.fase !== 'girone')
     const updates = []
 
-    if (groups.length === 4) {
-      const [A, B, C, D] = groups.map(g => standingsMap[g.label] ?? [])
-      const qf = knockout.filter(m => m.fase === 'quarti').sort((a, b) => a.slot - b.slot || a.campo - b.campo)
-      if (qf[0]) updates.push([qf[0].id, A[0]?.nome, D[1]?.nome, A[0]?.id, D[1]?.id])
-      if (qf[1]) updates.push([qf[1].id, B[0]?.nome, C[1]?.nome, B[0]?.id, C[1]?.id])
-      if (qf[2]) updates.push([qf[2].id, C[0]?.nome, B[1]?.nome, C[0]?.id, B[1]?.id])
-      if (qf[3]) updates.push([qf[3].id, D[0]?.nome, A[1]?.nome, D[0]?.id, A[1]?.id])
-    } else if (groups.length === 2) {
-      const [A, B] = groups.map(g => standingsMap[g.label] ?? [])
-      const sf = knockout.filter(m => m.fase === 'semifinale').sort((a, b) => a.slot - b.slot || a.campo - b.campo)
-      if (sf[0]) updates.push([sf[0].id, A[0]?.nome, B[1]?.nome, A[0]?.id, B[1]?.id])
-      if (sf[1]) updates.push([sf[1].id, B[0]?.nome, A[1]?.nome, B[0]?.id, A[1]?.id])
-    } else if (groups.length === 3) {
-      // Best runner-up logic: take highest pts/diff among 2nd-place teams
-      const runners = groups.map(g => (standingsMap[g.label] ?? [])[1]).filter(Boolean)
-      const bestRunner = runners.sort((a, b) => {
-        if (b.pts !== a.pts) return b.pts - a.pts
-        return (b.pf - b.pc) - (a.pf - a.pc)
-      })[0]
-      const [A, B, C] = groups.map(g => standingsMap[g.label] ?? [])
-      const sf = knockout.filter(m => m.fase === 'semifinale').sort((a, b) => a.slot - b.slot || a.campo - b.campo)
-      if (sf[0]) updates.push([sf[0].id, A[0]?.nome, bestRunner?.nome, A[0]?.id, bestRunner?.id])
-      if (sf[1]) updates.push([sf[1].id, B[0]?.nome, C[0]?.nome, B[0]?.id, C[0]?.id])
-    }
+    const teamWinner = m => m?.completata
+      ? (m.punteggio1 > m.punteggio2 ? { nome: m.squadra1_nome, id: m.squadra1_id } : { nome: m.squadra2_nome, id: m.squadra2_id })
+      : null
+    const teamLoser  = m => m?.completata
+      ? (m.punteggio1 < m.punteggio2 ? { nome: m.squadra1_nome, id: m.squadra1_id } : { nome: m.squadra2_nome, id: m.squadra2_id })
+      : null
 
+    if (groups.length === 2) {
+      const [gA, gB] = groups
+      const A = computeStandings(gA.matches)
+      const B = computeStandings(gB.matches)
+      const groupSize = gA.matches.length > 0
+        ? Math.round((1 + Math.sqrt(1 + 8 * gA.matches.length)) / 2)
+        : 4
+
+      if (groupSize >= 5) {
+        // QF: top-4 da ogni girone con seeding incrociato
+        const qf = ko.filter(m => m.fase === 'quarti').sort((a, b) => a.slot - b.slot || a.campo - b.campo)
+        if (qf[0]) updates.push([qf[0].id, A[0]?.nome ?? `1° ${gA.label}`, B[3]?.nome ?? `4° ${gB.label}`, A[0]?.id ?? null, B[3]?.id ?? null])
+        if (qf[1]) updates.push([qf[1].id, B[0]?.nome ?? `1° ${gB.label}`, A[3]?.nome ?? `4° ${gA.label}`, B[0]?.id ?? null, A[3]?.id ?? null])
+        if (qf[2]) updates.push([qf[2].id, A[1]?.nome ?? `2° ${gA.label}`, B[2]?.nome ?? `3° ${gB.label}`, A[1]?.id ?? null, B[2]?.id ?? null])
+        if (qf[3]) updates.push([qf[3].id, B[1]?.nome ?? `2° ${gB.label}`, A[2]?.nome ?? `3° ${gA.label}`, B[1]?.id ?? null, A[2]?.id ?? null])
+
+        // SF: vincitori dei QF
+        const sf = ko.filter(m => m.fase === 'semifinale').sort((a, b) => a.slot - b.slot || a.campo - b.campo)
+        const w = qf.map(teamWinner)
+        if (sf[0]) updates.push([sf[0].id, w[0]?.nome ?? 'Vin. QF1', w[1]?.nome ?? 'Vin. QF2', w[0]?.id ?? null, w[1]?.id ?? null])
+        if (sf[1]) updates.push([sf[1].id, w[2]?.nome ?? 'Vin. QF3', w[3]?.nome ?? 'Vin. QF4', w[2]?.id ?? null, w[3]?.id ?? null])
+
+        // Finale e 3° posto: vincitori/perdenti delle SF
+        const fin = ko.find(m => m.fase === 'finale')
+        const ter = ko.find(m => m.fase === 'terzo_posto')
+        const ws = sf.map(teamWinner), ls = sf.map(teamLoser)
+        if (fin) updates.push([fin.id, ws[0]?.nome ?? 'Vin. SF1', ws[1]?.nome ?? 'Vin. SF2', ws[0]?.id ?? null, ws[1]?.id ?? null])
+        if (ter) updates.push([ter.id, ls[0]?.nome ?? 'Perd. SF1', ls[1]?.nome ?? 'Perd. SF2', ls[0]?.id ?? null, ls[1]?.id ?? null])
+
+      } else {
+        // SF dirette: top-2 da ogni girone
+        const sf = ko.filter(m => m.fase === 'semifinale').sort((a, b) => a.slot - b.slot || a.campo - b.campo)
+        if (sf[0]) updates.push([sf[0].id, A[0]?.nome ?? `1° ${gA.label}`, B[1]?.nome ?? `2° ${gB.label}`, A[0]?.id ?? null, B[1]?.id ?? null])
+        if (sf[1]) updates.push([sf[1].id, B[0]?.nome ?? `1° ${gB.label}`, A[1]?.nome ?? `2° ${gA.label}`, B[0]?.id ?? null, A[1]?.id ?? null])
+
+        const fin = ko.find(m => m.fase === 'finale')
+        const ter = ko.find(m => m.fase === 'terzo_posto')
+        const ws = sf.map(teamWinner), ls = sf.map(teamLoser)
+        if (fin) updates.push([fin.id, ws[0]?.nome ?? 'Vin. SF1', ws[1]?.nome ?? 'Vin. SF2', ws[0]?.id ?? null, ws[1]?.id ?? null])
+        if (ter) updates.push([ter.id, ls[0]?.nome ?? 'Perd. SF1', ls[1]?.nome ?? 'Perd. SF2', ls[0]?.id ?? null, ls[1]?.id ?? null])
+      }
+    }
+    return updates
+  }
+
+  // ── Aggiorna spareggi — usa dati freschi, propaga tutta la eliminazione ──────
+  async function handleAutoFill() {
     try {
-      await Promise.all(updates.map(([id, n1, n2, i1, i2]) => updatePartitaNomi(id, n1, n2, i1, i2)))
+      const fresh = await fetchPartite()
+      const updates = [
+        ...buildBracketUpdates('pro',      fresh),
+        ...buildBracketUpdates('amatori',  fresh),
+      ]
+      if (updates.length > 0)
+        await Promise.all(updates.map(([id, n1, n2, i1, i2]) => updatePartitaNomi(id, n1, n2, i1, i2)))
       setPartite(await fetchPartite())
     } catch (e) { setErr(e.message) }
   }
 
-  // ── Salva punteggio ──────────────────────────────────────────────────────────
+  // ── Salva punteggio e aggiorna automaticamente il tabellone ─────────────────
   async function handleSave() {
     const n1 = parseInt(p1, 10), n2 = parseInt(p2, 10)
     if (isNaN(n1) || isNaN(n2) || n1 < 0 || n2 < 0) { setErr('Inserisci punteggi validi'); return }
@@ -174,6 +210,15 @@ export default function TorneoPage({ squadre }) {
     try {
       await updatePunteggio(editMatch.id, n1, n2)
       setEditMatch(null)
+      // Propaga automaticamente vincitori nel bracket (QF→SF→Finale)
+      const fresh = await fetchPartite()
+      const updates = [
+        ...buildBracketUpdates('pro',     fresh),
+        ...buildBracketUpdates('amatori', fresh),
+      ]
+      if (updates.length > 0)
+        await Promise.all(updates.map(([id, n1, n2, i1, i2]) => updatePartitaNomi(id, n1, n2, i1, i2)))
+      setPartite(await fetchPartite())
     } catch (e) { setErr(e.message) }
     finally { setLoading(false) }
   }
@@ -348,20 +393,13 @@ export default function TorneoPage({ squadre }) {
 
 // ── TorneoInfo ───────────────────────────────────────────────────────────────
 function TorneoInfo({ proGroups, amatGroups }) {
-  const nProG  = proGroups.length
-  const nAmatG = amatGroups.length
+  const nProG   = proGroups.length
+  const nAmatG  = amatGroups.length
+  const proSize = proGroups[0]?.matches
+    ? Math.round((1 + Math.sqrt(1 + 8 * proGroups[0].matches.length)) / 2)
+    : 7
 
-  function advanceDesc(n) {
-    if (n <= 1) return 'Le prime 2 del girone si sfidano in finale'
-    if (n <= 3) return `Le prime 2 di ogni girone (4 squadre) → Semifinali → Finale`
-    return `Le prime 2 di ogni girone (8 squadre) → Quarti → Semifinali → Finale`
-  }
-
-  function afternoonEnd(n) {
-    if (n <= 1) return '14:20'
-    if (n <= 3) return '14:40'
-    return '15:20'
-  }
+  const bigGroups = proSize >= 5  // gironi da 7 → quarti
 
   return (
     <div className={styles.infoBox}>
@@ -371,24 +409,24 @@ function TorneoInfo({ proGroups, amatGroups }) {
         <div className={styles.infoItem}>
           <div className={styles.infoIcon}>🕘</div>
           <div>
-            <div className={styles.infoLabel}>Mattina · Gironi</div>
-            <div className={styles.infoVal}>09:00 – 13:00 · partite da 1 set a 21</div>
+            <div className={styles.infoLabel}>Gironi · 09:00 – 17:00</div>
+            <div className={styles.infoVal}>Mattina 09:00–13:00 + pausa + pomeriggio 14:00–17:00 · set unico a 21</div>
           </div>
         </div>
 
         <div className={styles.infoItem}>
           <div className={styles.infoIcon}>🏐</div>
           <div>
-            <div className={styles.infoLabel}>Pro ({nProG} {nProG === 1 ? 'girone' : 'gironi'})</div>
-            <div className={styles.infoVal}>Ogni squadra gioca 3 partite nel proprio girone · Campi 1–2</div>
+            <div className={styles.infoLabel}>Pro — {nProG} {nProG === 1 ? 'girone' : 'gironi'} · Campi 1–2</div>
+            <div className={styles.infoVal}>Ogni squadra gioca {proSize >= 5 ? proSize - 1 : 'tutte le'} partite nel proprio girone</div>
           </div>
         </div>
 
         <div className={styles.infoItem}>
           <div className={styles.infoIcon}>🏐</div>
           <div>
-            <div className={styles.infoLabel}>Amatori ({nAmatG} {nAmatG === 1 ? 'girone' : 'gironi'})</div>
-            <div className={styles.infoVal}>Ogni squadra gioca 3 partite nel proprio girone · Campi 3–4</div>
+            <div className={styles.infoLabel}>Amatori — {nAmatG} {nAmatG === 1 ? 'girone' : 'gironi'} · Campi 3–4</div>
+            <div className={styles.infoVal}>Ogni squadra gioca {proSize >= 5 ? proSize - 1 : 'tutte le'} partite nel proprio girone</div>
           </div>
         </div>
 
@@ -396,15 +434,25 @@ function TorneoInfo({ proGroups, amatGroups }) {
           <div className={styles.infoIcon}>🏆</div>
           <div>
             <div className={styles.infoLabel}>Qualificazione</div>
-            <div className={styles.infoVal}>{advanceDesc(Math.max(nProG, nAmatG))}</div>
+            <div className={styles.infoVal}>
+              {bigGroups
+                ? 'Le prime 4 di ogni girone (8 squadre) → Quarti → Semifinali → Finale'
+                : 'Le prime 2 di ogni girone (4 squadre) → Semifinali → Finale'
+              }
+            </div>
           </div>
         </div>
 
         <div className={styles.infoItem}>
           <div className={styles.infoIcon}>☀️</div>
           <div>
-            <div className={styles.infoLabel}>Pomeriggio · Eliminazione diretta</div>
-            <div className={styles.infoVal}>14:00 → fine prevista {afternoonEnd(Math.max(nProG, nAmatG))} · spareggio 3° posto incluso</div>
+            <div className={styles.infoLabel}>Eliminazione diretta · ~17:00</div>
+            <div className={styles.infoVal}>
+              {bigGroups
+                ? 'QF ~17:00 → SF ~17:40 → Finale ~18:00 · spareggio 3° posto incluso'
+                : 'Semifinali → Finale · spareggio 3° posto incluso'
+              }
+            </div>
           </div>
         </div>
 

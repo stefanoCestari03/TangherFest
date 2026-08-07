@@ -1,10 +1,22 @@
 import { supabase } from './supabase'
 
 // ── Round-robin pairs (0-indexed) per dimensione gruppo ──────────────────────
+// Per n dispari: ogni round ha (n-1)/2 partite, 1 squadra riposa
 const RR = {
   2: [[0,1]],
   3: [[0,1],[1,2],[0,2]],
   4: [[0,1],[2,3],[0,2],[1,3],[0,3],[1,2]],
+  5: [[0,1],[2,3],[0,2],[1,4],[0,3],[2,4],[0,4],[1,3],[1,2],[3,4]],
+  6: [[0,5],[1,4],[2,3],[1,5],[0,2],[3,4],[2,5],[1,3],[0,4],[3,5],[2,4],[0,1],[4,5],[0,3],[1,2]],
+  7: [                   // 7 round × 3 partite = 21 partite totali
+    [0,1],[2,6],[3,5],   // round 1 (riposa 4)
+    [0,2],[1,3],[4,6],   // round 2 (riposa 5)
+    [0,3],[1,4],[2,5],   // round 3 (riposa 6)
+    [0,4],[2,3],[5,6],   // round 4 (riposa 1)
+    [0,5],[1,6],[3,4],   // round 5 (riposa 2)
+    [0,6],[2,4],[1,5],   // round 6 (riposa 3)
+    [1,2],[3,6],[4,5],   // round 7 (riposa 0)
+  ],
 }
 
 function addTime(baseMins, offsetMins) {
@@ -12,106 +24,105 @@ function addTime(baseMins, offsetMins) {
   return `${String(Math.floor(t / 60)).padStart(2,'0')}:${String(t % 60).padStart(2,'0')}`
 }
 
-// ── Genera il calendario completo (gironi + spareggi placeholder) ─────────────
+// Slot → orario con pausa pranzo 13:00-14:00
+// Slot  1-12 → 09:00, 09:20, ..., 12:40  (mattina)
+// Slot 13+   → 14:00, 14:20, ...          (pomeriggio, dopo pausa)
+function slotToTime(slot) {
+  if (slot <= 12) return addTime(9 * 60, (slot - 1) * 20)
+  return addTime(14 * 60, (slot - 13) * 20)
+}
+
+// Minuto di fine dell'ultimo slot → orario partenza knockout
+function knockoutStart(lastSlot) {
+  const startMin = lastSlot <= 12
+    ? 9 * 60 + (lastSlot - 1) * 20
+    : 14 * 60 + (lastSlot - 13) * 20
+  const endMin = startMin + 20
+  return Math.max(endMin, 14 * 60)  // minimo 14:00 (dopo pausa)
+}
+
+// ── Genera il calendario completo ─────────────────────────────────────────────
 export function buildSchedule(proTeams, amatoriTeams) {
   const partite = []
 
+  // Con 14 squadre → 2 gironi da 7; con meno → 2 gironi o 1
   function nGroups(n) {
-    if (n >= 13) return 4
-    if (n >= 9)  return 3
-    if (n >= 5)  return 2
+    if (n >= 4) return 2
     return 1
   }
 
-  // Distribuzione round-robin sui gironi
   function assignGroups(teams, labels) {
     const groups = labels.map(l => ({ label: l, teams: [] }))
     teams.forEach((t, i) => groups[i % groups.length].teams.push(t))
     return groups
   }
 
-  // Costruisce le partite di girone, interleaving due gironi per campo
+  // Ogni gruppo su campo dedicato (non interleaved) con gestione pausa
   function addGironeMatches(groups, campoBase, categoria) {
-    for (let fi = 0; fi < Math.ceil(groups.length / 2); fi++) {
+    groups.forEach((g, fi) => {
       const campo = campoBase + fi
-      const gA = groups[fi * 2]
-      const gB = groups[fi * 2 + 1]
-
-      const pairsA = RR[gA.teams.length] ?? RR[4]
-      pairsA.forEach(([i, j], mIdx) => {
-        if (gA.teams[i] && gA.teams[j]) {
+      const pairs = RR[g.teams.length] ?? RR[7]
+      pairs.forEach(([i, j], mIdx) => {
+        if (g.teams[i] && g.teams[j]) {
+          const slot = mIdx + 1
           partite.push({
-            categoria, fase: 'girone', girone: gA.label, campo,
-            slot: mIdx * 2 + 1,
-            ora_prevista: addTime(9 * 60, mIdx * 40),        // 20 min a partita, 40 per coppia
-            squadra1_id: gA.teams[i].id, squadra2_id: gA.teams[j].id,
-            squadra1_nome: gA.teams[i].nomeSquadra, squadra2_nome: gA.teams[j].nomeSquadra,
+            categoria, fase: 'girone', girone: g.label, campo,
+            slot,
+            ora_prevista: slotToTime(slot),
+            squadra1_id:   g.teams[i].id,
+            squadra2_id:   g.teams[j].id,
+            squadra1_nome: g.teams[i].nomeSquadra,
+            squadra2_nome: g.teams[j].nomeSquadra,
             completata: false,
           })
         }
       })
+    })
+  }
 
-      if (gB) {
-        const pairsB = RR[gB.teams.length] ?? RR[4]
-        pairsB.forEach(([i, j], mIdx) => {
-          if (gB.teams[i] && gB.teams[j]) {
-            partite.push({
-              categoria, fase: 'girone', girone: gB.label, campo,
-              slot: mIdx * 2 + 2,
-              ora_prevista: addTime(9 * 60, mIdx * 40 + 20), // sfalsato di 20 min rispetto al girone A
-              squadra1_id: gB.teams[i].id, squadra2_id: gB.teams[j].id,
-              squadra1_nome: gB.teams[i].nomeSquadra, squadra2_nome: gB.teams[j].nomeSquadra,
-              completata: false,
-            })
-          }
-        })
+  // Spareggi (calcola orario partenza dal numero di partite di girone)
+  function addKnockout(groups, campoBase, categoria) {
+    const n = groups.length
+    const groupSize = groups[0]?.teams.length ?? 4
+    const nGroupMatches = groupSize * (groupSize - 1) / 2
+    const KS = knockoutStart(nGroupMatches)  // minuti da mezzanotte
+
+    if (n === 1) {
+      // Solo finale tra i top-2 del girone unico
+      partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[0].label}`, squadra2_nome: `2° ${groups[0].label}`, completata: false })
+    } else if (n === 2) {
+      const [A, B] = groups
+
+      if (groupSize >= 5) {
+        // Top 4 da ogni girone → 8 squadre → Quarti + SF + Finale
+        // Seeding incrociato: 1°A vs 4°B, 1°B vs 4°A, 2°A vs 3°B, 2°B vs 3°A
+        partite.push({ categoria, fase: 'quarti',     campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${A.label}`, squadra2_nome: `4° ${B.label}`, completata: false })
+        partite.push({ categoria, fase: 'quarti',     campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${B.label}`, squadra2_nome: `4° ${A.label}`, completata: false })
+        partite.push({ categoria, fase: 'quarti',     campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: `2° ${A.label}`, squadra2_nome: `3° ${B.label}`, completata: false })
+        partite.push({ categoria, fase: 'quarti',     campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: `2° ${B.label}`, squadra2_nome: `3° ${A.label}`, completata: false })
+        partite.push({ categoria, fase: 'semifinale', campo: campoBase,   slot: 102, ora_prevista: addTime(KS, 40), squadra1_nome: 'Vin. QF1', squadra2_nome: 'Vin. QF2', completata: false })
+        partite.push({ categoria, fase: 'semifinale', campo: campoBase+1, slot: 102, ora_prevista: addTime(KS, 40), squadra1_nome: 'Vin. QF3', squadra2_nome: 'Vin. QF4', completata: false })
+        partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 103, ora_prevista: addTime(KS, 60), squadra1_nome: 'Vin. SF1', squadra2_nome: 'Vin. SF2', completata: false })
+        partite.push({ categoria, fase: 'terzo_posto',campo: campoBase+1, slot: 103, ora_prevista: addTime(KS, 60), squadra1_nome: 'Perd. SF1', squadra2_nome: 'Perd. SF2', completata: false })
+      } else {
+        // Gironi piccoli (≤4 sq): top-2 → SF → Finale
+        partite.push({ categoria, fase: 'semifinale', campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${A.label}`, squadra2_nome: `2° ${B.label}`, completata: false })
+        partite.push({ categoria, fase: 'semifinale', campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${B.label}`, squadra2_nome: `2° ${A.label}`, completata: false })
+        partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Vin. SF1', squadra2_nome: 'Vin. SF2', completata: false })
+        partite.push({ categoria, fase: 'terzo_posto',campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Perd. SF1', squadra2_nome: 'Perd. SF2', completata: false })
       }
     }
   }
 
-  // Placeholder spareggi pomeridiani (14:00+)
-  function addKnockout(groups, campoBase, categoria) {
-    const n = groups.length
-    const KS = 14 * 60 // 14:00
-
-    if (n === 1) {
-      // Solo finale (top 2 del girone unico)
-      partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[0].label}`, squadra2_nome: `2° ${groups[0].label}`, completata: false })
-    } else if (n === 2) {
-      // 2 gironi → 4 squadre → SF + Finale  (14:00 e 14:20)
-      partite.push({ categoria, fase: 'semifinale', campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[0].label}`, squadra2_nome: `2° ${groups[1].label}`, completata: false })
-      partite.push({ categoria, fase: 'semifinale', campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[1].label}`, squadra2_nome: `2° ${groups[0].label}`, completata: false })
-      partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Vin. SF1', squadra2_nome: 'Vin. SF2', completata: false })
-      partite.push({ categoria, fase: 'terzo_posto',campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Perd. SF1', squadra2_nome: 'Perd. SF2', completata: false })
-    } else if (n === 3) {
-      // 3 gironi → 4 squadre (3 vincitori + miglior 2°) → SF + Finale  (14:00 e 14:20)
-      partite.push({ categoria, fase: 'semifinale', campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[0].label}`, squadra2_nome: `Miglior 2°`, completata: false })
-      partite.push({ categoria, fase: 'semifinale', campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${groups[1].label}`, squadra2_nome: `1° ${groups[2].label}`, completata: false })
-      partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Vin. SF1', squadra2_nome: 'Vin. SF2', completata: false })
-      partite.push({ categoria, fase: 'terzo_posto',campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: 'Perd. SF1', squadra2_nome: 'Perd. SF2', completata: false })
-    } else {
-      // 4 gironi → 8 squadre → QF + SF + Finale  (14:00 / 14:20 / 14:40 / 15:00)
-      const [A, B, C, D] = groups
-      partite.push({ categoria, fase: 'quarti',     campo: campoBase,   slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${A.label}`, squadra2_nome: `2° ${D.label}`, completata: false })
-      partite.push({ categoria, fase: 'quarti',     campo: campoBase+1, slot: 100, ora_prevista: addTime(KS,  0), squadra1_nome: `1° ${B.label}`, squadra2_nome: `2° ${C.label}`, completata: false })
-      partite.push({ categoria, fase: 'quarti',     campo: campoBase,   slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: `1° ${C.label}`, squadra2_nome: `2° ${B.label}`, completata: false })
-      partite.push({ categoria, fase: 'quarti',     campo: campoBase+1, slot: 101, ora_prevista: addTime(KS, 20), squadra1_nome: `1° ${D.label}`, squadra2_nome: `2° ${A.label}`, completata: false })
-      partite.push({ categoria, fase: 'semifinale', campo: campoBase,   slot: 102, ora_prevista: addTime(KS, 40), squadra1_nome: 'Vin. QF1', squadra2_nome: 'Vin. QF2', completata: false })
-      partite.push({ categoria, fase: 'semifinale', campo: campoBase+1, slot: 102, ora_prevista: addTime(KS, 40), squadra1_nome: 'Vin. QF3', squadra2_nome: 'Vin. QF4', completata: false })
-      partite.push({ categoria, fase: 'finale',     campo: campoBase,   slot: 103, ora_prevista: addTime(KS, 60), squadra1_nome: 'Vin. SF1', squadra2_nome: 'Vin. SF2', completata: false })
-      partite.push({ categoria, fase: 'terzo_posto',campo: campoBase+1, slot: 103, ora_prevista: addTime(KS, 60), squadra1_nome: 'Perd. SF1', squadra2_nome: 'Perd. SF2', completata: false })
-    }
-  }
-
-  // Pro (campi 1–2)
-  const proLabels    = ['A','B','C','D'].slice(0, nGroups(proTeams.length))
-  const proGroups    = assignGroups(proTeams,    proLabels)
+  // Pro (campi 1–2): gironi A e B
+  const nProG    = nGroups(proTeams.length)
+  const proGroups = assignGroups(proTeams, ['A','B'].slice(0, nProG))
   addGironeMatches(proGroups, 1, 'pro')
   addKnockout(proGroups, 1, 'pro')
 
-  // Amatori (campi 3–4)
-  const amatLabels   = ['E','F','G','H'].slice(0, nGroups(amatoriTeams.length))
-  const amatGroups   = assignGroups(amatoriTeams, amatLabels)
+  // Amatori (campi 3–4): gironi E e F
+  const nAmatG    = nGroups(amatoriTeams.length)
+  const amatGroups = assignGroups(amatoriTeams, ['E','F'].slice(0, nAmatG))
   addGironeMatches(amatGroups, 3, 'amatori')
   addKnockout(amatGroups, 3, 'amatori')
 
