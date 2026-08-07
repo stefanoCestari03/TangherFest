@@ -134,6 +134,7 @@
 .setsTeam { flex: 1; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.55); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .setsSep { flex: 0 0 60px; }
 .setRow { display: flex; align-items: center; gap: .5rem; margin-bottom: .45rem; }
+.setRowOptional { opacity: .55; border-top: 1px dashed rgba(255,255,255,.1); padding-top: .45rem; margin-top: .1rem; }
 .setInput { flex: 1; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: .55rem .5rem; color: #fff; font-size: 1.3rem; font-weight: 700; text-align: center; outline: none; transition: border-color .2s; width: 0; }
 .setInput:focus { border-color: rgba(204,56,190,.5); }
 .setInput::placeholder { color: rgba(255,255,255,.2); font-size: .9rem; }

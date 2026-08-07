@@ -70,6 +70,13 @@ export default function App() {
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50)
   }
 
+  const goTorneo = () => {
+    setView('volley')
+    setTab('torneo')
+    window.history.pushState(null, '', '#volley/torneo')
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50)
+  }
+
   const goIscrizione = () => {
     setTab('iscrizione')
     window.history.pushState(null, '', '#volley/iscrizione')
@@ -88,7 +95,7 @@ export default function App() {
     <div className={styles.app}>
       {view === 'festival' ? (
         <>
-          <FestivalHome onGoVolley={goVolley} />
+          <FestivalHome onGoVolley={goVolley} onGoTorneo={goTorneo} />
           <Footer />
         </>
       ) : (

@@ -19,7 +19,7 @@ function CopyBtn({ text, label }) {
   )
 }
 
-export default function FestivalHome({ onGoVolley }) {
+export default function FestivalHome({ onGoVolley, onGoTorneo }) {
   return (
     <div className={styles.page}>
 
@@ -41,6 +41,10 @@ export default function FestivalHome({ onGoVolley }) {
             ))}
           </div>
           <p className={styles.heroSub}>Tre giorni di sport, musica e festa a Segonzano</p>
+          <button className={styles.liveTorneoBtn} onClick={onGoTorneo}>
+            <span className={styles.liveDot} />
+            Vedi classifica torneo live
+          </button>
         </div>
       </header>
 

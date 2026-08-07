@@ -31,8 +31,8 @@ export default function TorneoPage({ squadre }) {
   const [editMatch, setEditMatch] = useState(null)
   const [p1, setP1] = useState('')
   const [p2, setP2] = useState('')
-  // Score modal — best-of-3 (finale / 3° posto)
-  const [sets, setSets] = useState([{p1:'', p2:''}, {p1:'', p2:''}])
+  // Score modal — best-of-3 (finale / 3° posto) — 3 set sempre visibili, il 3° è facoltativo
+  const [sets, setSets] = useState([{p1:'', p2:''}, {p1:'', p2:''}, {p1:'', p2:''}])
 
   // Swap modal
   const [swapOpen, setSwapOpen] = useState(false)
@@ -252,11 +252,12 @@ export default function TorneoPage({ squadre }) {
     setEditMatch(m)
     setP1(m.punteggio1 ?? '')
     setP2(m.punteggio2 ?? '')
-    // Ripristina set esistenti o inizia con 2 set vuoti
-    const existing = m.sets?.length > 0
+    // Ripristina set esistenti (sempre 3 righe, il 3° vuoto se non usato)
+    const base = m.sets?.length > 0
       ? m.sets.map(s => ({ p1: String(s.p1), p2: String(s.p2) }))
-      : [{p1:'', p2:''}, {p1:'', p2:''}]
-    setSets(existing)
+      : []
+    while (base.length < 3) base.push({p1:'', p2:''})
+    setSets(base)
     setErr(null)
   }
 
@@ -460,8 +461,6 @@ export default function TorneoPage({ squadre }) {
         const isBo3 = BEST_OF_3.includes(editMatch.fase)
         const w1 = sets.filter(s => parseInt(s.p1) > parseInt(s.p2)).length
         const w2 = sets.filter(s => parseInt(s.p2) > parseInt(s.p1)).length
-        const tied = w1 === 1 && w2 === 1
-        const needSet3 = tied && sets.length < 3
         const updateSet = (i, side, val) => setSets(prev => prev.map((s, idx) => idx === i ? {...s, [side]: val} : s))
         return (
           <div className={styles.overlay} onClick={() => setEditMatch(null)}>
@@ -482,25 +481,20 @@ export default function TorneoPage({ squadre }) {
                     <span className={styles.setsSep}></span>
                     <span className={styles.setsTeam} style={{textAlign:'right'}}>{editMatch.squadra2_nome}</span>
                   </div>
-                  {/* righe set */}
+                  {/* righe set — sempre 3 visibili, il 3° è opzionale */}
                   {sets.map((s, i) => (
-                    <div key={i} className={styles.setRow}>
+                    <div key={i} className={`${styles.setRow} ${i === 2 ? styles.setRowOptional : ''}`}>
                       <input className={styles.setInput} type="number" min="0" max="99"
                         value={s.p1} onChange={e => updateSet(i, 'p1', e.target.value)}
                         autoFocus={i === 0} placeholder="—" />
-                      <span className={styles.setLabel}>Set {i + 1}</span>
+                      <span className={styles.setLabel}>
+                        {i === 2 ? 'Set 3 (opt.)' : `Set ${i + 1}`}
+                      </span>
                       <input className={styles.setInput} type="number" min="0" max="99"
                         value={s.p2} onChange={e => updateSet(i, 'p2', e.target.value)}
                         placeholder="—" />
                     </div>
                   ))}
-                  {/* aggiungi 3° set se in parità */}
-                  {needSet3 && (
-                    <button className={styles.addSetBtn}
-                      onClick={() => setSets(prev => [...prev, {p1:'', p2:''}])}>
-                      + Aggiungi 3° set
-                    </button>
-                  )}
                   {/* totale set */}
                   <div className={styles.setsTotale}>
                     <span className={w1 > w2 ? styles.setWinner : ''}>{w1}</span>

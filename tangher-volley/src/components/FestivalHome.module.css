@@ -13,7 +13,44 @@
 .heroYear { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(1.1rem, 3.5vw, 1.8rem); color: var(--sky); letter-spacing: .06em; margin-bottom: 1.2rem; }
 .pills { display: flex; justify-content: center; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 .pill { background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); border-radius: 20px; padding: 4px 14px; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.82); }
-.heroSub { font-size: 13px; color: rgba(255,255,255,.45); letter-spacing: .1em; text-transform: uppercase; }
+.heroSub { font-size: 13px; color: rgba(255,255,255,.45); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1.5rem; }
+
+.liveTorneoBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: 13px 28px;
+  background: rgba(80,200,255,.1);
+  border: 1.5px solid rgba(80,200,255,.35);
+  border-radius: 50px;
+  color: var(--sky);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.1rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 0 20px rgba(80,200,255,.12);
+}
+.liveTorneoBtn:hover {
+  background: rgba(80,200,255,.18);
+  border-color: var(--sky);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 24px rgba(80,200,255,.25);
+}
+.liveDot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex-shrink: 0;
+  animation: livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: .3; transform: scale(.7); }
+}
 
 /* ── Container ── */
 .container { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
