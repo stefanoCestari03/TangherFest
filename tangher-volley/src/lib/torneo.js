@@ -17,6 +17,15 @@ const RR = {
     [0,6],[2,4],[1,5],   // round 6 (riposa 3)
     [1,2],[3,6],[4,5],   // round 7 (riposa 0)
   ],
+  8: [                   // 7 round × 4 partite = 28 partite totali (poligono, team 0 fisso)
+    [0,7],[1,6],[2,5],[3,4],   // round 1
+    [0,6],[7,5],[1,4],[2,3],   // round 2
+    [0,5],[6,4],[7,3],[1,2],   // round 3
+    [0,4],[5,3],[6,2],[7,1],   // round 4
+    [0,3],[4,2],[5,1],[6,7],   // round 5
+    [0,2],[3,1],[4,7],[5,6],   // round 6
+    [0,1],[2,7],[3,6],[4,5],   // round 7
+  ],
 }
 
 function addTime(baseMins, offsetMins) {
