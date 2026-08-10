@@ -1,12 +1,10 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import {
-  fetchPartite, insertPartite, updatePunteggio, updateMatchSets, updatePartitaNomi,
+  fetchPartite, insertPartite, updatePunteggio, updatePartitaNomi,
   deleteAllPartite, subscribePartite, buildSchedule, computeStandings,
   swapTeamsInSchedule,
 } from '../lib/torneo'
-
-const BEST_OF_3 = ['finale', 'terzo_posto']
 import styles from './TorneoPage.module.css'
 
 const FASE_LABEL = {
@@ -27,12 +25,10 @@ export default function TorneoPage({ squadre }) {
   const [adminEmail, setAdminEmail] = useState('')
   const [adminPwd,   setAdminPwd]   = useState('')
 
-  // Score modal — set singolo
+  // Score modal
   const [editMatch, setEditMatch] = useState(null)
   const [p1, setP1] = useState('')
   const [p2, setP2] = useState('')
-  // Score modal — best-of-3 (finale / 3° posto) — 3 set sempre visibili, il 3° è facoltativo
-  const [sets, setSets] = useState([{p1:'', p2:''}, {p1:'', p2:''}, {p1:'', p2:''}])
 
   // Swap modal
   const [swapOpen, setSwapOpen] = useState(false)
@@ -215,25 +211,10 @@ export default function TorneoPage({ squadre }) {
   async function handleSave() {
     setLoading(true); setErr(null)
     try {
-      if (BEST_OF_3.includes(editMatch.fase)) {
-        // Valida set
-        const valid = sets.filter(s => s.p1 !== '' && s.p2 !== '')
-        if (valid.length < 2) { setErr('Inserisci almeno 2 set'); setLoading(false); return }
-        for (const s of valid) {
-          if (isNaN(parseInt(s.p1)) || isNaN(parseInt(s.p2))) { setErr('Punteggi non validi'); setLoading(false); return }
-          if (parseInt(s.p1) === parseInt(s.p2)) { setErr('Un set non può finire in parità'); setLoading(false); return }
-        }
-        const parsed = valid.map(s => ({ p1: parseInt(s.p1), p2: parseInt(s.p2) }))
-        const w1 = parsed.filter(s => s.p1 > s.p2).length
-        const w2 = parsed.filter(s => s.p2 > s.p1).length
-        if (w1 !== 2 && w2 !== 2) { setErr('La partita richiede 2 set vinti — completa il 3° set'); setLoading(false); return }
-        await updateMatchSets(editMatch.id, parsed)
-      } else {
-        const n1 = parseInt(p1, 10), n2 = parseInt(p2, 10)
-        if (isNaN(n1) || isNaN(n2) || n1 < 0 || n2 < 0) { setErr('Inserisci punteggi validi'); setLoading(false); return }
-        if (n1 === n2) { setErr('Non ci sono pareggi nel volley'); setLoading(false); return }
-        await updatePunteggio(editMatch.id, n1, n2)
-      }
+      const n1 = parseInt(p1, 10), n2 = parseInt(p2, 10)
+      if (isNaN(n1) || isNaN(n2) || n1 < 0 || n2 < 0) { setErr('Inserisci punteggi validi'); setLoading(false); return }
+      if (n1 === n2) { setErr('Non ci sono pareggi nel volley'); setLoading(false); return }
+      await updatePunteggio(editMatch.id, n1, n2)
       setEditMatch(null)
       // Propaga automaticamente vincitori nel bracket
       const fresh = await fetchPartite()
@@ -252,12 +233,6 @@ export default function TorneoPage({ squadre }) {
     setEditMatch(m)
     setP1(m.punteggio1 ?? '')
     setP2(m.punteggio2 ?? '')
-    // Ripristina set esistenti (sempre 3 righe, il 3° vuoto se non usato)
-    const base = m.sets?.length > 0
-      ? m.sets.map(s => ({ p1: String(s.p1), p2: String(s.p2) }))
-      : []
-    while (base.length < 3) base.push({p1:'', p2:''})
-    setSets(base)
     setErr(null)
   }
 
@@ -457,79 +432,41 @@ export default function TorneoPage({ squadre }) {
       })()}
 
       {/* Modal inserimento punteggio */}
-      {editMatch && (() => {
-        const isBo3 = BEST_OF_3.includes(editMatch.fase)
-        const w1 = sets.filter(s => parseInt(s.p1) > parseInt(s.p2)).length
-        const w2 = sets.filter(s => parseInt(s.p2) > parseInt(s.p1)).length
-        const updateSet = (i, side, val) => setSets(prev => prev.map((s, idx) => idx === i ? {...s, [side]: val} : s))
-        return (
-          <div className={styles.overlay} onClick={() => setEditMatch(null)}>
-            <div className={styles.modal} onClick={e => e.stopPropagation()}>
-              <div className={styles.modalTitle}>Inserisci Risultato</div>
-              <div className={styles.modalSub}>
-                {FASE_LABEL[editMatch.fase] ?? 'Girone ' + editMatch.girone}
-                {editMatch.ora_prevista && <> · {editMatch.ora_prevista}</>}
-                {' · Campo ' + editMatch.campo}
-                {isBo3 && <> · <strong>Al meglio dei 3 set</strong></>}
+      {editMatch && (
+        <div className={styles.overlay} onClick={() => setEditMatch(null)}>
+          <div className={styles.modal} onClick={e => e.stopPropagation()}>
+            <div className={styles.modalTitle}>Inserisci Risultato</div>
+            <div className={styles.modalSub}>
+              {FASE_LABEL[editMatch.fase] ?? 'Girone ' + editMatch.girone}
+              {editMatch.ora_prevista && <> · {editMatch.ora_prevista}</>}
+              {' · Campo ' + editMatch.campo}
+            </div>
+
+            <div className={styles.scoreRow}>
+              <div className={styles.scoreCol}>
+                <div className={styles.scoreTeam}>{editMatch.squadra1_nome}</div>
+                <input className={styles.scoreInput} type="number" min="0" max="99"
+                  value={p1} onChange={e => setP1(e.target.value)} autoFocus />
               </div>
-
-              {isBo3 ? (
-                <div className={styles.setsBlock}>
-                  {/* intestazione squadre */}
-                  <div className={styles.setsHeader}>
-                    <span className={styles.setsTeam}>{editMatch.squadra1_nome}</span>
-                    <span className={styles.setsSep}></span>
-                    <span className={styles.setsTeam} style={{textAlign:'right'}}>{editMatch.squadra2_nome}</span>
-                  </div>
-                  {/* righe set — sempre 3 visibili, il 3° è opzionale */}
-                  {sets.map((s, i) => (
-                    <div key={i} className={`${styles.setRow} ${i === 2 ? styles.setRowOptional : ''}`}>
-                      <input className={styles.setInput} type="number" min="0" max="99"
-                        value={s.p1} onChange={e => updateSet(i, 'p1', e.target.value)}
-                        autoFocus={i === 0} placeholder="—" />
-                      <span className={styles.setLabel}>
-                        {i === 2 ? 'Set 3 (opt.)' : `Set ${i + 1}`}
-                      </span>
-                      <input className={styles.setInput} type="number" min="0" max="99"
-                        value={s.p2} onChange={e => updateSet(i, 'p2', e.target.value)}
-                        placeholder="—" />
-                    </div>
-                  ))}
-                  {/* totale set */}
-                  <div className={styles.setsTotale}>
-                    <span className={w1 > w2 ? styles.setWinner : ''}>{w1}</span>
-                    <span className={styles.setsTotSep}>set vinti</span>
-                    <span className={w2 > w1 ? styles.setWinner : ''}>{w2}</span>
-                  </div>
-                </div>
-              ) : (
-                <div className={styles.scoreRow}>
-                  <div className={styles.scoreCol}>
-                    <div className={styles.scoreTeam}>{editMatch.squadra1_nome}</div>
-                    <input className={styles.scoreInput} type="number" min="0" max="99"
-                      value={p1} onChange={e => setP1(e.target.value)} autoFocus />
-                  </div>
-                  <div className={styles.scoreDash}>–</div>
-                  <div className={styles.scoreCol}>
-                    <div className={styles.scoreTeam}>{editMatch.squadra2_nome}</div>
-                    <input className={styles.scoreInput} type="number" min="0" max="99"
-                      value={p2} onChange={e => setP2(e.target.value)} />
-                  </div>
-                </div>
-              )}
-
-              {err && <div className={styles.modalErr}>{err}</div>}
-
-              <div className={styles.modalActions}>
-                <button className={styles.cancelBtn} onClick={() => setEditMatch(null)}>Annulla</button>
-                <button className={styles.saveBtn} onClick={handleSave} disabled={loading}>
-                  {loading ? 'Salvo…' : 'Salva risultato'}
-                </button>
+              <div className={styles.scoreDash}>–</div>
+              <div className={styles.scoreCol}>
+                <div className={styles.scoreTeam}>{editMatch.squadra2_nome}</div>
+                <input className={styles.scoreInput} type="number" min="0" max="99"
+                  value={p2} onChange={e => setP2(e.target.value)} />
               </div>
             </div>
+
+            {err && <div className={styles.modalErr}>{err}</div>}
+
+            <div className={styles.modalActions}>
+              <button className={styles.cancelBtn} onClick={() => setEditMatch(null)}>Annulla</button>
+              <button className={styles.saveBtn} onClick={handleSave} disabled={loading}>
+                {loading ? 'Salvo…' : 'Salva risultato'}
+              </button>
+            </div>
           </div>
-        )
-      })()}
+        </div>
+      )}
     </div>
   )
 }
@@ -682,16 +619,6 @@ function KnockoutBracket({ matches, isAdmin, onEdit }) {
                     <span>{m.squadra2_nome ?? '—'}</span>
                     {m.completata && <span className={styles.bScore}>{m.punteggio2}</span>}
                   </div>
-                  {/* dettaglio set per finale / 3° posto */}
-                  {m.completata && m.sets?.length > 0 && (
-                    <div className={styles.bracketSets}>
-                      {m.sets.map((s, i) => (
-                        <span key={i} className={styles.bracketSetChip}>
-                          {s.p1}–{s.p2}
-                        </span>
-                      ))}
-                    </div>
-                  )}
                   {isAdmin && (
                     <button className={styles.editBtn} onClick={() => onEdit(m)}>✏</button>
                   )}
