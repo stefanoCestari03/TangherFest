@@ -2,40 +2,84 @@
 .slabel { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--mg2); margin-bottom: .5rem; }
 .h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.8rem,6vw,3rem); text-transform: uppercase; margin-bottom: .75rem; color: #fff; }
 .h2 span { color: var(--gold); }
+.h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.5rem,5vw,2.4rem); text-transform: uppercase; color: #fff; margin-bottom: .25rem; }
+.h3 span { color: var(--mg2); }
 .lead { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,.6); margin-bottom: 2rem; }
-.lead strong { color: rgba(255,255,255,.9); }
+.subLead { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: rgba(255,255,255,.3); margin-bottom: 1.5rem; }
 
-.categories { display: flex; flex-direction: column; gap: 2rem; margin-bottom: 2rem; }
-
+/* ── Prize boxes ── */
+.categories { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2.5rem; }
 .catBlock { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 1.4rem; }
-
 .catHeader { display: flex; align-items: center; gap: .7rem; margin-bottom: 1.1rem; }
 .badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: 3px 10px; border-radius: 20px; border: 1px solid; flex-shrink: 0; }
 .badgeT { background: rgba(139,48,204,.25); border-color: rgba(139,48,204,.48); color: #D080FF; }
 .badgeL { background: rgba(112,202,255,.12); border-color: rgba(112,202,255,.3); color: var(--sky); }
-.catTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: .06em; color: #fff; }
+.catTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .06em; color: #fff; }
 
 .podio { display: grid; grid-template-columns: repeat(3, 1fr); gap: .65rem; }
-
-.podCard { display: flex; flex-direction: column; align-items: center; gap: .4rem; padding: 1.25rem .75rem 1rem; border-radius: 14px; border: 1.5px solid rgba(255,255,255,.09); background: rgba(255,255,255,.04); text-align: center; transition: transform .2s; position: relative; overflow: hidden; }
+.podCard { display: flex; flex-direction: column; align-items: center; gap: .35rem; padding: 1.1rem .75rem; border-radius: 14px; border: 1.5px solid rgba(255,255,255,.09); background: rgba(255,255,255,.04); text-align: center; transition: transform .2s; }
 .podCard:hover { transform: translateY(-2px); }
-
-.pos1 { border-color: rgba(255,200,80,.35); background: linear-gradient(160deg, rgba(255,200,80,.08), rgba(255,200,80,.02)); }
+.pos1 { border-color: rgba(255,200,80,.38); background: linear-gradient(160deg, rgba(255,200,80,.1), rgba(255,200,80,.02)); }
 .pos2 { border-color: rgba(180,180,200,.3); background: linear-gradient(160deg, rgba(180,180,200,.07), rgba(180,180,200,.02)); }
-.pos3 { border-color: rgba(200,120,60,.3); background: linear-gradient(160deg, rgba(200,120,60,.07), rgba(200,120,60,.02)); }
+.pos3 { border-color: rgba(200,120,60,.3); background: linear-gradient(160deg, rgba(200,120,60,.08), rgba(200,120,60,.02)); }
+.podIcon { font-size: 1.8rem; line-height: 1; }
+.podLabel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.4); }
+.podPremio { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.15rem; color: #fff; letter-spacing: .03em; }
 
-.podIcon { font-size: 2rem; line-height: 1; }
-.podLabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.5); }
-.podMystery { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 2rem; color: rgba(255,255,255,.12); letter-spacing: .1em; }
-.podLock { font-size: 14px; position: absolute; top: .55rem; right: .65rem; opacity: .35; }
+/* ── Year separator ── */
+.yearSep { display: flex; align-items: center; gap: 1rem; margin: 2.5rem 0 1.25rem; }
+.yearLine { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,217,122,.3), transparent); }
+.yearTag { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1rem; text-transform: uppercase; letter-spacing: .12em; color: var(--gold); white-space: nowrap; padding: .2rem .8rem; background: rgba(255,217,122,.07); border: 1px solid rgba(255,217,122,.2); border-radius: 20px; }
 
-.hint { display: flex; align-items: flex-start; gap: .9rem; background: linear-gradient(135deg, rgba(255,217,122,.07), rgba(204,56,190,.05)); border: 1px solid rgba(255,217,122,.2); border-radius: 14px; padding: 1.1rem 1.25rem; font-size: 13.5px; color: rgba(255,255,255,.65); line-height: 1.65; }
-.hintIcon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
-.hint strong { color: var(--gold); }
+.loadingRow { text-align: center; padding: 2rem; font-size: 13px; color: rgba(255,255,255,.3); }
+.noResults { text-align: center; padding: 2rem; font-size: 13px; color: rgba(255,255,255,.3); background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; }
+
+/* ── Podio 2026 ── */
+.podioSections { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; }
+.podioSection { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: 1.25rem 1.25rem 1rem; }
+.podioCatHeader { display: flex; align-items: center; gap: .7rem; margin-bottom: 1rem; }
+
+.podioGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+
+.podioCard { display: flex; flex-direction: column; align-items: center; gap: .3rem; padding: 1.1rem .7rem 1rem; border-radius: 14px; border: 1.5px solid rgba(255,255,255,.09); background: rgba(255,255,255,.04); text-align: center; position: relative; overflow: hidden; }
+.rank1 { border-color: rgba(255,200,80,.45); background: linear-gradient(160deg, rgba(255,200,80,.12), rgba(255,200,80,.03)); }
+.rank2 { border-color: rgba(180,180,200,.3); background: linear-gradient(160deg, rgba(180,180,200,.07), rgba(180,180,200,.02)); }
+.rank3 { border-color: rgba(200,120,60,.3); background: linear-gradient(160deg, rgba(200,120,60,.08), rgba(200,120,60,.02)); }
+
+.podioRankIcon { font-size: 2rem; line-height: 1; margin-bottom: .1rem; }
+.podioRankLabel { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,255,255,.38); margin-bottom: .2rem; }
+.podioTeamName { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 1.05rem; text-transform: uppercase; color: #fff; line-height: 1.1; margin-bottom: .45rem; }
+
+.podioPlayers { list-style: none; padding: 0; margin: 0 0 .45rem; display: flex; flex-direction: column; gap: .15rem; width: 100%; }
+.podioPlayer { font-size: 10.5px; color: rgba(255,255,255,.55); line-height: 1.4; }
+
+.podioPremio { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--gold); opacity: .7; margin-top: auto; padding-top: .3rem; border-top: 1px solid rgba(255,217,122,.15); width: 100%; text-align: center; }
+
+/* ── Partecipanti ── */
+.partecipanti { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.06); border-radius: 14px; padding: 1.15rem 1.25rem; margin-bottom: 2.5rem; }
+.partLabel { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; color: rgba(255,255,255,.3); margin-bottom: .9rem; }
+.partGrid { display: flex; flex-direction: column; gap: .85rem; }
+.partCat { display: flex; flex-direction: column; gap: .45rem; }
+.partCatLabel { display: flex; align-items: center; gap: .5rem; font-size: 11px; color: rgba(255,255,255,.4); }
+.partList { display: flex; flex-wrap: wrap; gap: .35rem; }
+.partTeam { font-size: 11px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: rgba(255,255,255,.65); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09); border-radius: 20px; padding: 2px 10px; letter-spacing: .04em; }
+
+/* ── 2027 Teaser ── */
+.teaser { position: relative; border-radius: 20px; overflow: hidden; padding: 3rem 1.5rem; text-align: center; border: 1.5px solid rgba(204,56,190,.3); margin-top: .5rem; }
+.teaserBg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(123,34,204,.22) 0%, transparent 70%), linear-gradient(160deg, rgba(10,2,24,.9) 0%, rgba(30,4,69,.9) 100%); z-index: 0; }
+.teaserContent { position: relative; z-index: 1; }
+.teaserEye { font-size: 2.5rem; margin-bottom: .5rem; display: block; }
+.teaserYear { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(5rem,20vw,9rem); color: rgba(255,255,255,.06); line-height: .85; letter-spacing: .04em; margin-bottom: -.5rem; user-select: none; }
+.teaserSeeYou { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(1.8rem,7vw,3rem); text-transform: uppercase; color: #fff; letter-spacing: .06em; margin-bottom: .4rem; text-shadow: 0 0 40px rgba(204,56,190,.6); }
+.teaserSub { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .18em; color: var(--mg2); margin-bottom: 1.25rem; }
+.teaserLine { width: 60px; height: 2px; background: linear-gradient(90deg, var(--v2), var(--mg)); border-radius: 2px; margin: 0 auto 1.25rem; }
+.teaserHint { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.7; max-width: 340px; margin: 0 auto; }
 
 @media (max-width: 480px) {
   .podio { grid-template-columns: 1fr; }
-  .podCard { flex-direction: row; justify-content: flex-start; text-align: left; padding: .9rem 1rem; }
-  .podIcon { font-size: 1.5rem; }
-  .podMystery { font-size: 1.5rem; }
+  .podCard { flex-direction: row; justify-content: flex-start; text-align: left; padding: .9rem 1rem; gap: .65rem; }
+  .podioGrid { grid-template-columns: 1fr; }
+  .podioCard { flex-direction: row; align-items: flex-start; text-align: left; gap: .75rem; padding: .9rem 1rem; }
+  .podioPlayers { gap: .1rem; }
+  .podioPremio { border-top: none; text-align: left; padding-top: 0; }
 }
